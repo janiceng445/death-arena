@@ -8,4 +8,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Rooms/VTA.unity
+    guid: dde5a6fb2aa94ec49b8028e24090275b
+  - enabled: 1
+    path: Assets/Scenes/Rooms/Stomach.unity
+    guid: 3262817a606ec6c46a7559d6c38b4add
+  - enabled: 1
+    path: Assets/Scenes/Rooms/Placeholder.unity
+    guid: 065a3dcf44619c447a93a0d1c889e589
+  - enabled: 1
+    path: Assets/Scenes/Rooms/Amygdala.unity
+    guid: 3c64c93fb672de04f87c379dff726cdc
   m_configObjects: {}
