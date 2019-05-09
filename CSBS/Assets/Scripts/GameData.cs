@@ -7,24 +7,24 @@ public class GameData : MonoBehaviour
 {
     private static bool instance;
 
+    // Status
+    public static bool isFainted = false;
+
     // Clock Data
     public static int hour = 0;
     public static int ticker = 0;
 
     // Bar Data
-    [Range(0.0f, 1.0f)] public float StressLvl = 1.0f;
-    [Range(0.0f, 1.0f)] public float SanityLvl = 1.0f;
-    [Range(0.0f, 1.0f)] public float HungerLvl = 1.0f;
-    [Range(0.0f, 1.0f)] public float TemperatureLvl = 1.0f;
-    [Range(0.0f, 1.0f)] public float GermsLvl = 1.0f;
-    [Range(0.0f, 1.0f)] public float TirednessLvl = 1.0f;
+    [Range(0.0f, 1.0f)] public static float StressLvl = 0;
+    [Range(0.0f, 1.0f)] public static float SanityLvl = 0;
+    [Range(0.0f, 1.0f)] public static float HungerLvl = 0;
+    [Range(0.0f, 1.0f)] public static float TemperatureLvl = 0;
+    [Range(0.0f, 1.0f)] public static float GermsLvl = 0;
+    [Range(0.0f, 1.0f)] public static float TirednessLvl = 0;
     private GameObject bars;
-    Transform stress_bar;
-    Transform sanity_bar;
-    Transform hunger_bar;
-    Transform temperature_bar;
-    Transform germs_bar;
-    Transform tiredness_bar;
+    Transform stress_bar, sanity_bar, hunger_bar, temperature_bar, germs_bar, tiredness_bar;
+    bool stress_maxed, sanity_maxed, hunger_maxed, temperature_maxed, germs_maxed, tiredness_maxed = false;
+    float DangerLevel = 0.75f;
 
     // Colors
     Color danger = new Color(255/255,0/255,0/255);
@@ -68,7 +68,87 @@ public class GameData : MonoBehaviour
         temperature_bar.localScale = new Vector3(1.0f, TemperatureLvl);
         germs_bar.localScale = new Vector3(1.0f, GermsLvl);
         tiredness_bar.localScale = new Vector3(1.0f, TirednessLvl);
+
+        // Stress and Sanity
+        if (StressLvl > DangerLevel || SanityLvl > DangerLevel) {
+            GameObject.Find("Alert").GetComponent<SpriteRenderer>().enabled = true;
+            GameObject.Find("Alert").GetComponent<Animator>().enabled = true;
+        }
+        else {
+            GameObject.Find("Alert").GetComponent<SpriteRenderer>().enabled = false;
+            GameObject.Find("Alert").GetComponent<Animator>().enabled = false;
+        }
+
+        // Tiredness
+        SpriteRenderer faint = GameObject.Find("Fainting").GetComponent<SpriteRenderer>();
+        Color temp = faint.color;
+        if (TirednessLvl > 0.5f && TirednessLvl != 1f) {
+            temp.a = (TirednessLvl - 0.5f);
+        }
+        else if (TirednessLvl == 1f) {
+            temp.a += 0.001f;
+            if (temp.a >= 1f) isFainted = true;
+        }
+        else {
+            temp.a = 0;
+        }
+        faint.color = temp;
+
+        // Others
         UpdateColorBars();
+        AffectHealth();
+        CheckHealth();
+        CheckMaxMeter();
+    }
+
+    void AffectHealth() {
+        // Hunger
+        if (!hunger_maxed) {
+            HungerLvl += 0.0005f;
+        }
+        else {
+            SanityLvl += 0.001f;
+        }
+
+        // Tiredness
+        if (!tiredness_maxed) TirednessLvl += 0.0001f;
+    }
+    void CheckMaxMeter() {
+        if (StressLvl > 1.0f) {
+            StressLvl = 1.0f;
+            stress_maxed = true;
+        } else if (StressLvl < 0) StressLvl = 0;
+        else stress_maxed = false;
+
+        if (SanityLvl > 1.0f) {
+            SanityLvl = 1.0f;
+            sanity_maxed = true;
+        } else if (SanityLvl < 0) SanityLvl = 0;
+        else sanity_maxed = false;
+
+        if (HungerLvl > 1.0f) {
+            HungerLvl = 1.0f;
+            hunger_maxed = true;
+        } else if (HungerLvl < 0) HungerLvl = 0;
+        else hunger_maxed = false;
+
+        if (TemperatureLvl > 1.0f) {
+            TemperatureLvl = 1.0f;
+            temperature_maxed = true;
+        } else if (TemperatureLvl < 0) TemperatureLvl = 0;
+        else temperature_maxed = false;
+
+        if (GermsLvl > 1.0f) {
+            GermsLvl = 1.0f;
+            germs_maxed = true;
+        } else if (GermsLvl < 0) GermsLvl = 0;
+        else germs_maxed = false;
+
+        if (TirednessLvl > 1.0f) {
+            TirednessLvl = 1.0f;
+            tiredness_maxed = true;
+        } else if (TirednessLvl < 0) TirednessLvl = 0;
+        else tiredness_maxed = false;
     }
 
     void UpdateColorBars() {
@@ -87,13 +167,19 @@ public class GameData : MonoBehaviour
         tiredness.color = TirednessLvl < 0.5f ? Color.Lerp(good, alert, TirednessLvl*2) : Color.Lerp(alert, danger, (TirednessLvl-0.5f) * 2);
     }
 
+    void CheckHealth() {
+        if (isFainted) {
+            Debug.Log("Game over");
+        }
+    }
+
     void Awake() {
         DontDestroyOnLoad(this.gameObject);
         if (!instance) {
             instance = true;
         }
         else {
-            DestroyObject(this.gameObject);
+            Destroy(this.gameObject);
         }
     }
 }
