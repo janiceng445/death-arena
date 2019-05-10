@@ -55,7 +55,7 @@ public class Portal : MonoBehaviour
                 SceneManager.LoadScene("Scenes/Rooms/Amygdala");
             break;
             case 5:
-                SceneManager.LoadScene("Scenes/GameScene");
+                SceneManager.LoadScene("Scenes/MainScene");
             break;
         }
     }

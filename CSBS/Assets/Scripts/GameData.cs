@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameData : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class GameData : MonoBehaviour
 
     // Status
     public static bool isFainted = false;
+    public static bool isTired = true;
+    private bool init = false;
 
     // Clock Data
     public static int hour = 0;
@@ -34,6 +37,9 @@ public class GameData : MonoBehaviour
     Color alert = Color.yellow;
     Color good = new Color(112/255, 255/255, 121/255);
 
+    // References
+    GameObject food;
+
     void Start() {
         // Bars
         bars = GameObject.Find("Bars");
@@ -51,6 +57,7 @@ public class GameData : MonoBehaviour
         GameObject.Find("TemperatureBar/BarSprite").GetComponent<SpriteRenderer>().color = good;
         GameObject.Find("GermsBar/BarSprite").GetComponent<SpriteRenderer>().color = good;
         GameObject.Find("TirednessBar/BarSprite").GetComponent<SpriteRenderer>().color = good;
+
     }
 
     void Update() {
@@ -114,7 +121,9 @@ public class GameData : MonoBehaviour
         }
 
         // Tiredness
-        if (!tiredness_maxed) TirednessLvl += 0.0001f;
+        if (!tiredness_maxed && isTired) {
+            TirednessLvl += 0.0001f;
+        }
     }
     void CheckMaxMeter() {
         if (StressLvl > 1.0f) {
@@ -173,6 +182,33 @@ public class GameData : MonoBehaviour
     void CheckHealth() {
         if (isFainted) {
             Debug.Log("Game over");
+        }
+    }
+
+    // Scene Management
+    void OnEnable() {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    } 
+
+    void OnDisable() {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        // Assigning camera
+        GameObject.Find("Canvas").GetComponent<Canvas>().worldCamera = Camera.main;
+        
+        // Disable food GUI
+        if (SceneManager.GetActiveScene().name != "MainScene") {
+            GameObject.Find("Food").GetComponent<BoxCollider2D>().enabled = false;
+            GameObject.Find("FoodGround").GetComponent<Image>().enabled = false;
+            GameObject.Find("FoodCircle").GetComponent<Image>().enabled = false;
+        }
+        else {
+            GameObject.Find("Food").GetComponent<BoxCollider2D>().enabled = true;
+            GameObject.Find("FoodGround").GetComponent<Image>().enabled = true;
+            GameObject.Find("FoodCircle").GetComponent<Image>().enabled = true;
+            GameObject.Find("FoodCircle").GetComponent<Image>().fillAmount = 0;
         }
     }
 

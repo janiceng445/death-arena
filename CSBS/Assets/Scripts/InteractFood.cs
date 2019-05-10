@@ -13,12 +13,12 @@ public class InteractFood : MonoBehaviour
     public int hungry_cooldown = 0;
 
 
-    void OnMouseEnter() {
+    void OnMouseOver() {
         enable = true;
     }
     
     void OnMouseExit() {
-        enable = false;
+        Calculate();
     }
 
     Color orange = new Color(1, .47f, 0);
@@ -69,6 +69,10 @@ public class InteractFood : MonoBehaviour
         }
     }
     void OnMouseUp() {
+        Calculate();
+    }
+
+    void Calculate() {
         GameData.fed = true;
         beginCD = true;
         if (amount >= 1.0f || amount / 2 > GameData.HungerLvl) {
@@ -79,5 +83,6 @@ public class InteractFood : MonoBehaviour
         }
         amount = 0;
         circle.fillAmount = 0;
+        enable = false;
     }
 }
