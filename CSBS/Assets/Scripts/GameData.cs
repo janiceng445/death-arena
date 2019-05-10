@@ -26,6 +26,9 @@ public class GameData : MonoBehaviour
     bool stress_maxed, sanity_maxed, hunger_maxed, temperature_maxed, germs_maxed, tiredness_maxed = false;
     float DangerLevel = 0.75f;
 
+    // Status
+    public static bool fed;
+
     // Colors
     Color danger = new Color(255/255,0/255,0/255);
     Color alert = Color.yellow;
@@ -103,10 +106,10 @@ public class GameData : MonoBehaviour
 
     void AffectHealth() {
         // Hunger
-        if (!hunger_maxed) {
+        if (!hunger_maxed && !fed) {
             HungerLvl += 0.0005f;
         }
-        else {
+        else if (hunger_maxed) {
             SanityLvl += 0.001f;
         }
 

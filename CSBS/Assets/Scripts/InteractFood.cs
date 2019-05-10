@@ -7,10 +7,13 @@ public class InteractFood : MonoBehaviour
 {
     float amount = 0;
     bool enable = false;
+    bool beginCD = false;
+    public bool disabled = false;
     public Image circle;
+    public int hungry_cooldown = 0;
+
 
     void OnMouseEnter() {
-        Debug.Log("Food");
         enable = true;
     }
     
@@ -18,45 +21,63 @@ public class InteractFood : MonoBehaviour
         enable = false;
     }
 
+    Color orange = new Color(1, .47f, 0);
+
     void Update() {
-        if (enable && Input.GetMouseButton(0) && amount <= 1.0f) {
+        if (enable && Input.GetMouseButton(0) && amount <= 1.0f && !disabled) {
             amount += 0.005f;
             circle.fillAmount += 0.005f;
 
-            // Level 4 - cuisine
-            if (amount >= 0.9f)
-                Debug.Log("Eating cuisine");
+            // Level 5 - cuisine
+            if (amount == 1f) {
+                circle.color = Color.white;
+                hungry_cooldown = 500;
+            }
+            // Level 4 - feast
+            else if (amount >= 0.9f) {
+                circle.color = Color.red;
+                hungry_cooldown = 200;
+            }
             // Level 3 - meal
-            else if (amount > 0.6f)
-                Debug.Log("Eating meal");
+            else if (amount > 0.6f) {
+                circle.color = orange;
+                hungry_cooldown = 150;
+            }
             // Level 2 - junk
-            else if (amount > 0.3f)
-                Debug.Log("Eating junk");
+            else if (amount > 0.3f) {
+                circle.color = Color.yellow;
+                hungry_cooldown = 100;
+            }
             // Level 1 - snack
-            else
-                Debug.Log("Eating snack");
+            else {
+                circle.color = Color.white;
+                hungry_cooldown = 50;
+            }
+        }
+
+        // Hungry cooldown
+        if (GameData.fed) {
+            hungry_cooldown--;
+            disabled = true;
+        }
+
+        if (beginCD && hungry_cooldown < 0) {
+            hungry_cooldown = 0;
+            GameData.fed = false;
+            beginCD = false;
+            disabled = false;
         }
     }
     void OnMouseUp() {
-        if (amount >= 1.0f) amount = 1.0f; 
-        circle.fillAmount = 0;
-
-        // Level 4 - cuisine
-        if (amount >= 1.0f)
-            Debug.Log("Eating cuisine");
-        // Level 3 - meal
-        else if (amount > 0.6f)
-            Debug.Log("Eating meal");
-        // Level 2 - junk
-        else if (amount > 0.3f)
-            Debug.Log("Eating junk");
-        // Level 1 - snack
-        else
-            Debug.Log("Eating snack");
-
-        if (amount > GameData.HungerLvl)
+        GameData.fed = true;
+        beginCD = true;
+        if (amount >= 1.0f || amount / 2 > GameData.HungerLvl) {
             GameData.HungerLvl = 0;
-        else GameData.HungerLvl -= amount;
+        }
+        else {
+            GameData.HungerLvl -= amount / 2;
+        }
         amount = 0;
+        circle.fillAmount = 0;
     }
 }
