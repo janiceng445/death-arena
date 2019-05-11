@@ -754,6 +754,7 @@ MonoBehaviour:
   disabled: 0
   circle: {fileID: 1869337185}
   hungry_cooldown: 0
+  sanity_amount: 0.2
 --- !u!61 &265890177
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3545,7 +3546,7 @@ GameObject:
   - component: {fileID: 1741256580}
   - component: {fileID: 1741256579}
   m_Layer: 8
-  m_Name: BedGround
+  m_Name: SleepGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

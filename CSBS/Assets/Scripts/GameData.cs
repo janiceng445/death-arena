@@ -203,12 +203,19 @@ public class GameData : MonoBehaviour
             GameObject.Find("Food").GetComponent<BoxCollider2D>().enabled = false;
             GameObject.Find("FoodGround").GetComponent<Image>().enabled = false;
             GameObject.Find("FoodCircle").GetComponent<Image>().enabled = false;
+            GameObject.Find("SleepGround").GetComponent<Image>().enabled = false;
+            GameObject.Find("SleepGround").GetComponent<BoxCollider2D>().enabled = false;
+            GameObject.Find("Coffee").GetComponent<Image>().enabled = false;
+            GameObject.Find("Nap").GetComponent<Image>().enabled = false;
+            GameObject.Find("Bed").GetComponent<Image>().enabled = false;
         }
         else {
             GameObject.Find("Food").GetComponent<BoxCollider2D>().enabled = true;
             GameObject.Find("FoodGround").GetComponent<Image>().enabled = true;
             GameObject.Find("FoodCircle").GetComponent<Image>().enabled = true;
             GameObject.Find("FoodCircle").GetComponent<Image>().fillAmount = 0;
+            GameObject.Find("SleepGround").GetComponent<Image>().enabled = true;
+            GameObject.Find("SleepGround").GetComponent<BoxCollider2D>().enabled = true;
         }
     }
 

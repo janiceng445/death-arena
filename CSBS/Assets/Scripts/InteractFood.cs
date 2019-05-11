@@ -11,6 +11,7 @@ public class InteractFood : MonoBehaviour
     public bool disabled = false;
     public Image circle;
     public int hungry_cooldown = 0;
+    public float sanity_amount = 0.1f;
 
 
     void OnMouseOver() {
@@ -24,6 +25,7 @@ public class InteractFood : MonoBehaviour
     Color orange = new Color(1, .47f, 0);
 
     void Update() {
+        // Hungry level
         if (enable && Input.GetMouseButton(0) && amount <= 1.0f && !disabled) {
             amount += 0.005f;
             circle.fillAmount += 0.005f;
@@ -66,6 +68,22 @@ public class InteractFood : MonoBehaviour
             GameData.fed = false;
             beginCD = false;
             disabled = false;
+
+            // Sanity
+            if (GameData.SanityLvl <= sanity_amount) {
+                GameData.SanityLvl = 0;
+            }
+            else {
+                GameData.SanityLvl -= sanity_amount;
+            }
+        }
+
+        // Sanity check
+        if (GameData.SanityLvl <= 0 && GameData.HungerLvl < 0.5f) {
+            GameData.SanityLvl = 0;
+        }
+        else {
+            GameData.SanityLvl -= 0.0001f;
         }
     }
     void OnMouseUp() {
@@ -73,6 +91,7 @@ public class InteractFood : MonoBehaviour
     }
 
     void Calculate() {
+        // Hunger
         GameData.fed = true;
         beginCD = true;
         if (amount >= 1.0f || amount / 2 > GameData.HungerLvl) {
