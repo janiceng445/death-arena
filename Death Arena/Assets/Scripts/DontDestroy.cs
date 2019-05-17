@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class DontDestroy : MonoBehaviour
 {
+    private static bool created = false;
+
     void Awake() {
-        DontDestroyOnLoad(this.gameObject);
+        if (!created) {
+            DontDestroyOnLoad(this.gameObject);
+            created = true;
+        }
     }
 }

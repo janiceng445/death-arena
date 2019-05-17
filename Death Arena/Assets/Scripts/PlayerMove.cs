@@ -36,7 +36,7 @@ public class PlayerMove : MonoBehaviour
 
         // Check if pausing
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            WorldStats.paused = !WorldStats.paused;
+            GameSettings.paused = !GameSettings.paused;
         }
     }
 
@@ -61,9 +61,12 @@ public class PlayerMove : MonoBehaviour
 
     void FixedUpdate ()
     {
-        if (!WorldStats.paused) {
+        if (!GameSettings.paused) {
             // Move character
             controller.Move(horizontalMove * Time.fixedDeltaTime, verticalMove * Time.fixedDeltaTime); 
+        }
+        else {
+            controller.Move(0, 0); 
         }
     }
 

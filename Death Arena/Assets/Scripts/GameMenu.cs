@@ -9,7 +9,7 @@ public class GameMenu : MonoBehaviour
     public GameObject screen;
 
     void Update() {
-        if (WorldStats.paused)
+        if (GameSettings.paused)
             screen.SetActive(true);
         else
             screen.SetActive(false);

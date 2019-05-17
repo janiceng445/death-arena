@@ -9,7 +9,7 @@ public class SceneChange : MonoBehaviour
 
     public void LoadGame() {
         SceneManager.LoadScene("Arena");
-        WorldStats.paused = false;
+        GameSettings.paused = false;
     }
 
     public void LoadArmory() {
@@ -22,6 +22,7 @@ public class SceneChange : MonoBehaviour
 
     public void LoadSettings() {
         settings.SetActive(true);
+        GameSettings.FindVolume();
     }
 
     public void UnLoadSettings() {
