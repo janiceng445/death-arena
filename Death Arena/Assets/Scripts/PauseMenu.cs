@@ -36,6 +36,7 @@ public class PauseMenu : MonoBehaviour
     }
 
     public void returnTitle() {
+        SaveSystem.LoadData();
         SceneManager.LoadScene("MainMenu");
     }
 

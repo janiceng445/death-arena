@@ -295,7 +295,6 @@ GameObject:
   - component: {fileID: 91343121}
   - component: {fileID: 91343120}
   - component: {fileID: 91343119}
-  - component: {fileID: 91343122}
   m_Layer: 0
   m_Name: Play_btn
   m_TagString: Untagged
@@ -366,7 +365,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 91343122}
+      - m_Target: {fileID: 1710931947}
         m_MethodName: LoadGame
         m_Mode: 1
         m_Arguments:
@@ -416,19 +415,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 91343117}
   m_CullTransparentMesh: 0
---- !u!114 &91343122
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 91343117}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4dc42652b16e7b4d861842dc77c4775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  settings: {fileID: 1046959860}
 --- !u!1 &129291340
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,7 +532,6 @@ GameObject:
   - component: {fileID: 142338466}
   - component: {fileID: 142338465}
   - component: {fileID: 142338464}
-  - component: {fileID: 142338467}
   m_Layer: 0
   m_Name: Settings_btn
   m_TagString: Untagged
@@ -617,7 +602,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1127327134}
+      - m_Target: {fileID: 1710931947}
         m_MethodName: LoadSettings
         m_Mode: 1
         m_Arguments:
@@ -667,19 +652,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 142338462}
   m_CullTransparentMesh: 0
---- !u!114 &142338467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 142338462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4dc42652b16e7b4d861842dc77c4775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  settings: {fileID: 1046959860}
 --- !u!1 &155149053
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,7 +1214,6 @@ GameObject:
   - component: {fileID: 554387949}
   - component: {fileID: 554387948}
   - component: {fileID: 554387947}
-  - component: {fileID: 554387950}
   m_Layer: 0
   m_Name: Quit_btn
   m_TagString: Untagged
@@ -1313,7 +1284,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1127327134}
+      - m_Target: {fileID: 1710931947}
         m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
@@ -1363,19 +1334,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 554387945}
   m_CullTransparentMesh: 0
---- !u!114 &554387950
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 554387945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4dc42652b16e7b4d861842dc77c4775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  settings: {fileID: 1046959860}
 --- !u!1 &563260043
 GameObject:
   m_ObjectHideFlags: 0
@@ -1388,7 +1346,6 @@ GameObject:
   - component: {fileID: 563260047}
   - component: {fileID: 563260046}
   - component: {fileID: 563260045}
-  - component: {fileID: 563260048}
   m_Layer: 0
   m_Name: Armory_btn
   m_TagString: Untagged
@@ -1459,7 +1416,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1127327134}
+      - m_Target: {fileID: 1710931947}
         m_MethodName: LoadArmory
         m_Mode: 1
         m_Arguments:
@@ -1509,19 +1466,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 563260043}
   m_CullTransparentMesh: 0
---- !u!114 &563260048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 563260043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4dc42652b16e7b4d861842dc77c4775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  settings: {fileID: 1046959860}
 --- !u!1 &578644829
 GameObject:
   m_ObjectHideFlags: 0
@@ -2052,7 +1996,7 @@ GameObject:
   - component: {fileID: 879875565}
   - component: {fileID: 879875564}
   m_Layer: 0
-  m_Name: GameSettings
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2680,7 +2624,6 @@ GameObject:
   - component: {fileID: 1127327133}
   - component: {fileID: 1127327132}
   - component: {fileID: 1127327131}
-  - component: {fileID: 1127327134}
   m_Layer: 0
   m_Name: Skills_btn
   m_TagString: Untagged
@@ -2751,7 +2694,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1127327134}
+      - m_Target: {fileID: 1710931947}
         m_MethodName: LoadSkills
         m_Mode: 1
         m_Arguments:
@@ -2801,19 +2744,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127327129}
   m_CullTransparentMesh: 0
---- !u!114 &1127327134
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1127327129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4dc42652b16e7b4d861842dc77c4775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  settings: {fileID: 1046959860}
 --- !u!1 &1210751849
 GameObject:
   m_ObjectHideFlags: 0
@@ -3064,6 +2994,7 @@ GameObject:
   - component: {fileID: 1710931944}
   - component: {fileID: 1710931943}
   - component: {fileID: 1710931946}
+  - component: {fileID: 1710931947}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -3173,6 +3104,19 @@ MonoBehaviour:
   defense: {fileID: 1874550543}
   level: {fileID: 1332417096}
   gold: {fileID: 1210751851}
+--- !u!114 &1710931947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710931941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4dc42652b16e7b4d861842dc77c4775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings: {fileID: 1046959860}
 --- !u!1 &1874550541
 GameObject:
   m_ObjectHideFlags: 0
