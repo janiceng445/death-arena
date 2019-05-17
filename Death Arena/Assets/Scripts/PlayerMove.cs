@@ -33,6 +33,11 @@ public class PlayerMove : MonoBehaviour
         // Set move values
         horizontalMove = Input.GetAxisRaw("Horizontal") * speed; 
         verticalMove = Input.GetAxisRaw("Vertical") * speed; 
+
+        // Check if pausing
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            WorldStats.paused = !WorldStats.paused;
+        }
     }
 
     void CheckConditions() {
@@ -56,8 +61,10 @@ public class PlayerMove : MonoBehaviour
 
     void FixedUpdate ()
     {
-        // Move character
-        controller.Move(horizontalMove * Time.fixedDeltaTime, verticalMove * Time.fixedDeltaTime); 
+        if (!WorldStats.paused) {
+            // Move character
+            controller.Move(horizontalMove * Time.fixedDeltaTime, verticalMove * Time.fixedDeltaTime); 
+        }
     }
 
 }

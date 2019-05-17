@@ -24,6 +24,6 @@ public class MenuStats : MonoBehaviour
 
         // Update world stats
         level.text = "Level: " + WorldStats.level;
-        gold.text = "Gold: " + WorldStats.gold;
+        gold.text = "Gold: " + WorldStats.gold.ToString("n0");
     }
 }

@@ -9,6 +9,7 @@ public class SceneChange : MonoBehaviour
 
     public void LoadGame() {
         SceneManager.LoadScene("Arena");
+        WorldStats.paused = false;
     }
 
     public void LoadArmory() {
