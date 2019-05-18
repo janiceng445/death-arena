@@ -8,6 +8,7 @@ public class SceneChange : MonoBehaviour
     public GameObject settings;
 
     public void LoadGame() {
+        SaveSystem.SaveData();
         SceneManager.LoadScene("Arena");
         GameSettings.paused = false;
     }
@@ -30,6 +31,7 @@ public class SceneChange : MonoBehaviour
     }
 
     public void QuitGame() {
+        SaveSystem.SaveData();
         Application.Quit();
     }
 

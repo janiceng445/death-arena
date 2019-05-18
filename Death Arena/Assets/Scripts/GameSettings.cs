@@ -29,6 +29,7 @@ public class GameSettings : MonoBehaviour
     }
 
     void Start() {
+        // The very start of the entire game
         paused = true;
     }
 

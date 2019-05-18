@@ -13,12 +13,24 @@ public class PlayerStats : MonoBehaviour
     public static int energy;
 
     void Start() {
+        // The default
         w_speed = 20f;
         r_speed = 30f;
         atk = 10;
         def = 5;
         hp = 100;
         energy = 100;
+
+        // Load actual player data file
+        PlayerData pd = SaveSystem.LoadPlayerData();
+        if (pd != null) {
+            w_speed = pd.w_speed;
+            r_speed = pd.r_speed;
+            atk = pd.atk;
+            def = pd.def;
+            hp = pd.hp;
+            energy = pd.energy;
+        }
     }
     
 }

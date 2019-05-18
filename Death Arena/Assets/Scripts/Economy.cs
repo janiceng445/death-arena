@@ -14,18 +14,4 @@ public class Economy : MonoBehaviour
     void Update() {
         InGameText.text = WorldStats.gold.ToString("n0");
     }
-
-    public void AddMoney(int amount) {
-        WorldStats.gold += amount;
-    }
-
-    public void RemoveMoney(int amount) {
-        if (WorldStats.gold - amount < 0) {
-            WorldStats.gold = 0;
-        }
-        else {
-            WorldStats.gold -= amount;
-        }
-    }
-
 }
