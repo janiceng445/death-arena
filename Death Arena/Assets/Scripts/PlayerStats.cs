@@ -14,8 +14,8 @@ public class PlayerStats : MonoBehaviour
 
     void Start() {
         // The default
-        w_speed = 20f;
-        r_speed = 30f;
+        w_speed = 35f;
+        r_speed = 45f;
         atk = 10;
         def = 5;
         hp = 100;

@@ -4,44 +4,72 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Range(0, .3f)] [SerializeField] private float smoothing = .05f;
-    private Vector3 ref_velocity;
-    private Rigidbody2D body;
-    private SpriteRenderer sprite;
-    private bool FacingRight = true;
-    public int frames = 300;
+    // Statistics
+    [SerializeField] public float WalkSpeed = 35f;
+    [SerializeField] public float RunSpeed = 45f;
+
+    // Conditions
+    private bool isRunning = false;
+    private bool isAttacking = false;
+
+    // Variables
+    private PlayerManager controller;
+    float horizontalMove, verticalMove = 0f;
 
     void Start() {
-        body = gameObject.GetComponent<Rigidbody2D>();
-        sprite = gameObject.GetComponent<SpriteRenderer>();
+        controller = gameObject.GetComponent<PlayerManager>();
+        WalkSpeed = PlayerStats.w_speed;
+        RunSpeed = PlayerStats.r_speed;
     }
 
-    public void Move(float x, float y) {
-        // Fix sorting order
-        sprite.sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
+    void Update() {
+        // Check conditions
+        CheckConditions();
 
-        // Assign velocity
-        Vector3 newVelocity = new Vector2(x * 10f, y *10f);
-
-        // Smooth out velocity and apply to character
-        body.velocity = Vector3.SmoothDamp(body.velocity, newVelocity, ref ref_velocity, smoothing);
-
-        // Fix face direction
-        if (x < 0 && FacingRight) {
-            Flip();
+        // Setting speed
+        float speed = 0f;
+        if (!isAttacking) {
+            speed = !isRunning ? WalkSpeed : RunSpeed;
         }
-        else if (x > 0 && !FacingRight) {
-            Flip();
+
+        // Set move values
+        horizontalMove = Input.GetAxisRaw("Horizontal") * speed; 
+        verticalMove = Input.GetAxisRaw("Vertical") * speed; 
+
+        // Check if pausing
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            GameSettings.paused = !GameSettings.paused;
         }
     }
 
-    void Flip() {
-        // Switch the way the player is labelled as facing.
-		FacingRight = !FacingRight;
+    void CheckConditions() {
+        // Running
+        if (Input.GetKeyDown(KeyCode.LeftShift)) {
+            isRunning = true;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift)) {
+            isRunning = false;
+        }
 
-		// Multiply the player's x local scale by -1.
-		Vector3 theScale = transform.localScale;
-		theScale.x *= -1;
-		transform.localScale = theScale;
+        // Attacking
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            isAttacking = true;
+        }
+        if (Input.GetKeyUp(KeyCode.Space)) {
+            isAttacking = false;
+        }
+
     }
+
+    void FixedUpdate ()
+    {
+        if (!GameSettings.paused) {
+            // Move character
+            controller.Move(horizontalMove * Time.fixedDeltaTime, verticalMove * Time.fixedDeltaTime); 
+        }
+        else {
+            controller.Move(0, 0); 
+        }
+    }
+
 }
