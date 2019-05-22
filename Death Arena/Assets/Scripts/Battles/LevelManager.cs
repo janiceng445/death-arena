@@ -7,7 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class LevelManager : MonoBehaviour
 {
     const string fileExtension = ".leb";
-    LevelData currLevelData;
+    public static LevelData currLevelData;
     int currLevel;
 
     void Start() {
