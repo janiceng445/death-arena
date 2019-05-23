@@ -11,20 +11,26 @@ public class PlayerController : MonoBehaviour
     // Conditions
     private bool isRunning = false;
     private bool isAttacking = false;
+    private bool isMoving = false;
 
     // Variables
     private PlayerManager controller;
     float horizontalMove, verticalMove = 0f;
+    private Animator animator;
+    public BoxCollider2D weaponCollider;
 
     void Start() {
         controller = gameObject.GetComponent<PlayerManager>();
         WalkSpeed = PlayerStats.w_speed;
         RunSpeed = PlayerStats.r_speed;
+        animator = gameObject.GetComponent<Animator>();
     }
 
     void Update() {
         // Check conditions
         CheckConditions();
+        // Check animations
+        UpdateAnimations();
 
         // Setting speed
         float speed = 0f;
@@ -35,6 +41,7 @@ public class PlayerController : MonoBehaviour
         // Set move values
         horizontalMove = Input.GetAxisRaw("Horizontal") * speed; 
         verticalMove = Input.GetAxisRaw("Vertical") * speed; 
+        isMoving = (Mathf.Abs(horizontalMove) > 0 || Mathf.Abs(verticalMove) > 0) ? true : false;
 
         // Check if pausing
         if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -52,13 +59,14 @@ public class PlayerController : MonoBehaviour
         }
 
         // Attacking
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (Input.GetKeyDown(KeyCode.Space) && !isAttacking) {
             isAttacking = true;
         }
-        if (Input.GetKeyUp(KeyCode.Space)) {
-            isAttacking = false;
-        }
+    }
 
+    void UpdateAnimations() {
+        animator.SetBool("isAttacking", isAttacking);
+        animator.SetBool("isMoving", isMoving);
     }
 
     void FixedUpdate ()
@@ -70,6 +78,16 @@ public class PlayerController : MonoBehaviour
         else {
             controller.Move(0, 0); 
         }
+    }
+
+
+    // Animation functions only
+    void EnableAttackCollision() {
+        weaponCollider.enabled = true;
+    }
+    void FinishAttacking() {
+        isAttacking = false;
+        weaponCollider.enabled = false;
     }
 
 }
