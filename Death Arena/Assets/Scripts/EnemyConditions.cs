@@ -8,7 +8,7 @@ public class EnemyConditions : MonoBehaviour
     public int atkPower;
 
     void Start() {
-        health = 1;
+        health = 100;
         atkPower = 1;
     }
 

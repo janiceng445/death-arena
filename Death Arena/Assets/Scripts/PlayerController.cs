@@ -24,6 +24,14 @@ public class PlayerController : MonoBehaviour
         WalkSpeed = PlayerStats.w_speed;
         RunSpeed = PlayerStats.r_speed;
         animator = gameObject.GetComponent<Animator>();
+
+        // TEMP
+        if (WalkSpeed == 0) {
+            WalkSpeed = 35f;
+        }
+        if (RunSpeed == 0) {
+            RunSpeed = 45f;
+        }
     }
 
     void Update() {

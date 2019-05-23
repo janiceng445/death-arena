@@ -18,8 +18,10 @@ public class SpawnEnemy : MonoBehaviour
     bool stopSpawn;
 
     void Start() {
-        numEnemiesWave = LevelManager.currLevelData.numPerWave;
-        Debug.Log(LevelManager.currLevelData.level);
+        //numEnemiesWave = LevelManager.currLevelData.numPerWave;
+        
+        // TEMP
+        numEnemiesWave = 5;
     }
 
     void Update()

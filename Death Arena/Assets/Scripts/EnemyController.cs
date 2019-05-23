@@ -55,6 +55,11 @@ public class EnemyController : MonoBehaviour
         target.GetComponent<PlayerConditions>().health -= amount;
     }
 
+    public void TakeDamage(int amount) {
+        Debug.Log("Receive dmg");
+        gameObject.GetComponent<EnemyConditions>().health -= amount;
+    }
+
     public void BeginAttackAnimation() {
         isAttacking = true;
     }

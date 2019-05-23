@@ -7,6 +7,8 @@ TagManager:
   - GameMoneyText
   - Volume
   - Menu
+  - EnemyHitbox
+  - Enemy
   layers:
   - Default
   - TransparentFX

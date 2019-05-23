@@ -190,6 +190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 3
   DistanceAway: 3
+  isAttacking: 0
 --- !u!114 &8935426198519154030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,7 +233,7 @@ GameObject:
   - component: {fileID: 6425932193926527530}
   m_Layer: 12
   m_Name: Hitbox
-  m_TagString: Untagged
+  m_TagString: EnemyHitbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
