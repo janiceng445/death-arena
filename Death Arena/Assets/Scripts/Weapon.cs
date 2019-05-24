@@ -8,6 +8,9 @@ public class Weapon : MonoBehaviour
     public int power;
 
     void Start() {
+        power = WeaponStats.weapon_power;
+
+        // TEMP
         power = 10;
     }
 
