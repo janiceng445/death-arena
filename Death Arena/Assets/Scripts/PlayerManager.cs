@@ -13,7 +13,7 @@ public class PlayerManager : MonoBehaviour
 
     void Start() {
         body = gameObject.GetComponent<Rigidbody2D>();
-        sprite = gameObject.GetComponent<SpriteRenderer>();
+        sprite = gameObject.GetComponentInChildren<SpriteRenderer>();
     }
 
     public void Move(float x, float y) {

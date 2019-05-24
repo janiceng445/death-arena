@@ -23,7 +23,8 @@ public class PlayerController : MonoBehaviour
         controller = gameObject.GetComponent<PlayerManager>();
         WalkSpeed = PlayerStats.w_speed;
         RunSpeed = PlayerStats.r_speed;
-        animator = gameObject.GetComponent<Animator>();
+        animator = gameObject.GetComponentInChildren<Animator>();
+        //animator = gameObject.GetComponent<Animator>();
 
         // TEMP
         if (WalkSpeed == 0) {
@@ -90,10 +91,10 @@ public class PlayerController : MonoBehaviour
 
 
     // Animation functions only
-    void EnableAttackCollision() {
+    public void EnableAttackCollision() {
         weaponCollider.enabled = true;
     }
-    void FinishAttacking() {
+    public void FinishAttacking() {
         isAttacking = false;
         weaponCollider.enabled = false;
     }
