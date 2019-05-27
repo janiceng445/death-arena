@@ -8,7 +8,7 @@ public class PlayerManager : MonoBehaviour
     private Vector3 ref_velocity;
     private Rigidbody2D body;
     private SpriteRenderer sprite;
-    private bool FacingRight = true;
+    public bool FacingRight;
     public int frames = 300;
 
     void Start() {

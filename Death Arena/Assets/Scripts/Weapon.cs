@@ -11,7 +11,7 @@ public class Weapon : MonoBehaviour
         power = WeaponStats.weapon_power;
 
         // TEMP
-        power = 10;
+        power = 50;
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
