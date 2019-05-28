@@ -9,6 +9,7 @@ TagManager:
   - Menu
   - EnemyHitbox
   - Enemy
+  - EnemyWeapon
   layers:
   - Default
   - TransparentFX

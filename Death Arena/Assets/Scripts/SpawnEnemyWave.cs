@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnEnemy : MonoBehaviour
+public class SpawnEnemyWave : MonoBehaviour
 {
     public GameObject enemy;
     public Transform west;
