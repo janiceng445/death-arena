@@ -5,6 +5,9 @@ using UnityEngine;
 public class Ogre : Boss
 {
     
+    public GameObject aliveSprite;
+    public GameObject deathSprite;
+
     protected override void Start() {
         base.Start();
 
@@ -17,15 +20,24 @@ public class Ogre : Boss
         weaponCollider = gameObject.transform.Find("bone_1/bone_2/bone_3/weapon").gameObject.GetComponent<BoxCollider2D>();
 
         ResetBreathTimer();
+        CompleteStats();
     }
 
     protected override void Update() {
         base.Update();
         base.Move();
-        base.Die();
+        if (health <= 0 && !dieOnce) {
+            base.Die();
+            Die();
+        }
 
         if (inRange && !isAttacking && !isTakingBreak) {
             isAttacking = true;
         }
+    }
+
+    protected override void Die() {
+        aliveSprite.SetActive(false);
+        deathSprite.SetActive(true);
     }
 }

@@ -1,22 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Boss : MonoBehaviour
 {
     protected bool FacingRight;
     protected float Speed;
     public int health;
+    public int maxHealth;
+    protected int moneyAmount;
     protected int power;
-    protected float DistanceAway = 3f;
+    protected float DistanceAway = 1f;
     protected int breathDuration;
     protected int breathTimer;
 
     protected SpriteRenderer sprite;
-    protected BoxCollider2D weaponCollider;
+    public BoxCollider2D weaponCollider;
     protected Animator animator;
     protected GameObject target;
     protected Transform targetLocation;
+    public Image bar;
 
     // Base Booleans
     public bool inRange;
@@ -24,12 +28,21 @@ public class Boss : MonoBehaviour
     protected bool isAttacking;
     protected bool isTakingBreak;
 
+    // Checks    
+    protected bool dieOnce = false;
+
     protected virtual void Start() {
         // Initialize some variables
-        sprite = gameObject.GetComponent<SpriteRenderer>();
-        animator = gameObject.GetComponent<Animator>();
+        sprite = gameObject.GetComponentInChildren<SpriteRenderer>();
+        animator = gameObject.GetComponentInChildren<Animator>();
         target = GameObject.FindGameObjectWithTag("Player");
         targetLocation = target.GetComponent<Transform>();
+        bar = GameObject.Find("BossHealthBar").GetComponent<Image>();
+        //weaponCollider = gameObject.transform.Find("OgreAlive/bone_1/bone_2/bone_3/weapon").gameObject.GetComponent<BoxCollider2D>();
+    }
+
+    protected virtual void CompleteStats() {
+        maxHealth = health;
     }
 
     protected virtual void ResetBreathTimer() {
@@ -79,17 +92,27 @@ public class Boss : MonoBehaviour
     }
 
     public virtual void Attack() {
-        target.GetComponent<PlayerConditions>().health -= power;
+        if (target.GetComponent<PlayerConditions>().health - power <= 0) {
+            target.GetComponent<PlayerConditions>().health = 0;
+        }
+        else {
+            target.GetComponent<PlayerConditions>().health -= power;
+        }
     }
 
     public virtual void TakeDamage(int amount) {
-        health -= amount;
+        if (health - amount <= 0) {
+            health = 0;
+        }
+        else {
+            health -= amount;
+        }
+        bar.fillAmount = (float) health / (float) maxHealth;
     }
 
     protected virtual void Die() {
-        if (health <= 0) {
-            Debug.Log("boss dies");
-        }
+        WorldStats.gold += 500;
+        dieOnce = true;
     }
 
     protected virtual void ActivateWeaponCollision() {
