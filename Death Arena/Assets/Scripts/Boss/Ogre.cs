@@ -28,8 +28,4 @@ public class Ogre : Boss
             isAttacking = true;
         }
     }
-
-    protected override void Attack(int amount) {
-
-    }
 }

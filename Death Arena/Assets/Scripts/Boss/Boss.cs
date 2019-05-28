@@ -78,17 +78,17 @@ public class Boss : MonoBehaviour
         }
     }
 
-    protected virtual void Attack(int amount) {
-
+    public virtual void Attack() {
+        target.GetComponent<PlayerConditions>().health -= power;
     }
 
-    protected virtual void TakeDamage(int amount) {
+    public virtual void TakeDamage(int amount) {
         health -= amount;
     }
 
     protected virtual void Die() {
         if (health <= 0) {
-            DestroyThis();
+            Debug.Log("boss dies");
         }
     }
 

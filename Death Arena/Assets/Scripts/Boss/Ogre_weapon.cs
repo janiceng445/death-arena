@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Ogre_weapon : MonoBehaviour
 {
+    public GameObject parent;
+
     void OnTriggerEnter2D(Collider2D collider) {
         if (collider.tag == "Player") {
-            Debug.Log("Hurt player");
+            parent.GetComponent<Boss>().Attack();
         }
     }
 }

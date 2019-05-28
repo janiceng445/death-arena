@@ -16,7 +16,7 @@ public class Weapon : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider) {
         if (collider.tag == "EnemyHitbox") {
-            collider.gameObject.transform.parent.GetComponent<EnemyController>().TakeDamage(power);
+            collider.transform.parent.gameObject.GetComponent<Boss>().TakeDamage(power);
         }
     }
 }
