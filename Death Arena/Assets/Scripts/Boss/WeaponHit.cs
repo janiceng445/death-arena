@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ogre_weapon : MonoBehaviour
+public class WeaponHit : MonoBehaviour
 {
     public GameObject parent;
 

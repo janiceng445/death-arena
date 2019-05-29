@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Detection : MonoBehaviour
+public class Mino_Detect_slam : MonoBehaviour
 {
     void OnTriggerEnter2D(Collider2D collider) {
         if (collider.tag == "Player") {

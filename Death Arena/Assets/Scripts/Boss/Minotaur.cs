@@ -15,10 +15,13 @@ public class Minotaur : Boss
     private bool rampageBool; 
 
     // Enable colliders for respectful abilities
-    public Collider2D hammerFistRadius; 
+    public BoxCollider2D hammerFistRadius; 
 
     // Collider disabling after time
     private float hammerZone; 
+
+    // Custom conditions
+    private bool slamRange;
 
     protected override void Start() {
         base.Start();
@@ -29,11 +32,8 @@ public class Minotaur : Boss
         Speed = 3f;
         breathDuration = 50;
 
-        weaponCollider = gameObject.transform.Find("bone_1/bone_2/bone_3/weapon").gameObject.GetComponent<BoxCollider2D>();
-
         ResetBreathTimer();
 
-        hammerFistRadius = GetComponentInChildren<CircleCollider2D>(); 
         hammerFistRadius.enabled = false; 
     }
 
