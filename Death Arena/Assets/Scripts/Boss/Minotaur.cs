@@ -16,12 +16,15 @@ public class Minotaur : Boss
 
     // Enable colliders for respectful abilities
     public BoxCollider2D hammerFistRadius; 
+    public BoxCollider2D slamCollider;
 
     // Collider disabling after time
     private float hammerZone; 
 
     // Custom conditions
-    private bool slamRange;
+    public bool slamRange;
+    private bool isJumpAttacking;
+    private bool canMove;
 
     protected override void Start() {
         base.Start();
@@ -33,17 +36,41 @@ public class Minotaur : Boss
         breathDuration = 50;
 
         ResetBreathTimer();
+        CompleteStats();
 
         hammerFistRadius.enabled = false; 
     }
 
     protected override void Update() {
-        base.Update();
-        base.Move();
-        base.Die();
+        // Check death
+        if (health <= 0 && !dieOnce) {
+            base.Die();
+        }
 
-        if (inRange && !isAttacking && !isTakingBreak) {
+        // Move mechanic
+        Move();
+
+        // Cooldown between attacks
+        if (isTakingBreak) {
+            isAttacking = false;
+            isJumpAttacking = false;
+            breathTimer--;
+            if (breathTimer <= 0) {
+                isTakingBreak = false;
+                ResetBreathTimer();
+            }
+        }
+
+        //*************************************************//Abilities//*************************************************//
+        //***************************************************************************************************************//
+        
+        // Punch attack
+        if (inRange && !isAttacking && !isTakingBreak && !slamRange) {
             isAttacking = true;
+        }
+        // Body slam attack
+        else if (slamRange && !isJumpAttacking && !isTakingBreak && !inRange) {
+            isJumpAttacking = true;
         }
 
         // If performing any ability, then boss is in the middle of performing an ability
@@ -57,20 +84,29 @@ public class Minotaur : Boss
             ability = 0;
             hammerZone = 0;
         }
-        
+
+        // Stop moving if attacking
+        if (isAttacking || isJumpAttacking) {
+            canMove = false;
+            isMoving = false;
+        }
+        else {
+            canMove = true;
+        }
+        //***************************************************************************************************************//
+        //***************************************************************************************************************//
+
+
+        //*************************************************//Calculations//*************************************************//
+        //******************************************************************************************************************//
         // Random Number / Skill Generator every _ seconds and must not be in the middle of performing an ability
         chooseTimer ++;
         if (chooseTimer >= 500 && !midstAbility)
         {
-            ability = 1;//Random.Range (1,4); 
+            //ability = 1;//Random.Range (1,4); 
             chooseTimer = 0; 
             Debug.Log (ability); 
         }
-            
-        // Call Animations 
-        animator.SetBool("isHammerFist", hammerFistBool); 
-        animator.SetBool("isBoulderToss", boulderTossBool); 
-        animator.SetBool("isRampage", rampageBool); 
 
         // Disable Collider Zones
         if (hammerFistRadius.enabled)
@@ -100,6 +136,48 @@ public class Minotaur : Boss
         {
             rampageBool = true; 
         }
+
+        //******************************************************************************************************************//
+        //******************************************************************************************************************//
+        
+            
+        //*************************************************//Animations//*************************************************//
+        //****************************************************************************************************************//
+        animator.SetBool("isMoving", isMoving);
+        animator.SetBool("isAttacking", isAttacking);
+        animator.SetBool("isTakingBreak", isTakingBreak);
+        animator.SetBool("isJumpAttacking", isJumpAttacking); 
+        animator.SetBool("isHammerFist", hammerFistBool); 
+        animator.SetBool("isBoulderToss", boulderTossBool); 
+        animator.SetBool("isRampage", rampageBool); 
+        //****************************************************************************************************************//
+        //****************************************************************************************************************//
+    }
+
+    protected override void Move() {
+        if (!GameSettings.paused) {
+            // Fix sorting order
+            sprite.sortingOrder = Mathf.RoundToInt(transform.parent.transform.position.y * 100f) * -1;
+
+            if (canMove) {
+                isMoving = true;
+                // Move
+                if (Vector2.Distance(myLocation.position, targetLocation.position) > DistanceAway) {
+                    transform.parent.transform.position = Vector2.MoveTowards(transform.parent.transform.position, targetLocation.position, Speed * Time.deltaTime);
+                }
+                
+                // Flip
+                if (transform.parent.transform.position.x < targetLocation.position.x && !FacingRight) {
+                    base.Flip();
+                }
+                else if (transform.parent.transform.position.x > targetLocation.position.x && FacingRight) {
+                    base.Flip();
+                }
+            }
+            else {
+                isMoving = false;
+            }
+        }
     }
 
     void hammerFist ()
@@ -119,5 +197,14 @@ public class Minotaur : Boss
     {
         rampageBool = false; 
         Debug.Log ("rampage"); 
+    }
+
+    public void ActivateSlamCollision() {
+        slamCollider.enabled = true;
+    }
+
+    public void DeactivateSlamCollision() {
+        slamCollider.enabled = false;
+        isTakingBreak = true;
     }
 }

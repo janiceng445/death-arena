@@ -11,7 +11,7 @@ public class Boss : MonoBehaviour
     public int maxHealth;
     protected int moneyAmount;
     protected int power;
-    protected float DistanceAway = 0.5f;
+    protected float DistanceAway = 1f;
     protected int breathDuration;
     protected int breathTimer;
 
@@ -28,6 +28,7 @@ public class Boss : MonoBehaviour
     protected bool isMoving;
     protected bool isAttacking;
     protected bool isTakingBreak;
+    protected bool isDead;
 
     // Checks    
     protected bool dieOnce = false;
@@ -114,8 +115,11 @@ public class Boss : MonoBehaviour
     }
 
     protected virtual void Die() {
+        isDead = true;
         WorldStats.gold += 500;
         dieOnce = true;
+        animator.Play("Death");
+        this.enabled = false;
     }
 
     protected virtual void ActivateWeaponCollision() {
@@ -131,7 +135,7 @@ public class Boss : MonoBehaviour
         Destroy(gameObject.transform.parent.gameObject);    
     }
 
-    void Flip() {
+    protected void Flip() {
         FacingRight = !FacingRight;
         Vector3 theScale = transform.parent.transform.localScale;
 		theScale.x *= -1;
