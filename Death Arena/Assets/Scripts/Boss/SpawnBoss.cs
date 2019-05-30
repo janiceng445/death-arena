@@ -8,11 +8,12 @@ public class SpawnBoss : MonoBehaviour
     private bool spawned = false;
 
     void Start() {
+        Debug.Log(WorldStats.level);
     }
 
     void Update() {        
         if (bossReady && !spawned) {
-            Instantiate(Resources.Load<GameObject>("Prefabs/Minotaur"), new Vector3(0,0,0), Quaternion.identity);
+            Instantiate(Resources.Load<GameObject>("Prefabs/Ogre"), new Vector3(0,0,0), Quaternion.identity);
             spawned = true;
         }
     }
