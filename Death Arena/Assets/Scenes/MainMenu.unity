@@ -2148,7 +2148,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 879875566}
+      - m_Target: {fileID: 0}
         m_MethodName: NextLevel
         m_Mode: 1
         m_Arguments:
@@ -2631,7 +2631,6 @@ GameObject:
   m_Component:
   - component: {fileID: 879875565}
   - component: {fileID: 879875564}
-  - component: {fileID: 879875566}
   - component: {fileID: 879875569}
   - component: {fileID: 879875568}
   - component: {fileID: 879875571}
@@ -2670,18 +2669,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &879875566
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 879875563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04fcfc4a757b5a94db3ce5caff96e922, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &879875567
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -27,7 +27,6 @@ public class Ogre : Boss
         base.Update();
         base.Move();
         if (health <= 0 && !dieOnce) {
-            base.Die();
             Die();
         }
 
@@ -37,6 +36,12 @@ public class Ogre : Boss
     }
 
     protected override void Die() {
+        isDead = true;
+        WorldStats.gold += 500;
+        dieOnce = true;
+        this.enabled = false;
+        BossManager.bossAlive = false;
+        BossManager.bossAlive = false;
         aliveSprite.SetActive(false);
         deathSprite.SetActive(true);
     }

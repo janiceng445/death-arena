@@ -12,13 +12,13 @@ public class LevelManager : MonoBehaviour
 
     void Start() {
         // Dummy data
-        //currLevelData = new LevelData();
+        currLevelData = new LevelData();
     }
 
     public void Load() {
         // Assign
         currLevel = WorldStats.level;
-        //currLevelData = LoadLevel();
+        currLevelData = LoadLevel();
     }
 
     public LevelData LoadLevel() {

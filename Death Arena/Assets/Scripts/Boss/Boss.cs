@@ -120,6 +120,7 @@ public class Boss : MonoBehaviour
         dieOnce = true;
         animator.Play("Death");
         this.enabled = false;
+        BossManager.bossAlive = false;
     }
 
     protected virtual void ActivateWeaponCollision() {
