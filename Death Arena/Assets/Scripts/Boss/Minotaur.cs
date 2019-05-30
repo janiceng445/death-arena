@@ -34,6 +34,7 @@ public class Minotaur : Boss
         health = 500;
         Speed = 3f;
         breathDuration = 50;
+        moneyAmount = 1000;
 
         ResetBreathTimer();
         CompleteStats();

@@ -16,6 +16,7 @@ public class Ogre : Boss
         health = 500;
         Speed = 3f;
         breathDuration = 50;
+        moneyAmount = 500;
 
         weaponCollider = gameObject.transform.Find("bone_1/bone_2/bone_3/weapon").gameObject.GetComponent<BoxCollider2D>();
 
@@ -37,7 +38,7 @@ public class Ogre : Boss
 
     protected override void Die() {
         isDead = true;
-        WorldStats.gold += 500;
+        WorldStats.gold += moneyAmount;
         dieOnce = true;
         this.enabled = false;
         BossManager.bossAlive = false;

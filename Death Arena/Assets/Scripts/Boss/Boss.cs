@@ -116,7 +116,7 @@ public class Boss : MonoBehaviour
 
     protected virtual void Die() {
         isDead = true;
-        WorldStats.gold += 500;
+        WorldStats.gold += moneyAmount;
         dieOnce = true;
         animator.Play("Death");
         this.enabled = false;
