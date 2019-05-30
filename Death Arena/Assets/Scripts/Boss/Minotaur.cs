@@ -14,11 +14,10 @@ public class Minotaur : Boss
     private bool boulderTossBool;
     private bool rampageBool; 
 
-    // Enable colliders for respectful abilities
-    public Collider2D hammerFistRadius; 
-
-    // Collider disabling after time
-    private float hammerZone; 
+    // HammerFist ability
+    private GameObject zoneObject;
+    private CircleCollider2D hammerZone;  
+    private float hammerAbilityTimer; 
 
     protected override void Start() {
         base.Start();
@@ -33,8 +32,12 @@ public class Minotaur : Boss
 
         ResetBreathTimer();
 
-        hammerFistRadius = GetComponentInChildren<CircleCollider2D>(); 
-        hammerFistRadius.enabled = false; 
+        // Create gameobject and define hammerZone to be this gameobject with the addition of the collider
+        zoneObject = new GameObject ("hammerFistCollider");
+        hammerZone = zoneObject.AddComponent<CircleCollider2D>();
+        hammerZone.enabled = false; 
+        hammerZone.radius = 5; 
+        hammerZone.isTrigger = true; 
     }
 
     protected override void Update() {
@@ -51,20 +54,21 @@ public class Minotaur : Boss
         {
             midstAbility = true; 
         }
-        else
+        else if (!hammerFistBool && !boulderTossBool && !rampageBool)
         {
             midstAbility = false; 
             ability = 0;
-            hammerZone = 0;
         }
         
         // Random Number / Skill Generator every _ seconds and must not be in the middle of performing an ability
-        chooseTimer ++;
-        if (chooseTimer >= 500 && !midstAbility)
+        if (!midstAbility)
         {
-            ability = 1;//Random.Range (1,4); 
-            chooseTimer = 0; 
-            Debug.Log (ability); 
+            chooseTimer ++;
+            if (chooseTimer >= 250)
+            {
+                ability = 1;//Random.Range (1,4); 
+                chooseTimer = 0; 
+            }
         }
             
         // Call Animations 
@@ -72,16 +76,17 @@ public class Minotaur : Boss
         animator.SetBool("isBoulderToss", boulderTossBool); 
         animator.SetBool("isRampage", rampageBool); 
 
-        // Disable Collider Zones
-        if (hammerFistRadius.enabled)
+        // If hammerFist radius is enabled, start a timer for when it should vanish and thus end the hammerFist ability
+        if (hammerZone.enabled)
         {
-            hammerZone ++;
-            Debug.Log(hammerZone);
-            if (hammerZone >= 50)
+            hammerAbilityTimer ++; 
+            Debug.Log (hammerAbilityTimer); 
+            if (hammerAbilityTimer >= 300)
             {
-                hammerFistRadius.enabled = false;
-                Debug.Log ("false");
-            }
+                hammerZone.enabled = false; 
+                hammerFistBool = false; 
+                hammerAbilityTimer = 0; 
+            } 
         }
 
         // If ability is 1-3 and are not performing the ability at this time, then perform the ability and
@@ -104,8 +109,12 @@ public class Minotaur : Boss
 
     void hammerFist ()
     {
-        hammerFistRadius.enabled = true; 
-        hammerFistBool = false; 
+        // Manipulate hammerFist radius transform position values about where the boss is 
+        float radiusX = gameObject.transform.position.x; 
+        float radiusY = gameObject.transform.position.y;
+        float radiusZ = gameObject.transform.position.z;
+        hammerZone.transform.position = new Vector3 (radiusX, radiusY, radiusZ);
+        hammerZone.enabled = true; 
         Debug.Log ("hammerfist"); 
     }
 
