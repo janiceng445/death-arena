@@ -18,6 +18,17 @@ public class Minotaur : Boss
     private GameObject zoneObject;
     private CircleCollider2D hammerZone;  
     private float hammerAbilityTimer; 
+    // Enable colliders for respectful abilities
+    public BoxCollider2D hammerFistRadius; 
+    public BoxCollider2D slamCollider;
+
+    // Collider disabling after time
+    private float hammerZone; 
+
+    // Custom conditions
+    public bool slamRange;
+    private bool isJumpAttacking;
+    private bool canMove;
 
     protected override void Start() {
         base.Start();
@@ -27,10 +38,10 @@ public class Minotaur : Boss
         health = 500;
         Speed = 3f;
         breathDuration = 50;
-
-        weaponCollider = gameObject.transform.Find("bone_1/bone_2/bone_3/weapon").gameObject.GetComponent<BoxCollider2D>();
+        moneyAmount = 1000;
 
         ResetBreathTimer();
+        CompleteStats();
 
         // Create gameobject and define hammerZone to be this gameobject with the addition of the collider
         zoneObject = new GameObject ("hammerFistCollider");
@@ -41,12 +52,35 @@ public class Minotaur : Boss
     }
 
     protected override void Update() {
-        base.Update();
-        base.Move();
-        base.Die();
+        // Check death
+        if (health <= 0 && !dieOnce) {
+            base.Die();
+        }
 
-        if (inRange && !isAttacking && !isTakingBreak) {
+        // Move mechanic
+        Move();
+
+        // Cooldown between attacks
+        if (isTakingBreak) {
+            isAttacking = false;
+            isJumpAttacking = false;
+            breathTimer--;
+            if (breathTimer <= 0) {
+                isTakingBreak = false;
+                ResetBreathTimer();
+            }
+        }
+
+        //*************************************************//Abilities//*************************************************//
+        //***************************************************************************************************************//
+        
+        // Punch attack
+        if (inRange && !isAttacking && !isTakingBreak && !slamRange) {
             isAttacking = true;
+        }
+        // Body slam attack
+        else if (slamRange && !isJumpAttacking && !isTakingBreak && !inRange) {
+            isJumpAttacking = true;
         }
 
         // If performing any ability, then boss is in the middle of performing an ability
@@ -59,7 +93,21 @@ public class Minotaur : Boss
             midstAbility = false; 
             ability = 0;
         }
-        
+
+        // Stop moving if attacking
+        if (isAttacking || isJumpAttacking) {
+            canMove = false;
+            isMoving = false;
+        }
+        else {
+            canMove = true;
+        }
+        //***************************************************************************************************************//
+        //***************************************************************************************************************//
+
+
+        //*************************************************//Calculations//*************************************************//
+        //******************************************************************************************************************//
         // Random Number / Skill Generator every _ seconds and must not be in the middle of performing an ability
         if (!midstAbility)
         {
@@ -70,11 +118,6 @@ public class Minotaur : Boss
                 chooseTimer = 0; 
             }
         }
-            
-        // Call Animations 
-        animator.SetBool("isHammerFist", hammerFistBool); 
-        animator.SetBool("isBoulderToss", boulderTossBool); 
-        animator.SetBool("isRampage", rampageBool); 
 
         // If hammerFist radius is enabled, start a timer for when it should vanish and thus end the hammerFist ability
         if (hammerZone.enabled)
@@ -105,6 +148,48 @@ public class Minotaur : Boss
         {
             rampageBool = true; 
         }
+
+        //******************************************************************************************************************//
+        //******************************************************************************************************************//
+        
+            
+        //*************************************************//Animations//*************************************************//
+        //****************************************************************************************************************//
+        animator.SetBool("isMoving", isMoving);
+        animator.SetBool("isAttacking", isAttacking);
+        animator.SetBool("isTakingBreak", isTakingBreak);
+        animator.SetBool("isJumpAttacking", isJumpAttacking); 
+        animator.SetBool("isHammerFist", hammerFistBool); 
+        animator.SetBool("isBoulderToss", boulderTossBool); 
+        animator.SetBool("isRampage", rampageBool); 
+        //****************************************************************************************************************//
+        //****************************************************************************************************************//
+    }
+
+    protected override void Move() {
+        if (!GameSettings.paused) {
+            // Fix sorting order
+            sprite.sortingOrder = Mathf.RoundToInt(transform.parent.transform.position.y * 100f) * -1;
+
+            if (canMove) {
+                isMoving = true;
+                // Move
+                if (Vector2.Distance(myLocation.position, targetLocation.position) > DistanceAway) {
+                    transform.parent.transform.position = Vector2.MoveTowards(transform.parent.transform.position, targetLocation.position, Speed * Time.deltaTime);
+                }
+                
+                // Flip
+                if (transform.parent.transform.position.x < targetLocation.position.x && !FacingRight) {
+                    base.Flip();
+                }
+                else if (transform.parent.transform.position.x > targetLocation.position.x && FacingRight) {
+                    base.Flip();
+                }
+            }
+            else {
+                isMoving = false;
+            }
+        }
     }
 
     void hammerFist ()
@@ -128,5 +213,14 @@ public class Minotaur : Boss
     {
         rampageBool = false; 
         Debug.Log ("rampage"); 
+    }
+
+    public void ActivateSlamCollision() {
+        slamCollider.enabled = true;
+    }
+
+    public void DeactivateSlamCollision() {
+        slamCollider.enabled = false;
+        isTakingBreak = true;
     }
 }

@@ -23,8 +23,5 @@ public class WorldStats : MonoBehaviour
             level = wd.level;
             gold = wd.gold;
         }
-
-        // Load level data
-        lvlMngr.Load();
     }
 }

@@ -20,6 +20,7 @@ public class Boss : MonoBehaviour
     protected Animator animator;
     protected GameObject target;
     protected Transform targetLocation;
+    public Transform myLocation;
     public Image bar;
 
     // Base Booleans
@@ -27,6 +28,7 @@ public class Boss : MonoBehaviour
     protected bool isMoving;
     protected bool isAttacking;
     protected bool isTakingBreak;
+    protected bool isDead;
 
     // Checks    
     protected bool dieOnce = false;
@@ -38,7 +40,9 @@ public class Boss : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player");
         targetLocation = target.GetComponent<Transform>();
         bar = GameObject.Find("BossHealthBar").GetComponent<Image>();
-        //weaponCollider = gameObject.transform.Find("OgreAlive/bone_1/bone_2/bone_3/weapon").gameObject.GetComponent<BoxCollider2D>();
+        if (myLocation == null) {
+            myLocation = transform.parent.transform;
+        }
     }
 
     protected virtual void CompleteStats() {
@@ -70,10 +74,10 @@ public class Boss : MonoBehaviour
             // Fix sorting order
             sprite.sortingOrder = Mathf.RoundToInt(transform.parent.transform.position.y * 100f) * -1;
 
-            if (!isAttacking && !isTakingBreak) {
+            if (!isAttacking && !isTakingBreak && !inRange) {
                 // Move
                 isMoving = true;
-                if (Vector2.Distance(transform.parent.transform.position, targetLocation.position) > DistanceAway) {
+                if (Vector2.Distance(myLocation.position, targetLocation.position) > DistanceAway) {
                     transform.parent.transform.position = Vector2.MoveTowards(transform.parent.transform.position, targetLocation.position, Speed * Time.deltaTime);
                 }
                 
@@ -111,8 +115,12 @@ public class Boss : MonoBehaviour
     }
 
     protected virtual void Die() {
-        WorldStats.gold += 500;
+        isDead = true;
+        WorldStats.gold += moneyAmount;
         dieOnce = true;
+        animator.Play("Death");
+        this.enabled = false;
+        BossManager.bossAlive = false;
     }
 
     protected virtual void ActivateWeaponCollision() {
@@ -128,7 +136,7 @@ public class Boss : MonoBehaviour
         Destroy(gameObject.transform.parent.gameObject);    
     }
 
-    void Flip() {
+    protected void Flip() {
         FacingRight = !FacingRight;
         Vector3 theScale = transform.parent.transform.localScale;
 		theScale.x *= -1;

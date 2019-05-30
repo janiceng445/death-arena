@@ -10,6 +10,7 @@ public class Countdown : MonoBehaviour
     public int countdownTimer;
     private TMPro.TextMeshProUGUI cdText;
     private Animator animator;
+    public GameObject SpawnBossHolder;
 
     void Start()
     {
@@ -29,7 +30,7 @@ public class Countdown : MonoBehaviour
             }
             if (countdownTimer <= 0) {
                 cdText.enabled = false;
-                SpawnBoss.bossReady = true;
+                SpawnBossHolder.GetComponent<BossManager>().bossReady = true;
             }
         }
     }

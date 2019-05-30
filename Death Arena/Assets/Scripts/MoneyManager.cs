@@ -32,4 +32,11 @@ public class MoneyManager : MonoBehaviour
     public void TestSetHealth() {
         PlayerStats.hp = int.Parse(Testhealth.text);
     }
+    public void NextLevel() {
+        WorldStats.level++;
+    }
+    public void ResetLevel() {
+        WorldStats.level = 1;
+        SaveSystem.SaveData();
+    }
 }

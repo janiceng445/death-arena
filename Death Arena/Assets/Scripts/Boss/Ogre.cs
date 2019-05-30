@@ -16,6 +16,7 @@ public class Ogre : Boss
         health = 500;
         Speed = 3f;
         breathDuration = 50;
+        moneyAmount = 500;
 
         weaponCollider = gameObject.transform.Find("bone_1/bone_2/bone_3/weapon").gameObject.GetComponent<BoxCollider2D>();
 
@@ -27,7 +28,6 @@ public class Ogre : Boss
         base.Update();
         base.Move();
         if (health <= 0 && !dieOnce) {
-            base.Die();
             Die();
         }
 
@@ -37,6 +37,12 @@ public class Ogre : Boss
     }
 
     protected override void Die() {
+        isDead = true;
+        WorldStats.gold += moneyAmount;
+        dieOnce = true;
+        this.enabled = false;
+        BossManager.bossAlive = false;
+        BossManager.bossAlive = false;
         aliveSprite.SetActive(false);
         deathSprite.SetActive(true);
     }
