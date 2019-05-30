@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
         // Check conditions
         CheckConditions();
         // Check animations
-        UpdateAnimations();
+        //UpdateAnimations();
 
         // Setting speed
         float speed = 0f;

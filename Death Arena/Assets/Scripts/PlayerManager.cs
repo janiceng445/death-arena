@@ -18,7 +18,7 @@ public class PlayerManager : MonoBehaviour
 
     public void Move(float x, float y) {
         // Fix sorting order
-        sprite.sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
+        //sprite.sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
 
         // Assign velocity
         Vector3 newVelocity = new Vector2(x * 10f, y *10f);
