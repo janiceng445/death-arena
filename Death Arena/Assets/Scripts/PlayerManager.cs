@@ -25,7 +25,7 @@ public class PlayerManager : MonoBehaviour
         gameObject.GetComponent<SortingGroup>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
 
         // Assign velocity
-        Vector3 newVelocity = new Vector2(x * 10f, y *10f);
+        Vector3 newVelocity = new Vector2(x * 10f, y * 10f);
 
         // Smooth out velocity and apply to character
         body.velocity = Vector3.SmoothDamp(body.velocity, newVelocity, ref ref_velocity, smoothing);

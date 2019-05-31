@@ -6,12 +6,10 @@ public class WorldStats : MonoBehaviour
 {
     public static int level;
     public static int gold;
-    private LevelManager lvlMngr;
 
     void Start() {
         level = 1;
         gold = 0;
-        lvlMngr = gameObject.GetComponent<LevelManager>();
 
         LoadAll();
     }

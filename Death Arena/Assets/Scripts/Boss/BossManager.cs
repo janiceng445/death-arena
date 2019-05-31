@@ -15,6 +15,12 @@ public class BossManager : MonoBehaviour
     private bool IncLvlOnce = false;
 
     void Start() {
+        // Error checking with world stats
+        if (WorldStats.level == 0) {
+            WorldStats.level = 1;
+        }
+
+        // Initialization
         ReturnToTitle_timer = 500;
         bossAlive = true;
         switch(WorldStats.level) {
@@ -23,9 +29,6 @@ public class BossManager : MonoBehaviour
                 break;
             case 2:
                 namePrefab = "Minotaur";
-                break;
-            default:
-                namePrefab = "Ogre";
                 break;
         }
     }
@@ -42,7 +45,7 @@ public class BossManager : MonoBehaviour
             ReturnToTitle_timer--;
             if (ReturnToTitle_timer <= 0 && !IncLvlOnce) {
                 IncLvlOnce = true;
-                WorldStats.level++;
+                WorldStats.level += 1;
                 SaveSystem.SaveData();
                 SceneManager.LoadScene("MainMenu");
             }
