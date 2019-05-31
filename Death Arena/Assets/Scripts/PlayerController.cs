@@ -61,23 +61,26 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update() {
-        // Check conditions
-        CheckConditions();
-        // Check animations
-        UpdateAnimations();
-        // Check timers
-        CheckTimers();
 
-        // Setting speed
-        float speed = 0f;
-        if (!isAttacking) {
-            speed = WalkSpeed;
+        if (!GameSettings.paused) {
+            // Check conditions
+            CheckConditions();
+            // Check animations
+            UpdateAnimations();
+            // Check timers
+            CheckTimers();
+
+            // Setting speed
+            float speed = 0f;
+            if (!isAttacking) {
+                speed = WalkSpeed;
+            }
+
+            // Set move values
+            horizontalMove = Input.GetAxisRaw("Horizontal") * speed; 
+            verticalMove = Input.GetAxisRaw("Vertical") * speed; 
+            isMoving = (Mathf.Abs(horizontalMove) > 0 || Mathf.Abs(verticalMove) > 0) ? true : false;
         }
-
-        // Set move values
-        horizontalMove = Input.GetAxisRaw("Horizontal") * speed; 
-        verticalMove = Input.GetAxisRaw("Vertical") * speed; 
-        isMoving = (Mathf.Abs(horizontalMove) > 0 || Mathf.Abs(verticalMove) > 0) ? true : false;
 
         // Check if pausing
         if (Input.GetKeyDown(KeyCode.Escape)) {
