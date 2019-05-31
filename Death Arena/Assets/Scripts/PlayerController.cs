@@ -7,12 +7,21 @@ public class PlayerController : MonoBehaviour
     // Statistics
     [SerializeField] public float WalkSpeed = 35f;
     [SerializeField] public float RunSpeed = 45f;
+    [SerializeField] public float DashSpeed = 5f;
+    
 
     // Conditions
     private bool isRunning = false;
     private bool isAttacking = false;
     private bool isMoving = false;
-    private bool isRolling = false;
+    private bool isDashing = false;
+
+    // Once conditions
+    private bool dashOnce = false;
+
+    // Cooldown timers
+    private int dashTimer;
+    private int dashTimer_remaining;
 
     // Variables
     private PlayerManager controller;
@@ -26,6 +35,10 @@ public class PlayerController : MonoBehaviour
         RunSpeed = PlayerStats.r_speed;
         animator = gameObject.GetComponentInChildren<Animator>();
         //animator = gameObject.GetComponent<Animator>();
+
+        // Timer initializations
+        dashTimer = 100;
+        dashTimer_remaining = dashTimer;
 
         // TEMP
         if (WalkSpeed == 0) {
@@ -41,11 +54,13 @@ public class PlayerController : MonoBehaviour
         CheckConditions();
         // Check animations
         UpdateAnimations();
+        // Check timers
+        CheckTimers();
 
         // Setting speed
         float speed = 0f;
         if (!isAttacking) {
-            speed = !isRunning ? WalkSpeed : RunSpeed;
+            speed = WalkSpeed;
         }
 
         // Set move values
@@ -74,15 +89,27 @@ public class PlayerController : MonoBehaviour
         }
 
         // Rolling
-        if (Input.GetKeyDown(KeyCode.A) && Input.GetKeyDown(KeyCode.LeftShift)) {
-            Debug.Log("roll");
+        if (isMoving && isRunning && !dashOnce && dashTimer_remaining == dashTimer) {
+            gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(horizontalMove * Time.fixedDeltaTime * 5f, verticalMove * Time.fixedDeltaTime * 5f) * DashSpeed;
+            dashOnce = true;
+        }
+    }
+
+    void CheckTimers() {
+        // Rolling
+        if (dashOnce) {
+            dashTimer_remaining--;
+            if (dashTimer_remaining <= 0) {
+                dashTimer_remaining = dashTimer;
+                dashOnce = false;
+            }
         }
     }
 
     void UpdateAnimations() {
         animator.SetBool("isAttacking", isAttacking);
         animator.SetBool("isMoving", isMoving);
-        //animator.SetBool("isRolling", isRolling);
+        animator.SetBool("isDashing", isDashing);
     }
 
     void FixedUpdate ()
@@ -105,5 +132,7 @@ public class PlayerController : MonoBehaviour
         isAttacking = false;
         weaponCollider.enabled = false;
     }
-
+    public void DisableRolling() {
+        isDashing = false;
+    }
 }
