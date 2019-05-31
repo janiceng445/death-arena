@@ -24,6 +24,9 @@ public class BossManager : MonoBehaviour
             case 2:
                 namePrefab = "Minotaur";
                 break;
+            default:
+                namePrefab = "Ogre";
+                break;
         }
     }
 

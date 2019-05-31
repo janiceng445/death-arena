@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private bool isRunning = false;
     private bool isAttacking = false;
     private bool isMoving = false;
+    private bool isRolling = false;
 
     // Variables
     private PlayerManager controller;
@@ -39,7 +40,7 @@ public class PlayerController : MonoBehaviour
         // Check conditions
         CheckConditions();
         // Check animations
-        //UpdateAnimations();
+        UpdateAnimations();
 
         // Setting speed
         float speed = 0f;
@@ -71,11 +72,17 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && !isAttacking) {
             isAttacking = true;
         }
+
+        // Rolling
+        if (Input.GetKeyDown(KeyCode.A) && Input.GetKeyDown(KeyCode.LeftShift)) {
+            Debug.Log("roll");
+        }
     }
 
     void UpdateAnimations() {
         animator.SetBool("isAttacking", isAttacking);
         animator.SetBool("isMoving", isMoving);
+        //animator.SetBool("isRolling", isRolling);
     }
 
     void FixedUpdate ()

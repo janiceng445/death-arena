@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -16,9 +17,12 @@ public class PlayerManager : MonoBehaviour
         sprite = gameObject.GetComponentInChildren<SpriteRenderer>();
     }
 
+
+
     public void Move(float x, float y) {
         // Fix sorting order
         //sprite.sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
+        gameObject.GetComponent<SortingGroup>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
 
         // Assign velocity
         Vector3 newVelocity = new Vector2(x * 10f, y *10f);
