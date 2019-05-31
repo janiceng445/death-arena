@@ -14,16 +14,11 @@ public class Minotaur : Boss
     private bool boulderTossBool;
     private bool rampageBool; 
 
-    // HammerFist ability
-    private GameObject zoneObject;
-    private CircleCollider2D hammerZone;  
-    private float hammerAbilityTimer; 
-    // Enable colliders for respectful abilities
-    public BoxCollider2D hammerFistRadius; 
+    // // HammerFist ability
     public BoxCollider2D slamCollider;
 
     // Collider disabling after time
-    private float hammerZone; 
+    //private float hammerZone; 
 
     // Custom conditions
     public bool slamRange;
@@ -42,13 +37,7 @@ public class Minotaur : Boss
 
         ResetBreathTimer();
         CompleteStats();
-
-        // Create gameobject and define hammerZone to be this gameobject with the addition of the collider
-        zoneObject = new GameObject ("hammerFistCollider");
-        hammerZone = zoneObject.AddComponent<CircleCollider2D>();
-        hammerZone.enabled = false; 
-        hammerZone.radius = 5; 
-        hammerZone.isTrigger = true; 
+ 
     }
 
     protected override void Update() {
@@ -112,24 +101,11 @@ public class Minotaur : Boss
         if (!midstAbility)
         {
             chooseTimer ++;
-            if (chooseTimer >= 250)
+            if (chooseTimer >= 500)
             {
                 ability = 1;//Random.Range (1,4); 
                 chooseTimer = 0; 
             }
-        }
-
-        // If hammerFist radius is enabled, start a timer for when it should vanish and thus end the hammerFist ability
-        if (hammerZone.enabled)
-        {
-            hammerAbilityTimer ++; 
-            Debug.Log (hammerAbilityTimer); 
-            if (hammerAbilityTimer >= 300)
-            {
-                hammerZone.enabled = false; 
-                hammerFistBool = false; 
-                hammerAbilityTimer = 0; 
-            } 
         }
 
         // If ability is 1-3 and are not performing the ability at this time, then perform the ability and
@@ -171,7 +147,7 @@ public class Minotaur : Boss
             // Fix sorting order
             sprite.sortingOrder = Mathf.RoundToInt(transform.parent.transform.position.y * 100f) * -1;
 
-            if (canMove) {
+            if (canMove && !midstAbility) {
                 isMoving = true;
                 // Move
                 if (Vector2.Distance(myLocation.position, targetLocation.position) > DistanceAway) {
@@ -198,8 +174,9 @@ public class Minotaur : Boss
         float radiusX = gameObject.transform.position.x; 
         float radiusY = gameObject.transform.position.y;
         float radiusZ = gameObject.transform.position.z;
-        hammerZone.transform.position = new Vector3 (radiusX, radiusY, radiusZ);
-        hammerZone.enabled = true; 
+        Instantiate(Resources.Load<GameObject>("Prefabs/HammerFistZone"), new Vector3(radiusX - 3, radiusY - 5, radiusZ), Quaternion.identity);
+        hammerFistBool = false; 
+        midstAbility = false; 
         Debug.Log ("hammerfist"); 
     }
 
