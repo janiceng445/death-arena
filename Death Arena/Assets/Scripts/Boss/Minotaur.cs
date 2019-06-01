@@ -14,11 +14,10 @@ public class Minotaur : Boss
     private bool boulderTossBool;
     private bool rampageBool; 
 
-    // // HammerFist ability
+    // HammerFist ability
     public BoxCollider2D slamCollider;
-
-    // Collider disabling after time
-    //private float hammerZone; 
+    // Defined to be instantiated polygon collider gameobject
+    private GameObject hammerFistCollider; 
 
     // Custom conditions
     public bool slamRange;
@@ -174,22 +173,20 @@ public class Minotaur : Boss
         float radiusX = gameObject.transform.position.x; 
         float radiusY = gameObject.transform.position.y;
         float radiusZ = gameObject.transform.position.z;
-        Instantiate(Resources.Load<GameObject>("Prefabs/HammerFistZone"), new Vector3(radiusX - 3, radiusY - 5, radiusZ), Quaternion.identity);
+        hammerFistCollider = Instantiate(Resources.Load<GameObject>("Prefabs/HammerFistZone"), new Vector3(radiusX - 3, radiusY - 5, radiusZ), Quaternion.identity);
+        hammerFistCollider.GetComponent<PolygonCollider2D>().isTrigger = true; 
         hammerFistBool = false; 
         midstAbility = false; 
-        Debug.Log ("hammerfist"); 
     }
 
     void boulderToss ()
     {
         boulderTossBool = false; 
-        Debug.Log ("bouldertoss"); 
     }
 
     void rampage ()
     {
         rampageBool = false; 
-        Debug.Log ("rampage"); 
     }
 
     public void ActivateSlamCollision() {
