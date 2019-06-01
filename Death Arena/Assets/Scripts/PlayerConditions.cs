@@ -10,7 +10,7 @@ public class PlayerConditions : MonoBehaviour
     public GameObject healthBar;
 
     void Start() {
-        PlayerStats.hp = 500;
+        PlayerStats.hp = 50;
         health = PlayerStats.hp;
     }
 
@@ -18,5 +18,13 @@ public class PlayerConditions : MonoBehaviour
         Vector3 temp = healthBar.transform.localScale;
         temp.x = (float) health / (float) PlayerStats.hp;
         healthBar.transform.localScale = temp;
+
+        CheckHealth();
+    }
+
+    void CheckHealth() {
+        if (health <= 0) {
+            Debug.Log("gameover");
+        }
     }
 }

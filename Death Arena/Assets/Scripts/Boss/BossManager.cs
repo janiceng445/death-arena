@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class BossManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class BossManager : MonoBehaviour
     private bool spawned = false;
     private string namePrefab;
     public static bool bossAlive;
+    private GameObject bossBar;
     
     // Return to title
     private int ReturnToTitle_timer;
@@ -21,6 +23,8 @@ public class BossManager : MonoBehaviour
         }
 
         // Initialization
+        bossBar = GameObject.Find("BossBar");
+        bossBar.SetActive(false);
         ReturnToTitle_timer = 500;
         bossAlive = true;
         switch(WorldStats.level) {
@@ -38,6 +42,7 @@ public class BossManager : MonoBehaviour
         if (bossReady && !spawned) {
             Instantiate(Resources.Load<GameObject>("Prefabs/" + namePrefab), new Vector3(0,0,0), Quaternion.identity);
             spawned = true;
+            bossBar.SetActive(true);
         }
 
         // If boss is dead, get ready to return to menu
