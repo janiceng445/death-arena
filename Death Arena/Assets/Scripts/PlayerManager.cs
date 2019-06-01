@@ -5,6 +5,9 @@ using UnityEngine.Rendering;
 
 public class PlayerManager : MonoBehaviour
 {
+    public bool isStunned;
+    public bool isSlowed;
+
     [Range(0, .3f)] [SerializeField] private float smoothing = .05f;
     private Vector3 ref_velocity;
     private Rigidbody2D body;
