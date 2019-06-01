@@ -1,13 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using CodeMonkey.Utils;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
     // Statistics
     [SerializeField] public float WalkSpeed = 35f;
     [SerializeField] public float RunSpeed = 45f;
-    [SerializeField] public float DashSpeed = 5f;
+    [SerializeField] public float DashSpeed = 100f;
     
 
     // Conditions
@@ -28,6 +31,10 @@ public class PlayerController : MonoBehaviour
     float horizontalMove, verticalMove = 0f;
     private Animator animator;
     public BoxCollider2D weaponCollider;
+    [SerializeField] private Transform plDashEffect;
+
+    // Ability icon references
+    private GameObject ability1;
 
     void Start() {
         controller = gameObject.GetComponent<PlayerManager>();
@@ -35,6 +42,10 @@ public class PlayerController : MonoBehaviour
         RunSpeed = PlayerStats.r_speed;
         animator = gameObject.GetComponentInChildren<Animator>();
         //animator = gameObject.GetComponent<Animator>();
+        plDashEffect = Resources.Load<GameObject>("Prefabs/plDashEffect").transform;
+
+        // Ability icon initalization
+        ability1 = GameObject.Find("Ability1_overlay");
 
         // Timer initializations
         dashTimer = 100;
@@ -50,23 +61,26 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update() {
-        // Check conditions
-        CheckConditions();
-        // Check animations
-        UpdateAnimations();
-        // Check timers
-        CheckTimers();
 
-        // Setting speed
-        float speed = 0f;
-        if (!isAttacking) {
-            speed = WalkSpeed;
+        if (!GameSettings.paused) {
+            // Check conditions
+            CheckConditions();
+            // Check animations
+            UpdateAnimations();
+            // Check timers
+            CheckTimers();
+
+            // Setting speed
+            float speed = 0f;
+            if (!isAttacking) {
+                speed = WalkSpeed;
+            }
+
+            // Set move values
+            horizontalMove = Input.GetAxisRaw("Horizontal") * speed; 
+            verticalMove = Input.GetAxisRaw("Vertical") * speed; 
+            isMoving = (Mathf.Abs(horizontalMove) > 0 || Mathf.Abs(verticalMove) > 0) ? true : false;
         }
-
-        // Set move values
-        horizontalMove = Input.GetAxisRaw("Horizontal") * speed; 
-        verticalMove = Input.GetAxisRaw("Vertical") * speed; 
-        isMoving = (Mathf.Abs(horizontalMove) > 0 || Mathf.Abs(verticalMove) > 0) ? true : false;
 
         // Check if pausing
         if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -87,20 +101,19 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && !isAttacking) {
             isAttacking = true;
         }
-
-        // Rolling
-        if (isMoving && isRunning && !dashOnce && dashTimer_remaining == dashTimer) {
-            gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(horizontalMove * Time.fixedDeltaTime * 5f, verticalMove * Time.fixedDeltaTime * 5f) * DashSpeed;
-            dashOnce = true;
-        }
     }
 
     void CheckTimers() {
         // Rolling
         if (dashOnce) {
             dashTimer_remaining--;
-            if (dashTimer_remaining <= 0) {
-                dashTimer_remaining = dashTimer;
+            ability1.GetComponent<Image>().fillAmount += 0.01f;
+            // if (dashTimer_remaining <= 0) {
+            //     dashTimer_remaining = dashTimer;
+            //     dashOnce = false;
+            // }
+            if (ability1.GetComponent<Image>().fillAmount >= 1f) {
+                ability1.GetComponent<Image>().fillAmount = 1f;
                 dashOnce = false;
             }
         }
@@ -117,6 +130,18 @@ public class PlayerController : MonoBehaviour
         if (!GameSettings.paused) {
             // Move character
             controller.Move(horizontalMove * Time.fixedDeltaTime, verticalMove * Time.fixedDeltaTime); 
+
+            // Dash character
+            if (isMoving && isRunning && !dashOnce && ability1.GetComponent<Image>().fillAmount == 1f) {
+                Vector3 beforeDashPos = transform.position;
+                Transform dashEffectTransform = Instantiate(plDashEffect, beforeDashPos, Quaternion.identity);
+                dashEffectTransform.eulerAngles = new Vector3(0, 0, UtilsClass.GetAngleFromVectorFloat(new Vector2(horizontalMove, verticalMove)));
+                dashEffectTransform.localScale = new Vector3(DashSpeed / 150f, 1f, 1f);
+                dashEffectTransform.GetComponent<SortingGroup>().sortingOrder = gameObject.GetComponent<SortingGroup>().sortingOrder - 1;
+                gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(horizontalMove * Time.fixedDeltaTime * DashSpeed, verticalMove * Time.fixedDeltaTime * DashSpeed);
+                ability1.GetComponent<Image>().fillAmount = 0;
+                dashOnce = true;
+            }
         }
         else {
             controller.Move(0, 0); 

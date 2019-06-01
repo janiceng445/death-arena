@@ -41,11 +41,22 @@ public class PauseMenu : MonoBehaviour
     }
 
     void Update() {
+
         if (GameSettings.paused) {
             menu.SetActive(true);
+            // Stop all animations
+            Animator[] anims = (Animator[]) GameObject.FindObjectsOfType(typeof(Animator));
+            foreach (Animator anim in anims) {
+                anim.speed = 0;
+            }
         }
         else {
             menu.SetActive(false);
+            // Resume all animations
+            Animator[] anims = (Animator[]) GameObject.FindObjectsOfType(typeof(Animator));
+            foreach (Animator anim in anims) {       
+                anim.speed = 1;
+            }
         }
 
         
