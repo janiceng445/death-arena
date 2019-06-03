@@ -25,18 +25,20 @@ public class GameSettings : MonoBehaviour
             GetComponent<AudioSource>().enabled = true;
         }
     }
-
+ 
     public static void FindVolume() {
         // Update the new volume reference
         GameObject volumePanel = GameObject.FindGameObjectWithTag("Volume");
         if (volumePanel != null) {
             volumePanel.GetComponent<Slider>().value = volume;
+            UpdateAllAudio();
         }
     }
 
     void Start() {
         // The very start of the entire game
         paused = true;
+        volume = 1f;
     }
 
     void Update()
@@ -46,6 +48,14 @@ public class GameSettings : MonoBehaviour
         if (volumePanel != null) {
             volume = volumePanel.GetComponent<Slider>().value;
             AudioListener.volume = volume;
+        }
+        UpdateAllAudio();
+    }
+
+    public static void UpdateAllAudio() {
+        AudioSource[] audiosources = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
+        foreach(AudioSource audio in audiosources) {
+            audio.volume = volume;
         }
     }
 }
