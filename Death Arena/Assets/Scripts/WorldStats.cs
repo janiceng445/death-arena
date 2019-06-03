@@ -11,6 +11,9 @@ public class WorldStats : MonoBehaviour
         level = 1;
         gold = 0;
 
+        // Save new world data file if needed
+        SaveSystem.SaveNewWorldData();
+
         LoadAll();
     }
 

@@ -5,14 +5,14 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class SaveSystem
 {
-    const string playerFileName = "/player.dat";
+    const string PlayerFileName = "/player.dat";
     const string WorldFileName = "/world.dat";
-    const string ArmoryFileData = "/armory.dat";
+    const string ArmoryFileName = "/armory.dat";
 
     public static void SaveData() {
         SavePlayerData();
         SaveWorldData();
-        SaveArmorData();
+        SaveArmoryData();
     }
 
     public static void LoadData() {
@@ -26,7 +26,7 @@ public static class SaveSystem
     #region Saving Methods
     public static void SavePlayerData() {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + playerFileName;
+        string path = Application.persistentDataPath + PlayerFileName;
         FileStream stream = new FileStream(path, FileMode.Create);
 
         PlayerData data = new PlayerData();
@@ -46,9 +46,9 @@ public static class SaveSystem
         stream.Close();
     }
 
-    public static void SaveArmorData() {
+    public static void SaveArmoryData() {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + ArmoryFileData;
+        string path = Application.persistentDataPath + ArmoryFileName;
         FileStream stream = new FileStream(path, FileMode.Create);
 
         ArmoryData data = new ArmoryData();
@@ -58,10 +58,32 @@ public static class SaveSystem
     }
     #endregion
 
+    // Save new data
+    #region Saving New Methods
+    public static void SaveNewPlayerData() {
+        string path = Application.persistentDataPath + PlayerFileName;
+        if (!File.Exists(path)) {
+            SavePlayerData();
+        }
+    }
+    public static void SaveNewWorldData() {
+        string path = Application.persistentDataPath + WorldFileName;
+        if (!File.Exists(path)) {
+            SaveWorldData();
+        }
+    }
+    public static void SaveNewArmoryData() {
+        string path = Application.persistentDataPath + ArmoryFileName;
+        if (!File.Exists(path)) {
+            SaveArmoryData();
+        }
+    }
+    #endregion
+
     // Load
     #region Loading Methods
     public static PlayerData LoadPlayerData() {
-        string path = Application.persistentDataPath + playerFileName;
+        string path = Application.persistentDataPath + PlayerFileName;
         if (File.Exists(path)) {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
@@ -94,7 +116,7 @@ public static class SaveSystem
     }
 
     public static ArmoryData LoadArmoryData() {
-        string path = Application.persistentDataPath + ArmoryFileData;
+        string path = Application.persistentDataPath + ArmoryFileName;
         if (File.Exists(path)) {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
@@ -105,7 +127,7 @@ public static class SaveSystem
             return data;
         }
         else {
-            Debug.LogError("No armor save file found.");
+            Debug.LogError("No armory save file found.");
             return null;
         }
     }

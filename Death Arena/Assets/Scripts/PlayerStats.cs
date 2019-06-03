@@ -25,6 +25,9 @@ public class PlayerStats : MonoBehaviour
         energy = 100;
         isWearingArmor = false;
 
+        // Save new player data file if needed
+        SaveSystem.SaveNewPlayerData();
+
         // Load actual player data file
         PlayerData pd = SaveSystem.LoadPlayerData();
         if (pd != null) {
