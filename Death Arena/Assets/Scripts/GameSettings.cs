@@ -18,6 +18,12 @@ public class GameSettings : MonoBehaviour
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        if (scene.name == "Arena") {
+            GetComponent<AudioSource>().enabled = false;
+        }
+        else if (!GetComponent<AudioSource>().enabled) {
+            GetComponent<AudioSource>().enabled = true;
+        }
     }
 
     public static void FindVolume() {

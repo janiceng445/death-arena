@@ -133,6 +133,8 @@ public class PlayerController : MonoBehaviour
 
             // Dash character
             if (isMoving && isRunning && !dashOnce && ability1.GetComponent<Image>().fillAmount == 1f) {
+                AudioClip dashSFX = (AudioClip) Resources.Load("SFX/dash", typeof(AudioClip));
+                GetComponent<AudioSource>().PlayOneShot(dashSFX);
                 Vector3 beforeDashPos = transform.position;
                 Transform dashEffectTransform = Instantiate(plDashEffect, beforeDashPos, Quaternion.identity);
                 dashEffectTransform.eulerAngles = new Vector3(0, 0, UtilsClass.GetAngleFromVectorFloat(new Vector2(horizontalMove, verticalMove)));
