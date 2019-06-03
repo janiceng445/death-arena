@@ -63,21 +63,4 @@ public class Ab_Colliders : MonoBehaviour
             }
         }
     }
-    // // Assign velocity
-    // if (!isStunned && !isSlowed) {
-    //     Vector3 newVelocity = new Vector2(x * 10f, y *10f);
-
-    //     // Smooth out velocity and apply to character
-    //     body.velocity = Vector3.SmoothDamp(body.velocity, newVelocity, ref ref_velocity, smoothing);
-    // }
-
-    // else if (isStunned) {
-    //     body.velocity = new Vector2 (0f, 0f);
-    // }
-    
-    // else if (isSlowed) {
-    //     Vector3 newVelocity = new Vector2 (x * 5f, y * 5f); 
-    //     body.velocity = Vector3.SmoothDamp(body.velocity, newVelocity, ref ref_velocity, smoothing);
-    // }
-
 }

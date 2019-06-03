@@ -167,17 +167,35 @@ public class Minotaur : Boss
         }
     }
 
+    //*************************************************//HammerFist//*************************************************//
+    //****************************************************************************************************************//
+
     void hammerFist ()
     {
-        // Manipulate hammerFist radius transform position values about where the boss is 
+        // Manipulate hammerFist radius transform position values about where the boss (hand) is 
         float radiusX = gameObject.transform.position.x; 
+        if (FacingRight)
+        {
+            radiusX += 3; 
+        }
+        else if (!FacingRight)
+        {
+            radiusX -= 3; 
+        }
         float radiusY = gameObject.transform.position.y;
         float radiusZ = gameObject.transform.position.z;
-        hammerFistCollider = Instantiate(Resources.Load<GameObject>("Prefabs/HammerFistZone"), new Vector3(radiusX - 3, radiusY - 5, radiusZ), Quaternion.identity);
+        hammerFistCollider = Instantiate(Resources.Load<GameObject>("Prefabs/HammerFistZone"), new Vector3(radiusX, radiusY - 5, radiusZ), Quaternion.identity);
         hammerFistCollider.GetComponent<PolygonCollider2D>().isTrigger = true; 
+    }
+
+    void hammerFistDisabled ()
+    {
         hammerFistBool = false; 
         midstAbility = false; 
     }
+
+    //*************************************************//BoulderToss//*************************************************//
+    //****************************************************************************************************************//
 
     void boulderToss ()
     {
