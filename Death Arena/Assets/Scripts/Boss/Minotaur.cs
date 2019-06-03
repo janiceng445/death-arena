@@ -19,6 +19,9 @@ public class Minotaur : Boss
     // Defined to be instantiated polygon collider gameobject
     private GameObject hammerFistCollider; 
 
+    // BoulderToss ability
+    private GameObject boulderCollider; 
+
     // Custom conditions
     public bool slamRange;
     private bool isJumpAttacking;
@@ -100,9 +103,9 @@ public class Minotaur : Boss
         if (!midstAbility)
         {
             chooseTimer ++;
-            if (chooseTimer >= 500)
+            if (chooseTimer >= 400)
             {
-                ability = 1;//Random.Range (1,4); 
+                ability = 2;//Random.Range (1,4); 
                 chooseTimer = 0; 
             }
         }
@@ -199,6 +202,7 @@ public class Minotaur : Boss
 
     void boulderToss ()
     {
+        boulderCollider = Instantiate(Resources.Load<GameObject>("Prefabs/Boulder"), new Vector3(0,0,0), Quaternion.identity); 
         boulderTossBool = false; 
     }
 

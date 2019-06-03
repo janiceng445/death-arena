@@ -27,11 +27,11 @@ public class PlayerManager : MonoBehaviour
         //sprite.sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
         gameObject.GetComponent<SortingGroup>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
 
-        // Assign velocity
-        Vector3 newVelocity = new Vector2(x * 10f, y * 10f);
+        // // Assign velocity
+        // Vector3 newVelocity = new Vector2(x * 10f, y * 10f);
 
-        // Smooth out velocity and apply to character
-        body.velocity = Vector3.SmoothDamp(body.velocity, newVelocity, ref ref_velocity, smoothing);
+        // // Smooth out velocity and apply to character
+        // body.velocity = Vector3.SmoothDamp(body.velocity, newVelocity, ref ref_velocity, smoothing);
 
         // Fix face direction
         if (x < 0 && FacingRight) {
@@ -41,21 +41,21 @@ public class PlayerManager : MonoBehaviour
             Flip();
         }
         // Assign velocity
-        // if (!isStunned && !isSlowed) {
-        //     Vector3 newVelocity = new Vector2(x * 10f, y *10f);
+        if (!isStunned && !isSlowed) {
+            Vector3 newVelocity = new Vector2(x * 10f, y *10f);
 
-        //     // Smooth out velocity and apply to character
-        //     body.velocity = Vector3.SmoothDamp(body.velocity, newVelocity, ref ref_velocity, smoothing);
-        // }
+            // Smooth out velocity and apply to character
+            body.velocity = Vector3.SmoothDamp(body.velocity, newVelocity, ref ref_velocity, smoothing);
+        }
 
-        // else if (isStunned) {
-        //     body.velocity = new Vector2 (0f, 0f);
-        // }
+        else if (isStunned) {
+            body.velocity = new Vector2 (0f, 0f);
+        }
         
-        // else if (isSlowed) {
-        //     Vector3 newVelocity = new Vector2 (x * 5f, y * 5f); 
-        //     body.velocity = Vector3.SmoothDamp(body.velocity, newVelocity, ref ref_velocity, smoothing);
-        // }
+        else if (isSlowed) {
+            Vector3 newVelocity = new Vector2 (x * 5f, y * 5f); 
+            body.velocity = Vector3.SmoothDamp(body.velocity, newVelocity, ref ref_velocity, smoothing);
+        }
     }
 
     void Flip() {
