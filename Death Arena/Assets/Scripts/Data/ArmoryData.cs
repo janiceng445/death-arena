@@ -7,14 +7,12 @@ using UnityEngine;
 public class ArmoryData
 {
     // Armor
-    public bool[] armorBought = new bool[1];
+    public bool[] armorBought;
     // Weapons
     public bool[] weaponBought;
 
 
     public ArmoryData() {
-        for (int i = 0; i < armorBought.Length; i++) {
-            armorBought[i] = ArmorSet.GetIfBought(i);
-        }
+        armorBought = Armory.armorBought;
     }
 }

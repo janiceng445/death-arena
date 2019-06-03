@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class ArmorSet : MonoBehaviour
 {
-    public static bool[] armorBought;
     protected int index;
     protected bool isBought;
     protected int cost;
@@ -25,26 +24,25 @@ public class ArmorSet : MonoBehaviour
         itemRefName = "iron";
         itemReference = GameObject.Find(itemRefName);
         itemReference.GetComponentInChildren<Text>().text = cost.ToString();
+    }
 
-        // Load actual armor data file
-        ArmoryData ad = SaveSystem.LoadArmoryData();
-        if (ad != null) {
-            armorBought = ad.armorBought;
+    protected virtual void UpdateBought() {
+        // Update what has been bought from saved data
+        isBought = Armory.armorBought[index];
+        if (isBought) {
+            itemReference.GetComponentInChildren<Button>().interactable = false;
+            itemReference.GetComponentInChildren<Button>().GetComponentInChildren<Text>().text = "Bought";
         }
     }
 
     protected virtual void Update() {
-        // if (armorBought[index]) {
-        //     itemReference.GetComponentInChildren<Button>().interactable = false;
-        //     itemReference.GetComponentInChildren<Button>().GetComponentInChildren<Text>().text = "Bought";
-        // }
     }
 
     public virtual void Buy() {
         if (WorldStats.gold >= cost) {
             PlayerStats.isWearingArmor = true;
             isBought = true;
-            //armorBought[index] = isBought;
+            Armory.armorBought[index] = isBought;
             itemReference.GetComponentInChildren<Button>().interactable = false;
             itemReference.GetComponentInChildren<Button>().GetComponentInChildren<Text>().text = "Bought";
             WorldStats.gold -= cost;
@@ -52,9 +50,5 @@ public class ArmorSet : MonoBehaviour
         else {
             Debug.Log("Not enough gold");
         }
-    }
-
-    public static bool GetIfBought(int findIndex) {
-        return armorBought[findIndex];
     }
 }
