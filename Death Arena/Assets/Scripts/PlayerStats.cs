@@ -12,6 +12,9 @@ public class PlayerStats : MonoBehaviour
     public static int hp;
     public static int energy;
 
+    // Armor
+    public static bool isWearingArmor;
+
     void Start() {
         // The default
         w_speed = 35f;
@@ -20,6 +23,7 @@ public class PlayerStats : MonoBehaviour
         def = 5;
         hp = 100;
         energy = 100;
+        isWearingArmor = false;
 
         // Load actual player data file
         PlayerData pd = SaveSystem.LoadPlayerData();
@@ -30,6 +34,7 @@ public class PlayerStats : MonoBehaviour
             def = pd.def;
             hp = pd.hp;
             energy = pd.energy;
+            isWearingArmor = pd.isWearingArmor;
         }
     }
     

@@ -7,15 +7,18 @@ public static class SaveSystem
 {
     const string playerFileName = "/player.dat";
     const string WorldFileName = "/world.dat";
+    const string ArmoryFileData = "/armory.dat";
 
     public static void SaveData() {
         SavePlayerData();
         SaveWorldData();
+        SaveArmorData();
     }
 
     public static void LoadData() {
         LoadPlayerData();
         LoadWorldData();
+        LoadArmoryData();
     }
 
 
@@ -38,6 +41,17 @@ public static class SaveSystem
         FileStream stream = new FileStream(path, FileMode.Create);
 
         WorldData data = new WorldData();
+
+        formatter.Serialize(stream, data);
+        stream.Close();
+    }
+
+    public static void SaveArmorData() {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + ArmoryFileData;
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        ArmoryData data = new ArmoryData();
 
         formatter.Serialize(stream, data);
         stream.Close();
@@ -75,6 +89,23 @@ public static class SaveSystem
         }
         else {
             Debug.LogError("No world save file found.");
+            return null;
+        }
+    }
+
+    public static ArmoryData LoadArmoryData() {
+        string path = Application.persistentDataPath + ArmoryFileData;
+        if (File.Exists(path)) {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+            ArmoryData data = formatter.Deserialize(stream) as ArmoryData;
+            stream.Close();
+
+            return data;
+        }
+        else {
+            Debug.LogError("No armor save file found.");
             return null;
         }
     }

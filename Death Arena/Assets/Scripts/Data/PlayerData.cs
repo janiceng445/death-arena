@@ -13,6 +13,9 @@ public class PlayerData
     public int hp;
     public int energy;
 
+    // Armor
+    public bool isWearingArmor;
+
     public PlayerData() {
         w_speed = PlayerStats.w_speed;
         r_speed = PlayerStats.w_speed;
@@ -20,5 +23,6 @@ public class PlayerData
         def = PlayerStats.def;
         hp = PlayerStats.hp;
         energy = PlayerStats.energy;
+        isWearingArmor = PlayerStats.isWearingArmor;
     }
 }
