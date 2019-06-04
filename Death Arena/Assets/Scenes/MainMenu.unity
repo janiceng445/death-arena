@@ -2665,8 +2665,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf61a04a9698b454aaa763f9755c41a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TestMoneyField: {fileID: 840606305}
-  Testhealth: {fileID: 0}
 --- !u!114 &879875571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3902,6 +3900,7 @@ GameObject:
   - component: {fileID: 1710931943}
   - component: {fileID: 1710931946}
   - component: {fileID: 1710931947}
+  - component: {fileID: 1710931948}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -4028,6 +4027,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 1046959860}
+--- !u!114 &1710931948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710931941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6621aafe842378f4d8af1a5fa4789c39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TestMoneyField: {fileID: 840606305}
+  Testhealth: {fileID: 0}
 --- !u!1 &1790096659
 GameObject:
   m_ObjectHideFlags: 0

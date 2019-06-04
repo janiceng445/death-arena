@@ -43,8 +43,6 @@ public static class SaveSystem
                 File.Delete(files[i]);
             }
         }
-        Directory.Delete(Application.persistentDataPath + DirectoryPath);
-        CheckDirectory();
     }
 
     // Save
