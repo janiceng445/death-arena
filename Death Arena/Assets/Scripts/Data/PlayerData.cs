@@ -19,6 +19,8 @@ public class PlayerData
 
     // Armor
     public bool isWearingArmor;
+    public string[] armorSet;
+    public string armorSetName;
 
     public PlayerData() {
         w_speed = PlayerStats.w_speed;
@@ -31,5 +33,7 @@ public class PlayerData
         atk_bon = PlayerStats.atk_bon;
         def_bon = PlayerStats.def_bon;
         hp_bon = PlayerStats.hp_bon;
+        armorSet = PlayerStats.armorSet;
+        armorSetName = PlayerStats.armorSetName;
     }
 }

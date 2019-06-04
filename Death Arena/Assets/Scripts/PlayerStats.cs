@@ -19,6 +19,8 @@ public class PlayerStats : MonoBehaviour
 
     // Armor
     public static bool isWearingArmor;
+    public static string[] armorSet;
+    public static string armorSetName;
 
     void Start() {
         // The default
@@ -32,6 +34,8 @@ public class PlayerStats : MonoBehaviour
         atk_bon = 0;
         def_bon = 0;
         hp_bon = 0;
+        armorSet = new string[10];
+        armorSetName = "null";
 
         // Save new player data file if needed
         SaveSystem.SaveNewPlayerData();
@@ -52,6 +56,8 @@ public class PlayerStats : MonoBehaviour
             hp = pd.hp + hp_bon;
             energy = pd.energy;
             isWearingArmor = pd.isWearingArmor;
+            armorSet = pd.armorSet;
+            armorSetName = pd.armorSetName;
         }
     }
 

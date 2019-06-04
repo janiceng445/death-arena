@@ -12,13 +12,6 @@ public class PreviewUpdates : MonoBehaviour
     private Text defense;
     private Text money;
 
-    // Before stats
-    private int curr_hp;
-    private int curr_energy;
-    private int curr_atk;
-    private int curr_def;
-    private int curr_money;
-
     private ArmorSet script;
 
     void Start () {
@@ -27,11 +20,6 @@ public class PreviewUpdates : MonoBehaviour
         attack = GameObject.Find("Attack").GetComponent<Text>();
         defense = GameObject.Find("Defense").GetComponent<Text>();
         money = GameObject.Find("Money").GetComponent<Text>();
-        curr_hp = PlayerStats.hp;
-        curr_energy = PlayerStats.energy;
-        curr_atk = PlayerStats.atk;
-        curr_def = PlayerStats.def;
-        curr_money = WorldStats.gold;
     }
 
     void OnMouseOver() {
@@ -53,10 +41,10 @@ public class PreviewUpdates : MonoBehaviour
     }
 
     void OnMouseExit() {
-        health.text = "Health: " + (curr_hp).ToString();
-        energy.text = "Energy: " + (curr_energy).ToString();
-        attack.text = "Attack: " + (curr_atk).ToString();
-        defense.text = "Defense: " + (curr_def).ToString();
-        money.text = "Money: " + (curr_money).ToString();
+        health.text = "Health: " + (PlayerStats.hp).ToString();
+        energy.text = "Energy: " + (PlayerStats.energy).ToString();
+        attack.text = "Attack: " + (PlayerStats.atk).ToString();
+        defense.text = "Defense: " + (PlayerStats.def).ToString();
+        money.text = "Money: " + (WorldStats.gold).ToString();
     }
 }

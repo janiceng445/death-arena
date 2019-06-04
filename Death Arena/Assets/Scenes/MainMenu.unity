@@ -1914,7 +1914,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 879875570}
+      - m_Target: {fileID: 1710931948}
         m_MethodName: NextLevel
         m_Mode: 1
         m_Arguments:
@@ -1979,7 +1979,7 @@ PrefabInstance:
     - target: {fileID: 5834154097058068793, guid: 03de9fe4be8ca504d931048bccc4231c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.7718472
+      value: 3.21
       objectReference: {fileID: 0}
     - target: {fileID: 5834154097058068793, guid: 03de9fe4be8ca504d931048bccc4231c,
         type: 3}
@@ -2261,7 +2261,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 879875570}
+      - m_Target: {fileID: 1710931948}
         m_MethodName: TestSetMoney
         m_Mode: 1
         m_Arguments:
@@ -3836,7 +3836,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 879875570}
+      - m_Target: {fileID: 1710931948}
         m_MethodName: DeleteFiles
         m_Mode: 1
         m_Arguments:
@@ -4281,7 +4281,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 879875570}
+      - m_Target: {fileID: 1710931948}
         m_MethodName: ResetLevel
         m_Mode: 1
         m_Arguments:

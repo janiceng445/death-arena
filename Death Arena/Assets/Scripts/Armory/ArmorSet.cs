@@ -9,6 +9,7 @@ public class ArmorSet : MonoBehaviour
     public bool isBought;
     public int cost;
     protected Image image;
+    protected string setName;
     protected string itemName;
     protected string itemRefName;
     protected GameObject itemReference;
@@ -18,21 +19,27 @@ public class ArmorSet : MonoBehaviour
     public int healthBuff;
     public int defBuff;
 
+    // Sprites
+    public Sprite[] sprites = new Sprite[10];
+
     protected virtual void Start() {
         index = 0;
         isBought = false;
         cost = 150;
         image = null;
+        setName = "Placeholder";
         itemName = "Placeholder";
         healthBuff = 15;
-        itemRefName = "Iron";
+        itemRefName = "Placeholder";
         itemReference = GameObject.Find(itemRefName);
         itemReference.GetComponentInChildren<Text>().text = cost.ToString();
     }
 
     protected virtual void UpdateBought() {
         // Update what has been bought from saved data
-        isBought = Armory.armorBought[index];
+        if (Armory.armorBought != null) {
+            isBought = Armory.armorBought[index];
+        }
         if (isBought) {
             itemReference.GetComponentInChildren<Button>().interactable = false;
             itemReference.GetComponentInChildren<Button>().GetComponentInChildren<Text>().text = "Bought";
@@ -53,6 +60,7 @@ public class ArmorSet : MonoBehaviour
             itemReference.GetComponentInChildren<Button>().GetComponentInChildren<Text>().text = "Bought";
             WorldStats.gold -= cost;
             SetBuffs();
+            AssignSprites();
 
             // Reset texts
             GameObject.Find("Canvas").GetComponent<ArrmoryButtons>().ResetText();
@@ -60,6 +68,10 @@ public class ArmorSet : MonoBehaviour
         else {
             Debug.Log("Not enough gold");
         }
+    }
+
+    protected void AssignSprites() {
+        GameObject.Find("Player").GetComponent<PlayerGear>().SetGear(sprites, itemRefName);
     }
 
     protected void SetBuffs() {

@@ -15,6 +15,7 @@ public class PlayerGear : MonoBehaviour
     private GameObject lower_leg_left;
     private GameObject upper_leg_right;
     private GameObject lower_leg_right;
+    private string[] names;
     
     void Start() {
         helmet = GameObject.Find("helmet");
@@ -28,7 +29,9 @@ public class PlayerGear : MonoBehaviour
         lower_leg_left = GameObject.Find("l_armor_leg_l");
         upper_leg_right = GameObject.Find("u_armor_leg_r");
         lower_leg_right = GameObject.Find("l_armor_leg_r");
-
+        if (PlayerStats.armorSetName != "null") {
+            LoadArmorSet(PlayerStats.armorSet, PlayerStats.armorSetName); 
+        }
     }
 
     void Update() {
@@ -60,7 +63,50 @@ public class PlayerGear : MonoBehaviour
         }
     }
 
-    void SetImage() {
-        Sprite head_img = Resources.Load<Sprite>("Armor");
+    public void SetGear(Sprite[] sprites, string name) {
+        PlayerStats.armorSetName = name;
+        helmet.GetComponent<SpriteRenderer>().sprite = sprites[0];
+        chest.GetComponent<SpriteRenderer>().sprite = sprites[1];
+        upper_arm_left.GetComponent<SpriteRenderer>().sprite = sprites[2];
+        lower_arm_left.GetComponent<SpriteRenderer>().sprite = sprites[3];
+        upper_arm_right.GetComponent<SpriteRenderer>().sprite = sprites[4];
+        lower_arm_right.GetComponent<SpriteRenderer>().sprite = sprites[5];
+        upper_leg_left.GetComponent<SpriteRenderer>().sprite = sprites[6];
+        lower_leg_left.GetComponent<SpriteRenderer>().sprite = sprites[7];
+        upper_leg_right.GetComponent<SpriteRenderer>().sprite = sprites[8];
+        lower_leg_right.GetComponent<SpriteRenderer>().sprite = sprites[9];
+        GetNamesImages(sprites);
+    }
+
+    public void GetNamesImages(Sprite[] sprites) {
+        names = new string[sprites.Length];
+        for (int i = 0; i < names.Length; i++) {
+            if (sprites[i] != null) 
+                names[i] = sprites[i].name.ToString();
+            else
+                names[i] = "null";
+        }
+        PlayerStats.armorSet = names;
+    }
+
+    public void LoadArmorSet(string[] names, string setName) {
+        // Match name of images and sprite
+        Dictionary<string, Sprite> spriteSet = new Dictionary<string, Sprite>();
+        Sprite[] sprites = Resources.LoadAll<Sprite>("Armor/" + setName);
+        foreach(Sprite sprite in sprites) {
+            spriteSet.Add(sprite.name, sprite);
+        }
+
+        // Assign sprites to renderer
+        helmet.GetComponent<SpriteRenderer>().sprite = names[0] != "null" ? spriteSet[names[0]] : null;
+        chest.GetComponent<SpriteRenderer>().sprite = names[1] != "null" ? spriteSet[names[1]] : null;
+        upper_arm_left.GetComponent<SpriteRenderer>().sprite = names[2] != "null" ? spriteSet[names[2]] : null;
+        lower_arm_left.GetComponent<SpriteRenderer>().sprite = names[3] != "null" ? spriteSet[names[3]] : null;
+        upper_arm_right.GetComponent<SpriteRenderer>().sprite = names[4] != "null" ? spriteSet[names[4]] : null;
+        lower_arm_right.GetComponent<SpriteRenderer>().sprite = names[5] != "null" ? spriteSet[names[5]] : null;
+        upper_leg_left.GetComponent<SpriteRenderer>().sprite = names[6] != "null" ? spriteSet[names[6]] : null;
+        lower_leg_left.GetComponent<SpriteRenderer>().sprite = names[7] != "null" ? spriteSet[names[7]] : null;
+        upper_leg_right.GetComponent<SpriteRenderer>().sprite = names[8] != "null" ? spriteSet[names[8]] : null;
+        lower_leg_right.GetComponent<SpriteRenderer>().sprite = names[9] != "null" ? spriteSet[names[9]] : null;
     }
 }
