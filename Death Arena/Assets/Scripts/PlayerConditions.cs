@@ -5,12 +5,14 @@ using UnityEngine;
 public class PlayerConditions : MonoBehaviour
 {
     public int health;
+    public GameObject hitbox;
 
     // GUI
     public GameObject healthBar;
 
     void Start() {
-        PlayerStats.hp = 50;
+        if (PlayerStats.hp == 0) 
+            PlayerStats.hp = 50;
         health = PlayerStats.hp;
     }
 
@@ -24,7 +26,21 @@ public class PlayerConditions : MonoBehaviour
 
     void CheckHealth() {
         if (health <= 0) {
-            Debug.Log("gameover");
+            // Orientation fix
+            GameObject boss = GameObject.FindGameObjectWithTag("Enemy");
+            if (boss.transform.position.x < transform.position.x && transform.localScale.x < 0) {
+                Vector3 newScale = transform.localScale;
+                newScale.x *= -1;
+                transform.localScale = newScale;
+            }
+            else if (boss.transform.position.x > transform.position.x && transform.localScale.x > 0) {
+                Vector3 newScale = transform.localScale;
+                newScale.x *= -1;
+                transform.localScale = newScale;
+            }
+            hitbox.GetComponent<BoxCollider2D>().enabled = false;
+            GetComponentInChildren<Animator>().Play("Death");
+
         }
     }
 }

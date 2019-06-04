@@ -9,9 +9,10 @@ public class ArrmoryButtons : MonoBehaviour
 
     GameObject armorTab;
     GameObject weaponTab;
-    public Text health;
-    public Text energy;
     public Text attack;
+    public Text health;
+    public Text defense;
+    public Text energy;
     public Text money;
 
     void Start() {
@@ -22,9 +23,10 @@ public class ArrmoryButtons : MonoBehaviour
     }
 
     void Update() {
-        health.text = "Health: " + PlayerStats.hp.ToString();
-        energy.text = "Energy: " + PlayerStats.energy.ToString();
         attack.text = "Attack: " + PlayerStats.atk.ToString();
+        health.text = "Health: " + PlayerStats.hp.ToString();
+        defense.text = "Defense: " + PlayerStats.def.ToString();
+        energy.text = "Energy: " + PlayerStats.energy.ToString();
         money.text = "Money: " + WorldStats.gold.ToString();
     }
 

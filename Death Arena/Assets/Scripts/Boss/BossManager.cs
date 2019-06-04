@@ -25,7 +25,7 @@ public class BossManager : MonoBehaviour
         // Initialization
         bossBar = GameObject.Find("BossBar");
         bossBar.SetActive(false);
-        ReturnToTitle_timer = 500;
+        ReturnToTitle_timer = 200;
         bossAlive = true;
         switch(WorldStats.level) {
             case 1:

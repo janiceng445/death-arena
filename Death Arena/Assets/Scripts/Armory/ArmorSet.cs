@@ -10,9 +10,13 @@ public class ArmorSet : MonoBehaviour
     protected int cost;
     protected Image image;
     protected string itemName;
-    protected int healthBuff;
     protected string itemRefName;
     protected GameObject itemReference;
+
+    // Buff stats
+    protected int attackBuff;
+    protected int healthBuff;
+    protected int defBuff;
 
     protected virtual void Start() {
         index = 0;
@@ -46,9 +50,14 @@ public class ArmorSet : MonoBehaviour
             itemReference.GetComponentInChildren<Button>().interactable = false;
             itemReference.GetComponentInChildren<Button>().GetComponentInChildren<Text>().text = "Bought";
             WorldStats.gold -= cost;
+            SetBuffs();
         }
         else {
             Debug.Log("Not enough gold");
         }
+    }
+
+    protected void SetBuffs() {
+        PlayerStats.AddBonuses(attackBuff, healthBuff, defBuff);
     }
 }

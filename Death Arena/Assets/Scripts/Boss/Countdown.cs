@@ -14,7 +14,7 @@ public class Countdown : MonoBehaviour
 
     void Start()
     {
-        countdown = 400;
+        countdown = 200; // should be 400
         countdownTimer = countdown;
         cdText = gameObject.GetComponent<TMPro.TextMeshProUGUI>();
         animator = gameObject.GetComponent<Animator>();

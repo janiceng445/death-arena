@@ -15,6 +15,9 @@ public class Iron : ArmorSet
         itemRefName = "iron";
         itemReference = GameObject.Find(itemRefName);
         itemReference.GetComponentInChildren<Text>().text = cost.ToString();
+        attackBuff = 0;
+        healthBuff = 50;
+        defBuff = 5;
 
         UpdateBought();
     }

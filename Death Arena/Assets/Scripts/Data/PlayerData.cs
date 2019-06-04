@@ -13,6 +13,10 @@ public class PlayerData
     public int hp;
     public int energy;
 
+    public int atk_bon;
+    public int def_bon;
+    public int hp_bon;
+
     // Armor
     public bool isWearingArmor;
 
@@ -24,5 +28,8 @@ public class PlayerData
         hp = PlayerStats.hp;
         energy = PlayerStats.energy;
         isWearingArmor = PlayerStats.isWearingArmor;
+        atk_bon = PlayerStats.atk_bon;
+        def_bon = PlayerStats.def_bon;
+        hp_bon = PlayerStats.hp_bon;
     }
 }
