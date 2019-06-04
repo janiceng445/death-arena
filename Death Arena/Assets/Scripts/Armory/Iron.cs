@@ -12,7 +12,7 @@ public class Iron : ArmorSet
         image = null;
         itemName = "Placeholder";
         healthBuff = 15;
-        itemRefName = "iron";
+        itemRefName = "Iron";
         itemReference = GameObject.Find(itemRefName);
         itemReference.GetComponentInChildren<Text>().text = cost.ToString();
         attackBuff = 0;

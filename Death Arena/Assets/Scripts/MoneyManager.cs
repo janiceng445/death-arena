@@ -39,4 +39,7 @@ public class MoneyManager : MonoBehaviour
         WorldStats.level = 1;
         SaveSystem.SaveData();
     }
+    public void DeleteFiles() {
+        SaveSystem.DeleteSaveDirectory();
+    }
 }

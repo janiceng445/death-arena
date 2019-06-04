@@ -6,17 +6,17 @@ using UnityEngine.UI;
 public class ArmorSet : MonoBehaviour
 {
     protected int index;
-    protected bool isBought;
-    protected int cost;
+    public bool isBought;
+    public int cost;
     protected Image image;
     protected string itemName;
     protected string itemRefName;
     protected GameObject itemReference;
 
     // Buff stats
-    protected int attackBuff;
-    protected int healthBuff;
-    protected int defBuff;
+    public int attackBuff;
+    public int healthBuff;
+    public int defBuff;
 
     protected virtual void Start() {
         index = 0;
@@ -25,7 +25,7 @@ public class ArmorSet : MonoBehaviour
         image = null;
         itemName = "Placeholder";
         healthBuff = 15;
-        itemRefName = "iron";
+        itemRefName = "Iron";
         itemReference = GameObject.Find(itemRefName);
         itemReference.GetComponentInChildren<Text>().text = cost.ToString();
     }
@@ -44,6 +44,8 @@ public class ArmorSet : MonoBehaviour
 
     public virtual void Buy() {
         if (WorldStats.gold >= cost) {
+            AudioClip purchaseSFX = (AudioClip) Resources.Load("SFX/purchase", typeof(AudioClip));
+            GameObject.Find("Canvas").GetComponent<AudioSource>().PlayOneShot(purchaseSFX);
             PlayerStats.isWearingArmor = true;
             isBought = true;
             Armory.armorBought[index] = isBought;
@@ -51,6 +53,9 @@ public class ArmorSet : MonoBehaviour
             itemReference.GetComponentInChildren<Button>().GetComponentInChildren<Text>().text = "Bought";
             WorldStats.gold -= cost;
             SetBuffs();
+
+            // Reset texts
+            GameObject.Find("Canvas").GetComponent<ArrmoryButtons>().ResetText();
         }
         else {
             Debug.Log("Not enough gold");

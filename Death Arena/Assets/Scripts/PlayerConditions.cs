@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerConditions : MonoBehaviour
 {
     public int health;
     public GameObject hitbox;
+    private int timer;
 
     // GUI
     public GameObject healthBar;
@@ -14,6 +16,7 @@ public class PlayerConditions : MonoBehaviour
         if (PlayerStats.hp == 0) 
             PlayerStats.hp = 50;
         health = PlayerStats.hp;
+        timer = 200;
     }
 
     void Update() {
@@ -38,9 +41,17 @@ public class PlayerConditions : MonoBehaviour
                 newScale.x *= -1;
                 transform.localScale = newScale;
             }
+
+            // Disable things
             hitbox.GetComponent<BoxCollider2D>().enabled = false;
             GetComponentInChildren<Animator>().Play("Death");
+            GetComponentInChildren<PlayerController>().WalkSpeed = 0;
 
+            // Timer until going back to title screen
+            timer--;
+            if (timer <= 0) {
+                SceneManager.LoadScene("MainMenu");
+            }
         }
     }
 }

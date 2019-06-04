@@ -8,8 +8,10 @@ public static class SaveSystem
     const string PlayerFileName = "/player.dat";
     const string WorldFileName = "/world.dat";
     const string ArmoryFileName = "/armory.dat";
+    const string DirectoryPath = "/Save";
 
     public static void SaveData() {
+        CheckDirectory();
         SavePlayerData();
         SaveWorldData();
         SaveArmoryData();
@@ -21,12 +23,36 @@ public static class SaveSystem
         LoadArmoryData();
     }
 
+    // Check if directory exists
+    public static void CheckDirectory() {
+        if (!Directory.Exists(Application.persistentDataPath + DirectoryPath)) {
+            CreateSaveDirectory();
+        }
+    }
+
+    // Create directory
+    public static void CreateSaveDirectory() {
+        Directory.CreateDirectory(Application.persistentDataPath + DirectoryPath);
+    }
+
+    // Delete directory
+    public static void DeleteSaveDirectory() {
+        if (Directory.Exists(Application.persistentDataPath + DirectoryPath)) {
+            var files = Directory.GetFiles(Application.persistentDataPath + DirectoryPath);
+            for (int i = 0; i < files.Length; i++) {
+                File.Delete(files[i]);
+            }
+        }
+        Directory.Delete(Application.persistentDataPath + DirectoryPath);
+        CheckDirectory();
+    }
 
     // Save
     #region Saving Methods
     public static void SavePlayerData() {
+        CheckDirectory();
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + PlayerFileName;
+        string path = Application.persistentDataPath + DirectoryPath + PlayerFileName;
         FileStream stream = new FileStream(path, FileMode.Create);
 
         PlayerData data = new PlayerData();
@@ -36,8 +62,9 @@ public static class SaveSystem
     }
 
     public static void SaveWorldData() {
+        CheckDirectory();
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + WorldFileName;
+        string path = Application.persistentDataPath + DirectoryPath + WorldFileName;
         FileStream stream = new FileStream(path, FileMode.Create);
 
         WorldData data = new WorldData();
@@ -47,8 +74,9 @@ public static class SaveSystem
     }
 
     public static void SaveArmoryData() {
+        CheckDirectory();
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + ArmoryFileName;
+        string path = Application.persistentDataPath + DirectoryPath + ArmoryFileName;
         FileStream stream = new FileStream(path, FileMode.Create);
 
         ArmoryData data = new ArmoryData();
@@ -61,19 +89,19 @@ public static class SaveSystem
     // Save new data
     #region Saving New Methods
     public static void SaveNewPlayerData() {
-        string path = Application.persistentDataPath + PlayerFileName;
+        string path = Application.persistentDataPath + DirectoryPath + PlayerFileName;
         if (!File.Exists(path)) {
             SavePlayerData();
         }
     }
     public static void SaveNewWorldData() {
-        string path = Application.persistentDataPath + WorldFileName;
+        string path = Application.persistentDataPath + DirectoryPath + WorldFileName;
         if (!File.Exists(path)) {
             SaveWorldData();
         }
     }
     public static void SaveNewArmoryData() {
-        string path = Application.persistentDataPath + ArmoryFileName;
+        string path = Application.persistentDataPath + DirectoryPath + ArmoryFileName;
         if (!File.Exists(path)) {
             SaveArmoryData();
         }
@@ -83,7 +111,7 @@ public static class SaveSystem
     // Load
     #region Loading Methods
     public static PlayerData LoadPlayerData() {
-        string path = Application.persistentDataPath + PlayerFileName;
+        string path = Application.persistentDataPath + DirectoryPath + PlayerFileName;
         if (File.Exists(path)) {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
@@ -99,7 +127,7 @@ public static class SaveSystem
     }
 
     public static WorldData LoadWorldData() {
-        string path = Application.persistentDataPath + WorldFileName;
+        string path = Application.persistentDataPath + DirectoryPath + WorldFileName;
         if (File.Exists(path)) {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
@@ -116,7 +144,7 @@ public static class SaveSystem
     }
 
     public static ArmoryData LoadArmoryData() {
-        string path = Application.persistentDataPath + ArmoryFileName;
+        string path = Application.persistentDataPath + DirectoryPath + ArmoryFileName;
         if (File.Exists(path)) {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);

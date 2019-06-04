@@ -20,14 +20,18 @@ public class ArrmoryButtons : MonoBehaviour
         weaponTab = GameObject.Find("Weapons Tab");
         armorTab.SetActive(true);
         weaponTab.SetActive(false);
+        ResetText();
     }
 
-    void Update() {
+    public void ResetText() {
         attack.text = "Attack: " + PlayerStats.atk.ToString();
         health.text = "Health: " + PlayerStats.hp.ToString();
         defense.text = "Defense: " + PlayerStats.def.ToString();
         energy.text = "Energy: " + PlayerStats.energy.ToString();
         money.text = "Money: " + WorldStats.gold.ToString();
+    }
+
+    void Update() {
     }
 
     public void ReturnTitle() {
