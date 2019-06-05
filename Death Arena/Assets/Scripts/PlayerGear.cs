@@ -15,6 +15,8 @@ public class PlayerGear : MonoBehaviour
     private GameObject lower_leg_left;
     private GameObject upper_leg_right;
     private GameObject lower_leg_right;
+    private GameObject weapon_back;
+    private GameObject weapon_hand;
     private string[] names;
     
     void Start() {
@@ -29,8 +31,13 @@ public class PlayerGear : MonoBehaviour
         lower_leg_left = GameObject.Find("l_armor_leg_l");
         upper_leg_right = GameObject.Find("u_armor_leg_r");
         lower_leg_right = GameObject.Find("l_armor_leg_r");
+        weapon_back = GameObject.Find("weapon");
+        weapon_hand = GameObject.Find("WeaponHitbox");
         if (PlayerStats.armorSetName != "null") {
             LoadArmorSet(PlayerStats.armorSet, PlayerStats.armorSetName); 
+        }
+        if (PlayerStats.weaponName != "null") {
+            LoadWeapon();
         }
     }
 
@@ -61,6 +68,11 @@ public class PlayerGear : MonoBehaviour
             upper_leg_right.GetComponent<SpriteRenderer>().enabled = false;
             lower_leg_right.GetComponent<SpriteRenderer>().enabled = false;
         }
+        if (!PlayerStats.hasNewWeapon) {
+            Sprite broadsword = Resources.Load<Sprite>("Armor/w_broadsword");
+            weapon_back.GetComponent<SpriteRenderer>().sprite = broadsword;
+            weapon_hand.GetComponent<SpriteRenderer>().sprite = broadsword;
+        }
     }
 
     public void SetGear(Sprite[] sprites, string name) {
@@ -76,6 +88,12 @@ public class PlayerGear : MonoBehaviour
         upper_leg_right.GetComponent<SpriteRenderer>().sprite = sprites[8];
         lower_leg_right.GetComponent<SpriteRenderer>().sprite = sprites[9];
         GetNamesImages(sprites);
+    }
+
+    public void SetWeapon(Sprite[] sprites, string name) {
+        PlayerStats.weaponName = name;
+        weapon_back.GetComponent<SpriteRenderer>().sprite = sprites[0];
+        weapon_hand.GetComponent<SpriteRenderer>().sprite = sprites[0];
     }
 
     public void GetNamesImages(Sprite[] sprites) {
@@ -108,5 +126,11 @@ public class PlayerGear : MonoBehaviour
         lower_leg_left.GetComponent<SpriteRenderer>().sprite = names[7] != "null" ? spriteSet[names[7]] : null;
         upper_leg_right.GetComponent<SpriteRenderer>().sprite = names[8] != "null" ? spriteSet[names[8]] : null;
         lower_leg_right.GetComponent<SpriteRenderer>().sprite = names[9] != "null" ? spriteSet[names[9]] : null;
+    }
+
+    public void LoadWeapon() {
+        Sprite sprite = Resources.Load<Sprite>("Armor/" + PlayerStats.weaponName);
+        weapon_back.GetComponent<SpriteRenderer>().sprite = sprite;
+        weapon_hand.GetComponent<SpriteRenderer>().sprite = sprite;
     }
 }

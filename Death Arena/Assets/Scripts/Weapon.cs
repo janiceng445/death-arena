@@ -9,7 +9,7 @@ public class Weapon : MonoBehaviour
 
     void Start() {
         power = WeaponStats.weapon_power;
-
+        
         // TEMP
         power = PlayerStats.atk;
 

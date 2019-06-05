@@ -27,18 +27,18 @@ public class ArmorSet : MonoBehaviour
 
     protected virtual void Start() {
         index = 0;
-        isBought = false;
         cost = 150;
         image = null;
-        setName = "Placeholder";
-        itemName = "Placeholder";
+        setName = "null";
+        itemName = "null";
         healthBuff = 15;
-        itemRefName = "Placeholder";
-        itemReference = GameObject.Find(itemRefName);
-        itemReference.GetComponentInChildren<Text>().text = cost.ToString();
+        itemRefName = "null";
     }
 
     protected virtual void FinalizeStart() {
+        isBought = false;
+        itemReference = GameObject.Find(itemRefName);
+        itemReference.GetComponentInChildren<Text>().text = cost.ToString();
         toggleReference = GetComponentInChildren<Toggle>().gameObject;
         toggleReference.SetActive(false);
         toggleGroupReference = GameObject.FindObjectOfType<ToggleGroup>().gameObject;

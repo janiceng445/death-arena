@@ -8,8 +8,8 @@ using System.Linq;
 public class ArrmoryButtons : MonoBehaviour
 {
 
-    GameObject armorTab;
-    GameObject weaponTab;
+    private GameObject armorTab;
+    private GameObject weaponTab;
     public Text attack;
     public Text health;
     public Text defense;
@@ -30,9 +30,22 @@ public class ArrmoryButtons : MonoBehaviour
         defense.text = "Defense: " + PlayerStats.def.ToString();
         energy.text = "Energy: " + PlayerStats.energy.ToString();
         money.text = "Money: " + WorldStats.gold.ToString();
+        attack.color = new Color32(0x32, 0x32, 0x32, 0xFF);
+        health.color = new Color32(0x32, 0x32, 0x32, 0xFF);
+        defense.color = new Color32(0x32, 0x32, 0x32, 0xFF);
+        energy.color = new Color32(0x32, 0x32, 0x32, 0xFF);
+        money.color = new Color32(0x32, 0x32, 0x32, 0xFF);
     }
 
     void Update() {
+        ToggleGroup armor_ref = armorTab.GetComponent<ToggleGroup>();
+        ToggleGroup weapon_Ref = weaponTab.GetComponent<ToggleGroup>();
+        if (armor_ref.ActiveToggles().FirstOrDefault() != null) {
+            PlayerStats.armorSetName = armor_ref.ActiveToggles().FirstOrDefault().transform.parent.name;
+        }
+        if (weapon_Ref.ActiveToggles().FirstOrDefault() != null) {
+            PlayerStats.weaponName = weapon_Ref.ActiveToggles().FirstOrDefault().transform.parent.name;
+        }
     }
 
     public void ReturnTitle() {

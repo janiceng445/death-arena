@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Iron : ArmorSet
+public class Iron : Item
 {
     protected override void Start() {
         // Variables
@@ -12,17 +12,14 @@ public class Iron : ArmorSet
         attackBuff = 0;
         healthBuff = 50;
         defBuff = 5;
+        type = 1;
 
         // Defaults
-        isBought = false;
         image = null;
         itemName = "Placeholder";
         itemRefName = "Iron";
-        itemReference = GameObject.Find(itemRefName);
-        itemReference.GetComponentInChildren<Text>().text = cost.ToString();
 
         // Call functions
         FinalizeStart();
-        UpdateBought();
     }
 }

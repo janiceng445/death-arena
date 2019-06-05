@@ -14,5 +14,6 @@ public class ArmoryData
 
     public ArmoryData() {
         armorBought = Armory.armorBought;
+        weaponBought = Armory.weaponBought;
     }
 }
