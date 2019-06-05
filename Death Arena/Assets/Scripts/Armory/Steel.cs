@@ -22,6 +22,7 @@ public class Steel : ArmorSet
         itemReference.GetComponentInChildren<Text>().text = cost.ToString();
 
         // Call functions
+        FinalizeStart();
         UpdateBought();
     }
 }

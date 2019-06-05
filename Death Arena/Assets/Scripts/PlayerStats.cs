@@ -62,12 +62,12 @@ public class PlayerStats : MonoBehaviour
     }
 
     public static void AddBonuses(int a, int h, int d) {
+        atk += a - atk_bon;
+        hp += h - hp_bon;
+        def += d - def_bon;
         atk_bon = a;
         hp_bon = h;
         def_bon = d;
-        atk += atk_bon;
-        hp += hp_bon;
-        def += def_bon;
     }
     
 }

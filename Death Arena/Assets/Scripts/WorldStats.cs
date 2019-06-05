@@ -9,7 +9,7 @@ public class WorldStats : MonoBehaviour
 
     void Start() {
         level = 1;
-        gold = 0;
+        gold = 5000;
 
         // Save new world data file if needed
         SaveSystem.SaveNewWorldData();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class ArmorSet : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class ArmorSet : MonoBehaviour
     protected string itemName;
     protected string itemRefName;
     protected GameObject itemReference;
+    protected GameObject toggleReference;
+    protected GameObject toggleGroupReference;
 
     // Buff stats
     public int attackBuff;
@@ -35,6 +38,12 @@ public class ArmorSet : MonoBehaviour
         itemReference.GetComponentInChildren<Text>().text = cost.ToString();
     }
 
+    protected virtual void FinalizeStart() {
+        toggleReference = GetComponentInChildren<Toggle>().gameObject;
+        toggleReference.SetActive(false);
+        toggleGroupReference = GameObject.FindObjectOfType<ToggleGroup>().gameObject;
+    }
+
     protected virtual void UpdateBought() {
         // Update what has been bought from saved data
         if (Armory.armorBought != null) {
@@ -43,10 +52,21 @@ public class ArmorSet : MonoBehaviour
         if (isBought) {
             itemReference.GetComponentInChildren<Button>().interactable = false;
             itemReference.GetComponentInChildren<Button>().GetComponentInChildren<Text>().text = "Bought";
+            toggleReference.SetActive(true);
+            if (PlayerStats.armorSetName == itemRefName) {
+                toggleReference.GetComponent<Toggle>().isOn = true;
+            }
         }
     }
 
     protected virtual void Update() {
+        // Getting name of holding toggle
+        if (toggleGroupReference.GetComponent<ToggleGroup>().ActiveToggles().FirstOrDefault() != null) {
+            GameObject currArmorObject = GameObject.FindObjectOfType<ToggleGroup>().ActiveToggles().FirstOrDefault().transform.parent.gameObject;
+            string currArmorSet = currArmorObject.name;
+            Sprite[] currSprites = currArmorObject.GetComponent<ArmorSet>().sprites;
+            GameObject.Find("Player").GetComponent<PlayerGear>().SetGear(currSprites, currArmorSet);
+        }
     }
 
     public virtual void Buy() {
@@ -59,6 +79,11 @@ public class ArmorSet : MonoBehaviour
             itemReference.GetComponentInChildren<Button>().interactable = false;
             itemReference.GetComponentInChildren<Button>().GetComponentInChildren<Text>().text = "Bought";
             WorldStats.gold -= cost;
+            
+            // Enabling the toggle
+            toggleReference.SetActive(true);
+            toggleReference.GetComponent<Toggle>().isOn = true;
+
             SetBuffs();
             AssignSprites();
 
