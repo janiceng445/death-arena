@@ -204,7 +204,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1041251966}
-        m_MethodName: ToggleCurrGear
+        m_MethodName: ToggleChangeGear
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4473,7 +4473,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 35564931}
-        m_MethodName: ToggleCurrGear
+        m_MethodName: ToggleChangeGear
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

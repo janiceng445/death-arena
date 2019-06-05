@@ -66,6 +66,8 @@ public class ArmorSet : MonoBehaviour
             string currArmorSet = currArmorObject.name;
             Sprite[] currSprites = currArmorObject.GetComponent<ArmorSet>().sprites;
             GameObject.Find("Player").GetComponent<PlayerGear>().SetGear(currSprites, currArmorSet);
+            PlayerStats.AddBonuses(currArmorObject.GetComponent<ArmorSet>().attackBuff, currArmorObject.GetComponent<ArmorSet>().healthBuff, currArmorObject.GetComponent<ArmorSet>().defBuff);
+            GameObject.Find("Canvas").GetComponent<ArrmoryButtons>().ResetText();
         }
     }
 

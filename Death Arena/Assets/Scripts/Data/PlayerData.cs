@@ -25,9 +25,9 @@ public class PlayerData
     public PlayerData() {
         w_speed = PlayerStats.w_speed;
         r_speed = PlayerStats.w_speed;
-        atk = PlayerStats.atk;
-        def = PlayerStats.def;
-        hp = PlayerStats.hp;
+        atk = PlayerStats.atk - PlayerStats.atk_bon;
+        def = PlayerStats.def - PlayerStats.def_bon;
+        hp = PlayerStats.hp - PlayerStats.hp_bon;;
         energy = PlayerStats.energy;
         isWearingArmor = PlayerStats.isWearingArmor;
         atk_bon = PlayerStats.atk_bon;
