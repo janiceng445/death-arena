@@ -52,6 +52,7 @@ public class PauseMenu : MonoBehaviour
         }
         else {
             menu.SetActive(false);
+            closeConfirmation();
             // Resume all animations
             Animator[] anims = (Animator[]) GameObject.FindObjectsOfType(typeof(Animator));
             foreach (Animator anim in anims) {       

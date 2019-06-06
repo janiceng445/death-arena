@@ -1,0 +1,341 @@
+fileFormatVersion: 2
+guid: fe13e6cdb60a4674ba508e1b9f5c62f2
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4226397978021778064
+    second: steel_0
+  - first:
+      213: -3691853470787869031
+    second: steel_1
+  - first:
+      213: -66283223140571393
+    second: steel_2
+  - first:
+      213: -4625912186589108272
+    second: steel_3
+  - first:
+      213: -2845155152400892366
+    second: steel_4
+  - first:
+      213: -3869403725959430812
+    second: steel_5
+  - first:
+      213: 4087749444819642008
+    second: steel_6
+  - first:
+      213: -6503362087972162227
+    second: steel_7
+  - first:
+      213: 1571257531024911125
+    second: steel_8
+  - first:
+      213: 8906453585310706166
+    second: steel_9
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: steel_0
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 707
+        width: 274
+        height: 281
+      alignment: 9
+      pivot: {x: 0.47707462, y: 0.5296003}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0292a7cdad6aa6468ff304f90d68bf0
+      internalID: 4226397978021778064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: steel_1
+      rect:
+        serializedVersion: 2
+        x: 758
+        y: 866
+        width: 104
+        height: 159
+      alignment: 9
+      pivot: {x: 0.5800893, y: 0.7881213}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5572f90bc82dd594d8ab5833e58973ee
+      internalID: -3691853470787869031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: steel_2
+      rect:
+        serializedVersion: 2
+        x: 877
+        y: 870
+        width: 130
+        height: 157
+      alignment: 9
+      pivot: {x: 0.29176778, y: 0.8315807}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f825df7629c45a4ba6b5512d52c1948
+      internalID: -66283223140571393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: steel_3
+      rect:
+        serializedVersion: 2
+        x: 755
+        y: 712
+        width: 89
+        height: 138
+      alignment: 9
+      pivot: {x: 0.64038086, y: 0.741429}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70fba99c809285f408b442507b44a096
+      internalID: -4625912186589108272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: steel_4
+      rect:
+        serializedVersion: 2
+        x: 926
+        y: 732
+        width: 104
+        height: 134
+      alignment: 9
+      pivot: {x: 0.5600674, y: 0.8574141}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 190f829e6171aff45acd4028db89b925
+      internalID: -2845155152400892366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: steel_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 443
+        height: 514
+      alignment: 9
+      pivot: {x: 0.4291044, y: 0.41038272}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8489be0140ecb164693007eef6ffa5bd
+      internalID: -3869403725959430812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: steel_6
+      rect:
+        serializedVersion: 2
+        x: 766
+        y: 468
+        width: 102
+        height: 151
+      alignment: 9
+      pivot: {x: 0.54083014, y: 0.80338633}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea6a330c0e5e88c4298f0e95488fed97
+      internalID: 4087749444819642008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: steel_7
+      rect:
+        serializedVersion: 2
+        x: 915
+        y: 473
+        width: 98
+        height: 147
+      alignment: 9
+      pivot: {x: 0.563745, y: 0.78331107}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a032e66cc216c146acccd79ca14170d
+      internalID: -6503362087972162227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: steel_8
+      rect:
+        serializedVersion: 2
+        x: 737
+        y: 341
+        width: 115
+        height: 114
+      alignment: 9
+      pivot: {x: 0.536214, y: 0.84705395}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f04fe9bcd77d78a4494b66bd15632a09
+      internalID: 1571257531024911125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: steel_9
+      rect:
+        serializedVersion: 2
+        x: 938
+        y: 343
+        width: 108
+        height: 110
+      alignment: 9
+      pivot: {x: 0.36503488, y: 0.85967517}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05ac0a29b9c6eda4a92ea7822458b2ab
+      internalID: 8906453585310706166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 972ec9f0c8baada4ebb62449bf474733
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

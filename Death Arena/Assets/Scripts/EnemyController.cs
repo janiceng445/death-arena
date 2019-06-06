@@ -56,7 +56,6 @@ public class EnemyController : MonoBehaviour
     }
 
     public void TakeDamage(int amount) {
-        Debug.Log("Receive dmg");
         gameObject.GetComponent<EnemyConditions>().health -= amount;
     }
 

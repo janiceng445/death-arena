@@ -9,9 +9,13 @@ public class Weapon : MonoBehaviour
 
     void Start() {
         power = WeaponStats.weapon_power;
-
+        
         // TEMP
-        power = 1000;
+        power = PlayerStats.atk;
+
+        if (power == 0) {
+            power = 500;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collider) {

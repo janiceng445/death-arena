@@ -41,7 +41,6 @@ public class PlayerController : MonoBehaviour
         WalkSpeed = PlayerStats.w_speed;
         RunSpeed = PlayerStats.r_speed;
         animator = gameObject.GetComponentInChildren<Animator>();
-        //animator = gameObject.GetComponent<Animator>();
         plDashEffect = Resources.Load<GameObject>("Prefabs/plDashEffect").transform;
 
         // Ability icon initalization
@@ -108,10 +107,6 @@ public class PlayerController : MonoBehaviour
         if (dashOnce) {
             dashTimer_remaining--;
             ability1.GetComponent<Image>().fillAmount += 0.01f;
-            // if (dashTimer_remaining <= 0) {
-            //     dashTimer_remaining = dashTimer;
-            //     dashOnce = false;
-            // }
             if (ability1.GetComponent<Image>().fillAmount >= 1f) {
                 ability1.GetComponent<Image>().fillAmount = 1f;
                 dashOnce = false;

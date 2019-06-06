@@ -71,36 +71,39 @@ public class Boss : MonoBehaviour
 
     protected virtual void Move() {
         if (!GameSettings.paused) {
-            // Fix sorting order
-            sprite.sortingOrder = Mathf.RoundToInt(transform.parent.transform.position.y * 100f) * -1;
+            if (target.GetComponent<PlayerConditions>().health >= 0.001f) {
+                // Fix sorting order
+                sprite.sortingOrder = Mathf.RoundToInt(transform.parent.transform.position.y * 100f) * -1;
 
-            if (!isAttacking && !isTakingBreak && !inRange) {
-                // Move
-                isMoving = true;
-                if (Vector2.Distance(myLocation.position, targetLocation.position) > DistanceAway) {
-                    transform.parent.transform.position = Vector2.MoveTowards(transform.parent.transform.position, targetLocation.position, Speed * Time.deltaTime);
+                if (!isAttacking && !isTakingBreak && !inRange) {
+                    // Move
+                    isMoving = true;
+                    if (Vector2.Distance(myLocation.position, targetLocation.position) > DistanceAway) {
+                        transform.parent.transform.position = Vector2.MoveTowards(transform.parent.transform.position, targetLocation.position, Speed * Time.deltaTime);
+                    }
+                    
+                    // Flip
+                    if (transform.parent.transform.position.x < targetLocation.position.x && !FacingRight) {
+                        Flip();
+                    }
+                    else if (transform.parent.transform.position.x > targetLocation.position.x && FacingRight) {
+                        Flip();
+                    }
                 }
-                
-                // Flip
-                if (transform.parent.transform.position.x < targetLocation.position.x && !FacingRight) {
-                    Flip();
+                else {
+                    isMoving = false;
                 }
-                else if (transform.parent.transform.position.x > targetLocation.position.x && FacingRight) {
-                    Flip();
-                }
-            }
-            else {
-                isMoving = false;
             }
         }
     }
 
     public virtual void Attack() {
-        if (target.GetComponent<PlayerConditions>().health - power <= 0) {
+        float calc_power = power - ((float) PlayerStats.def / 2f);
+        if (target.GetComponent<PlayerConditions>().health - calc_power <= 0) {
             target.GetComponent<PlayerConditions>().health = 0;
         }
         else {
-            target.GetComponent<PlayerConditions>().health -= power;
+            target.GetComponent<PlayerConditions>().health -= (int) Mathf.Ceil(calc_power);
         }
     }
 

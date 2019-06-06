@@ -23,15 +23,27 @@ public class PlayerManager : MonoBehaviour
 
 
     public void Move(float x, float y) {
+
         // Fix sorting order
         //sprite.sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
         gameObject.GetComponent<SortingGroup>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
 
-        // // Assign velocity
-        // Vector3 newVelocity = new Vector2(x * 10f, y * 10f);
+        // Speed reduction
+        float speedReduc;
+        if (isStunned) {
+            speedReduc = 0;
+        }
+        else if (isSlowed) {
+            speedReduc = 0.5f;
+        }
+        else {
+            speedReduc = 1f;
+        }
+        // Assign velocity
+        Vector3 newVelocity = new Vector2(x * 10f * speedReduc, y * 10f * speedReduc);
 
-        // // Smooth out velocity and apply to character
-        // body.velocity = Vector3.SmoothDamp(body.velocity, newVelocity, ref ref_velocity, smoothing);
+        // Smooth out velocity and apply to character
+        body.velocity = Vector3.SmoothDamp(body.velocity, newVelocity, ref ref_velocity, smoothing);
 
         // Fix face direction
         if (x < 0 && FacingRight) {
@@ -39,22 +51,6 @@ public class PlayerManager : MonoBehaviour
         }
         else if (x > 0 && !FacingRight) {
             Flip();
-        }
-        // Assign velocity
-        if (!isStunned && !isSlowed) {
-            Vector3 newVelocity = new Vector2(x * 10f, y *10f);
-
-            // Smooth out velocity and apply to character
-            body.velocity = Vector3.SmoothDamp(body.velocity, newVelocity, ref ref_velocity, smoothing);
-        }
-
-        else if (isStunned) {
-            body.velocity = new Vector2 (0f, 0f);
-        }
-        
-        else if (isSlowed) {
-            Vector3 newVelocity = new Vector2 (x * 5f, y * 5f); 
-            body.velocity = Vector3.SmoothDamp(body.velocity, newVelocity, ref ref_velocity, smoothing);
         }
     }
 

@@ -106,7 +106,7 @@ public class Minotaur : Boss
             chooseTimer ++;
             if (chooseTimer >= 400)
             {
-                ability = 2;//Random.Range (1,4); 
+                ability = 1;//Random.Range (1,4); 
                 chooseTimer = 0; 
             }
         }

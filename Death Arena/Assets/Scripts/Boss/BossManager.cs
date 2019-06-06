@@ -16,6 +16,11 @@ public class BossManager : MonoBehaviour
     private int ReturnToTitle_timer;
     private bool IncLvlOnce = false;
 
+    // Stats upgrade for player
+    private int hp_up;
+    private int atk_up;
+    private int def_up;
+
     void Start() {
         // Error checking with world stats
         if (WorldStats.level == 0) {
@@ -25,7 +30,7 @@ public class BossManager : MonoBehaviour
         // Initialization
         bossBar = GameObject.Find("BossBar");
         bossBar.SetActive(false);
-        ReturnToTitle_timer = 500;
+        ReturnToTitle_timer = 200;
         bossAlive = true;
         switch(WorldStats.level) {
             case 1:
@@ -35,6 +40,11 @@ public class BossManager : MonoBehaviour
                 namePrefab = "Minotaur";
                 break;
         }
+
+        // Player ups
+        hp_up = (WorldStats.level * 10) + (int) (0.2f * PlayerStats.hp);
+        atk_up = (WorldStats.level * 2) + (int) (0.2f * PlayerStats.atk);
+        def_up  = WorldStats.level * 2;
     }
 
     void Update() {        
@@ -51,6 +61,9 @@ public class BossManager : MonoBehaviour
             if (ReturnToTitle_timer <= 0 && !IncLvlOnce) {
                 IncLvlOnce = true;
                 WorldStats.level += 1;
+                PlayerStats.hp += hp_up;
+                PlayerStats.atk += atk_up;
+                PlayerStats.def += def_up;
                 SaveSystem.SaveData();
                 SceneManager.LoadScene("MainMenu");
             }
