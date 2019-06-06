@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3473694224399723082}
   - component: {fileID: 549028048296432480}
+  - component: {fileID: -2814047444243699629}
   m_Layer: 0
   m_Name: Boulder
   m_TagString: Untagged
@@ -79,3 +80,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-2814047444243699629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5213495911457696123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 079804f8962659a41a2483caa76d0106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

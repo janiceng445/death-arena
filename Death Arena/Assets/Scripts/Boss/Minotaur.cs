@@ -20,7 +20,8 @@ public class Minotaur : Boss
     private GameObject hammerFistCollider; 
 
     // BoulderToss ability
-    private GameObject boulderCollider; 
+    private GameObject boulderCollider;
+    private GameObject boulderPosition;  
 
     // Custom conditions
     public bool slamRange;
@@ -202,8 +203,15 @@ public class Minotaur : Boss
 
     void boulderToss ()
     {
-        boulderCollider = Instantiate(Resources.Load<GameObject>("Prefabs/Boulder"), new Vector3(0,0,0), Quaternion.identity); 
+        boulderCollider = Instantiate(Resources.Load<GameObject>("Prefabs/Boulder"), boulderGetLocation(), Quaternion.identity); 
         boulderTossBool = false; 
+    }
+
+    public Vector3 boulderGetLocation()
+    {
+        boulderCollider = GameObject.Find("Boulder"); 
+        Vector3 boulderPos = boulderCollider.transform.position; 
+        return boulderPos; 
     }
 
     void rampage ()
