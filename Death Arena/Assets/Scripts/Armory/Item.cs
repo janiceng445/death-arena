@@ -4,6 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
+/*
+    When adding a new item to shop, you must do the following:
+    1. Create a script with name that matches .png file (case sensitive) plus all updated contents of script
+    2. Drag and drop appropriate sprites in the Sprites[] found in the Inspector of the script
+    3. Update the image of the item
+    4. Configure the set script (on value change)
+    5. Configure the button script (on click)
+    6. Update the array sizes found in Armory for respective type
+    7. Add the name of the script to "WeaponOrientationFixes" script if flipping is needed
+ */
+
 public class Item : MonoBehaviour
 {
     protected int index;
@@ -50,7 +61,6 @@ public class Item : MonoBehaviour
                 itemReference.GetComponentInChildren<Button>().GetComponentInChildren<Text>().text = "Bought";
                 toggleReference.SetActive(true);
                 if (PlayerStats.armorSetName == itemRefName) {
-                    Debug.Log("current armor: " + PlayerStats.armorSetName);
                     toggleReference.GetComponent<Toggle>().isOn = true;
                 }
             }

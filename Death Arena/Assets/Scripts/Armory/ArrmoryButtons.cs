@@ -15,10 +15,16 @@ public class ArrmoryButtons : MonoBehaviour
     public Text defense;
     public Text energy;
     public Text money;
+    private GameObject currArmorObject;
+    private GameObject currWeaponObject;
+    private ToggleGroup armorToggleGroup;
+    private ToggleGroup weaponToggleGroup;
 
     void Start() {
         armorTab = GameObject.Find("Armor Tab");
         weaponTab = GameObject.Find("Weapons Tab");
+        armorToggleGroup = armorTab.GetComponent<ToggleGroup>();
+        weaponToggleGroup = weaponTab.GetComponent<ToggleGroup>();
         armorTab.SetActive(true);
         weaponTab.SetActive(false);
         ResetText();
@@ -38,13 +44,11 @@ public class ArrmoryButtons : MonoBehaviour
     }
 
     void Update() {
-        ToggleGroup armor_ref = armorTab.GetComponent<ToggleGroup>();
-        ToggleGroup weapon_Ref = weaponTab.GetComponent<ToggleGroup>();
-        if (armor_ref.ActiveToggles().FirstOrDefault() != null) {
-            PlayerStats.armorSetName = armor_ref.ActiveToggles().FirstOrDefault().transform.parent.name;
+        if (armorToggleGroup.ActiveToggles().FirstOrDefault() != null) {
+            currArmorObject = armorToggleGroup.ActiveToggles().FirstOrDefault().gameObject;
         }
-        if (weapon_Ref.ActiveToggles().FirstOrDefault() != null) {
-            PlayerStats.weaponName = weapon_Ref.ActiveToggles().FirstOrDefault().transform.parent.name;
+        if (weaponToggleGroup.ActiveToggles().FirstOrDefault() != null) {
+            currWeaponObject = weaponToggleGroup.ActiveToggles().FirstOrDefault().gameObject;
         }
     }
 
@@ -56,10 +60,12 @@ public class ArrmoryButtons : MonoBehaviour
     public void ViewArmory() {
         armorTab.SetActive(true);
         weaponTab.SetActive(false);
+        if (currArmorObject != null) currArmorObject.GetComponent<Toggle>().isOn = true;
     }
 
     public void ViewWeaponry() {
         armorTab.SetActive(false);
         weaponTab.SetActive(true);
+        if (currWeaponObject != null) currWeaponObject.GetComponent<Toggle>().isOn = true;
     }
 }
