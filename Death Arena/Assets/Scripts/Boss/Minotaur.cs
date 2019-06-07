@@ -22,6 +22,7 @@ public class Minotaur : Boss
     // BoulderToss ability
     private GameObject boulderCollider;
     private GameObject boulderPosition;  
+    public float speed = 1.0f; 
 
     // Custom conditions
     public bool slamRange;
@@ -71,7 +72,7 @@ public class Minotaur : Boss
             isAttacking = true;
         }
         // Body slam attack
-        else if (slamRange && !isJumpAttacking && !isTakingBreak && !inRange) {
+        else if (slamRange && !isJumpAttacking && !isTakingBreak && !inRange && !midstAbility) {
             isJumpAttacking = true;
         }
 
@@ -106,7 +107,7 @@ public class Minotaur : Boss
             chooseTimer ++;
             if (chooseTimer >= 400)
             {
-                ability = 1;//Random.Range (1,4); 
+                ability = 2;//Random.Range (1,4); 
                 chooseTimer = 0; 
             }
         }
@@ -204,14 +205,18 @@ public class Minotaur : Boss
     void boulderToss ()
     {
         boulderCollider = Instantiate(Resources.Load<GameObject>("Prefabs/Boulder"), boulderGetLocation(), Quaternion.identity); 
-        boulderTossBool = false; 
     }
 
-    public Vector3 boulderGetLocation()
+    public Vector3 boulderGetLocation ()
     {
         boulderCollider = GameObject.Find("Boulder"); 
         Vector3 boulderPos = boulderCollider.transform.position; 
         return boulderPos; 
+    }
+
+    void boulderTossDisabled ()
+    {
+        boulderTossBool = false; 
     }
 
     void rampage ()

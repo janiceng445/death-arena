@@ -14,7 +14,7 @@ public class PlayerConditions : MonoBehaviour
 
     void Start() {
         if (PlayerStats.hp == 0) 
-            PlayerStats.hp = 50;
+            PlayerStats.hp = 1000;
         health = PlayerStats.hp;
         timer = 200;
     }
