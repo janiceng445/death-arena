@@ -11,6 +11,7 @@ public class Spellbook : MonoBehaviour
     private GameObject currPage;
     private Animator animator;
     private AudioSource audiosource;
+    private Text crystals_count;
     int counter;
 
     void Start() {
@@ -20,6 +21,8 @@ public class Spellbook : MonoBehaviour
         counter = numPages;
         audiosource = GameObject.Find("Right").GetComponent<AudioSource>();
         animator = GameObject.Find("pg" + page.ToString()).GetComponent<Animator>();
+        crystals_count = GameObject.Find("Knowledge_Crystals").GetComponent<Text>();
+        UpdateCrystals();
     }
 
     public void Update() {
@@ -61,6 +64,11 @@ public class Spellbook : MonoBehaviour
     }
 
     public void ReturnTitle() {
+        SaveSystem.SaveData();
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void UpdateCrystals() {
+        crystals_count.text = WorldStats.knowledge_crystals.ToString();
     }
 }

@@ -31,7 +31,6 @@ public class SceneChange : MonoBehaviour
     }
 
     public void QuitGame() {
-        SaveSystem.SaveData();
         Application.Quit();
     }
 

@@ -2874,21 +2874,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ad980451443d70438faac0bc6c235a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LookaheadTime: 0.1
-  m_LookaheadSmoothing: 10
-  m_LookaheadIgnoreY: 0
-  m_XDamping: 1
-  m_YDamping: 1
+  m_LookaheadTime: 0
+  m_LookaheadSmoothing: 30
+  m_LookaheadIgnoreY: 1
+  m_XDamping: 2
+  m_YDamping: 2
   m_ZDamping: 0
   m_ScreenX: 0.5
   m_ScreenY: 0.5
   m_CameraDistance: 10
-  m_DeadZoneWidth: 0.594
-  m_DeadZoneHeight: 0.541
+  m_DeadZoneWidth: 0
+  m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
-  m_SoftZoneWidth: 0.8
-  m_SoftZoneHeight: 0.8
+  m_SoftZoneWidth: 0.61
+  m_SoftZoneHeight: 0.68
   m_BiasX: 0
   m_BiasY: 0
   m_CenterOnActivate: 1
@@ -3656,7 +3656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 826e2c0840ec97644a7575d098e399a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countdown: 0
+  countdownInterval: 0
   countdownTimer: 0
   SpawnBossHolder: {fileID: 1389149692}
 --- !u!1 &1299902814
@@ -5656,6 +5656,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5834154097058068795, guid: 03de9fe4be8ca504d931048bccc4231c,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 03de9fe4be8ca504d931048bccc4231c, type: 3}

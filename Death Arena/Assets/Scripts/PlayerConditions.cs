@@ -7,7 +7,7 @@ public class PlayerConditions : MonoBehaviour
 {
     public int health;
     public GameObject hitbox;
-    private int timer;
+    private float timer;
 
     // GUI
     public GameObject healthBar;
@@ -48,7 +48,7 @@ public class PlayerConditions : MonoBehaviour
             GetComponentInChildren<PlayerController>().WalkSpeed = 0;
 
             // Timer until going back to title screen
-            timer--;
+            timer -= Time.deltaTime;
             if (timer <= 0) {
                 SceneManager.LoadScene("MainMenu");
             }

@@ -6,32 +6,40 @@ using UnityEngine.UI;
 public class Countdown : MonoBehaviour
 {
 
-    public int countdown;
-    public int countdownTimer;
+    public float countdownInterval;
+    public float countdownTimer;
     private TMPro.TextMeshProUGUI cdText;
     private Animator animator;
     public GameObject SpawnBossHolder;
+    private int seconds;
 
     void Start()
     {
-        countdown = 200; // should be 400
-        countdownTimer = countdown;
+        countdownInterval = 2f; // should be 400
+        seconds = 3;
+        countdownTimer = countdownInterval;
         cdText = gameObject.GetComponent<TMPro.TextMeshProUGUI>();
+        cdText.enabled = false;
         animator = gameObject.GetComponent<Animator>();
     }
 
     void Update() {
         if (!GameSettings.paused) {
-            countdownTimer--;
-            if (countdownTimer != 0 && countdownTimer % 100 == 0) {
+            countdownTimer -= Time.deltaTime;
+            if (countdownTimer <= 0 && seconds >= 0) {
                 animator.Play("countdown", -1, 0f);
-                cdText.text = (countdownTimer / 100).ToString();
-                cdText.enabled = true;
+                cdText.text = (seconds).ToString();
+                if (seconds != 0) cdText.enabled = true;
+                seconds--;
+                countdownTimer = countdownInterval;
             }
-            if (countdownTimer <= 0) {
-                cdText.enabled = false;
+            if (seconds == -1 && !cdText.enabled) {
                 SpawnBossHolder.GetComponent<BossManager>().bossReady = true;
             }
         }
+    }
+
+    void DisableText() {
+        cdText.enabled = false;
     }
 }

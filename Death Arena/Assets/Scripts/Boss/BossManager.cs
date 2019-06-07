@@ -13,7 +13,7 @@ public class BossManager : MonoBehaviour
     private GameObject bossBar;
     
     // Return to title
-    private int ReturnToTitle_timer;
+    private float ReturnToTitle_timer;
     private bool IncLvlOnce = false;
 
     // Stats upgrade for player
@@ -30,7 +30,7 @@ public class BossManager : MonoBehaviour
         // Initialization
         bossBar = GameObject.Find("BossBar");
         bossBar.SetActive(false);
-        ReturnToTitle_timer = 200;
+        ReturnToTitle_timer = 2f;
         bossAlive = true;
         switch(WorldStats.level) {
             case 1:
@@ -57,7 +57,7 @@ public class BossManager : MonoBehaviour
 
         // If boss is dead, get ready to return to menu
         if (!bossAlive) {
-            ReturnToTitle_timer--;
+            ReturnToTitle_timer -= Time.deltaTime;
             if (ReturnToTitle_timer <= 0 && !IncLvlOnce) {
                 IncLvlOnce = true;
                 WorldStats.level += 1;

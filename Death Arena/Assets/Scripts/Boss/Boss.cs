@@ -12,8 +12,8 @@ public class Boss : MonoBehaviour
     protected int moneyAmount;
     protected int power;
     protected float DistanceAway = 1f;
-    protected int breathDuration;
-    protected int breathTimer;
+    protected float breathDuration;
+    protected float breathTimer;
 
     protected SpriteRenderer sprite;
     public BoxCollider2D weaponCollider;
@@ -61,7 +61,7 @@ public class Boss : MonoBehaviour
         // Cooldown between attacks
         if (isTakingBreak) {
             isAttacking = false;
-            breathTimer--;
+            breathTimer -= Time.deltaTime;
             if (breathTimer <= 0) {
                 isTakingBreak = false;
                 ResetBreathTimer();

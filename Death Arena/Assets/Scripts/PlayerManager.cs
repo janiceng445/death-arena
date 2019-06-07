@@ -25,7 +25,6 @@ public class PlayerManager : MonoBehaviour
     public void Move(float x, float y) {
 
         // Fix sorting order
-        //sprite.sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
         gameObject.GetComponent<SortingGroup>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
 
         // Speed reduction

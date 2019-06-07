@@ -133,6 +133,10 @@ public class Item : MonoBehaviour
 
             // Reset texts
             GameObject.Find("Canvas").GetComponent<ArrmoryButtons>().ResetText();
+
+            // Save
+            SaveSystem.SaveArmoryData();
+            SaveSystem.SaveWorldData();
         }
         else {
             Debug.Log("Not enough gold");

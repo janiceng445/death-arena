@@ -9,7 +9,7 @@ public class SpawnEnemyWave : MonoBehaviour
     public Transform north;
     public Transform east;
     public Transform south;
-    int timer = 100;
+    float timer = 100;
 
     // Level local information tracker
     int numEnemiesWave;
@@ -28,7 +28,7 @@ public class SpawnEnemyWave : MonoBehaviour
     {
         if (!GameSettings.paused) {
             if (!stopSpawn) {
-                timer--;
+                timer -= Time.deltaTime;
                 string msg = "";
                 Transform chosenDoor = null;
                 if (timer == 0) {

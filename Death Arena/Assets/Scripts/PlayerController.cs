@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     // Statistics
     [SerializeField] public float WalkSpeed = 35f;
     [SerializeField] public float RunSpeed = 45f;
-    [SerializeField] public float DashSpeed = 100f;
+    [SerializeField] public float DashSpeed = 5f;
     
 
     // Conditions
@@ -23,8 +23,8 @@ public class PlayerController : MonoBehaviour
     private bool dashOnce = false;
 
     // Cooldown timers
-    private int dashTimer;
-    private int dashTimer_remaining;
+    private float dashTimer;
+    private float dashTimer_remaining;
 
     // Variables
     private PlayerManager controller;
@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
         ability1 = GameObject.Find("Ability1_overlay");
 
         // Timer initializations
-        dashTimer = 100;
+        dashTimer = 1f;
         dashTimer_remaining = dashTimer;
 
         // TEMP
@@ -105,10 +105,11 @@ public class PlayerController : MonoBehaviour
     void CheckTimers() {
         // Rolling
         if (dashOnce) {
-            dashTimer_remaining--;
-            ability1.GetComponent<Image>().fillAmount += 0.01f;
-            if (ability1.GetComponent<Image>().fillAmount >= 1f) {
+            dashTimer_remaining -= Time.deltaTime;
+            ability1.GetComponent<Image>().fillAmount = 1f - dashTimer_remaining;
+            if (ability1.GetComponent<Image>().fillAmount == 1f) {
                 ability1.GetComponent<Image>().fillAmount = 1f;
+                dashTimer_remaining = dashTimer;
                 dashOnce = false;
             }
         }

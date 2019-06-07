@@ -36,7 +36,7 @@ public class Minotaur : Boss
         power = 50;
         health = 500;
         Speed = 3f;
-        breathDuration = 50;
+        breathDuration = 1f;
         moneyAmount = 1000;
 
         ResetBreathTimer();
@@ -57,7 +57,7 @@ public class Minotaur : Boss
         if (isTakingBreak) {
             isAttacking = false;
             isJumpAttacking = false;
-            breathTimer--;
+            breathTimer -= Time.deltaTime;
             if (breathTimer <= 0) {
                 isTakingBreak = false;
                 ResetBreathTimer();
@@ -104,8 +104,8 @@ public class Minotaur : Boss
         // Random Number / Skill Generator every _ seconds and must not be in the middle of performing an ability
         if (!midstAbility)
         {
-            chooseTimer ++;
-            if (chooseTimer >= 400)
+            chooseTimer += Time.deltaTime;
+            if (chooseTimer >= 4)
             {
                 ability = 2;//Random.Range (1,4); 
                 chooseTimer = 0; 
