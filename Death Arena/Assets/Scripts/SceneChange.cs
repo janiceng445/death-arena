@@ -17,8 +17,8 @@ public class SceneChange : MonoBehaviour
         SceneManager.LoadScene("Armory");
     }
 
-    public void LoadSkills() {
-        SceneManager.LoadScene("Skills");
+    public void LoadSpellbook() {
+        SceneManager.LoadScene("Spellbook");
     }
 
     public void LoadSettings() {

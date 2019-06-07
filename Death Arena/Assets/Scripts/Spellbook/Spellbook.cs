@@ -2,92 +2,65 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Spellbook : MonoBehaviour
 {
     public static int page;
     private int numPages;
-    private GameObject prevPage;
     private GameObject currPage;
     private Animator animator;
-    private GameObject[] canvases;
-    private List<GameObject> sorting;
+    private AudioSource audiosource;
+    int counter;
 
     void Start() {
         page = 0;
         numPages = 6;
-        prevPage = null;
-        sorting = new List<GameObject>();
         currPage = GameObject.Find("pg" + page.ToString());
+        counter = numPages;
+        audiosource = GameObject.Find("Right").GetComponent<AudioSource>();
         animator = GameObject.Find("pg" + page.ToString()).GetComponent<Animator>();
-        canvases = new GameObject[numPages];
-        for (int i = 0; i < numPages; i++) {
-            canvases[i] = GameObject.Find("cv" + i);
+    }
+
+    public void Update() {
+        if (page == numPages - 1) {
+            GameObject.Find("Next").GetComponent<Button>().interactable = false;
+        }
+        if (page == 0) {
+            GameObject.Find("Previous").GetComponent<Button>().interactable = false;
         }
     }
 
     public void NextPage() {
         if (page != numPages - 1) {
-            animator.Play("PageForward");
-            
-            if (prevPage != null) {
-                Debug.Log(prevPage);
-                sorting.Add(prevPage);
-                ReSort();
-            }
-            else {
-                currPage.transform.parent.GetComponent<Canvas>().sortingOrder--;
-            }
             page++;
-            
-            prevPage = currPage;
+            currPage.transform.parent.GetComponent<Canvas>().sortingOrder = counter;
+            counter++;
+            animator.Play("PageForward");
             FindPage();
-            
+            AudioClip clip = (AudioClip) Resources.Load("SFX/pageflip_medium", typeof(AudioClip));
+            audiosource.PlayOneShot(clip);
         }
     }
 
     public void PreviousPage() {
         if (page != 0) {
-            prevPage = currPage;
-            if (prevPage != null) prevPage.transform.parent.GetComponent<Canvas>().sortingOrder++;
             page--;
             FindPage();
+            currPage.transform.parent.GetComponent<Canvas>().sortingOrder = counter;
+            counter++;
             animator.Play("PageBack");
+            AudioClip clip = (AudioClip) Resources.Load("SFX/pageflip_light", typeof(AudioClip));
+            audiosource.PlayOneShot(clip);
         }
     }
 
     void FindPage() {
-        Debug.Log(page);
         animator = GameObject.Find("pg" + page.ToString()).GetComponent<Animator>();
         currPage = GameObject.Find("pg" + page.ToString());
     }
 
-    void FixSortingLayers(bool direction) {
-        // If true, increment sorting layers
-        if (direction) {
-            for (int i = 0; i < numPages; i++) {
-                canvases[i].GetComponent<Canvas>().sortingOrder++;
-                if (canvases[i].GetComponent<Canvas>().sortingOrder > numPages - 1) {
-                    canvases[i].GetComponent<Canvas>().sortingOrder = 0;
-                }
-            }
-        }
-        // If false, decrement sorting layers
-        else {
-            for (int i = 0; i < numPages; i++) {
-                canvases[i].GetComponent<Canvas>().sortingOrder--;
-                if (canvases[i].GetComponent<Canvas>().sortingOrder < 0) {
-                    canvases[i].GetComponent<Canvas>().sortingOrder = numPages - 1;
-                }
-            }
-        }
-    }
-
-    void ReSort() {
-        Debug.Log("resorting");
-        Debug.Log(sorting.Count);
-        foreach (GameObject g in sorting) {
-            g.transform.parent.GetComponent<Canvas>().sortingOrder--;
-        }
+    public void ReturnTitle() {
+        SceneManager.LoadScene("MainMenu");
     }
 }

@@ -2036,6 +2036,12 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5834154098423690183, guid: 03de9fe4be8ca504d931048bccc4231c,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 20f8989e75b701f48ab89696fb8f062d,
+        type: 3}
     - target: {fileID: 5834154097058068796, guid: 03de9fe4be8ca504d931048bccc4231c,
         type: 3}
       propertyPath: m_Enabled
@@ -2071,12 +2077,6 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 7.74
       objectReference: {fileID: 0}
-    - target: {fileID: 5834154098423690183, guid: 03de9fe4be8ca504d931048bccc4231c,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 20f8989e75b701f48ab89696fb8f062d,
-        type: 3}
     - target: {fileID: 5834154098232492212, guid: 03de9fe4be8ca504d931048bccc4231c,
         type: 3}
       propertyPath: m_Enabled
@@ -3333,7 +3333,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Skills
+  m_Text: Spellbook
 --- !u!222 &1121158933
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3355,7 +3355,7 @@ GameObject:
   - component: {fileID: 1127327132}
   - component: {fileID: 1127327131}
   m_Layer: 0
-  m_Name: Skills_btn
+  m_Name: Spellbook_btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3425,7 +3425,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1710931947}
-        m_MethodName: LoadSkills
+        m_MethodName: LoadSpellbook
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

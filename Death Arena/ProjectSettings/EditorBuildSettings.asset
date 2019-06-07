@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Armory.unity
     guid: d9376526474acae4aa36163bce2421d4
   - enabled: 1
-    path: Assets/Scenes/Skills.unity
+    path: Assets/Scenes/Spellbook.unity
     guid: c58eb58f909d731439e883885525a5f2
   m_configObjects: {}
