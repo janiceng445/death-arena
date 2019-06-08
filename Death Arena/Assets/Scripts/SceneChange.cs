@@ -31,7 +31,11 @@ public class SceneChange : MonoBehaviour
     }
 
     public void QuitGame() {
-        Application.Quit();
+        //Application.Quit();
+        if (!Application.isEditor)
+        {
+            System.Diagnostics.Process.GetCurrentProcess().Kill();
+        }
     }
 
     public void LoadMenu() {

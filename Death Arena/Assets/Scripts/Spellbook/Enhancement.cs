@@ -43,16 +43,16 @@ public class Enhancement : MonoBehaviour
                 WorldStats.knowledge_crystals -= 1;
                 spellbook.UpdateCrystals();
                 if (this.name == "atk_cir") {
-                    PlayerStats.atk += 5;
-                    msgUpdate.GetComponentInChildren<Text>().text = "+5 Atk";
+                    PlayerStats.atk += 15;
+                    msgUpdate.GetComponentInChildren<Text>().text = "+15 Atk";
                 }
                 else if (this.name == "def_cir") {
                     PlayerStats.def += 5;
                     msgUpdate.GetComponentInChildren<Text>().text = "+5 Def";
                 }
                 else if (this.name == "hp_cir") {
-                    PlayerStats.hp += 5;
-                    msgUpdate.GetComponentInChildren<Text>().text = "+5 HP";
+                    PlayerStats.hp += 50;
+                    msgUpdate.GetComponentInChildren<Text>().text = "+50 HP";
                 }
                 isClicked = true;
                 SaveSystem.SaveWorldData();

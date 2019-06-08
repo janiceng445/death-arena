@@ -135,8 +135,7 @@ public class Item : MonoBehaviour
             GameObject.Find("Canvas").GetComponent<ArrmoryButtons>().ResetText();
 
             // Save
-            SaveSystem.SaveArmoryData();
-            SaveSystem.SaveWorldData();
+            SaveSystem.SaveData();
         }
         else {
             Debug.Log("Not enough gold");

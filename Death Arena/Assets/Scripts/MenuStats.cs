@@ -14,6 +14,7 @@ public class MenuStats : MonoBehaviour
     // World stats
     public Text level;
     public Text gold;
+    public Text crystals;
 
     void Update() {
         // Update player stats
@@ -25,5 +26,6 @@ public class MenuStats : MonoBehaviour
         // Update world stats
         level.text = "Level: " + WorldStats.level;
         gold.text = "Gold: " + WorldStats.gold.ToString("n0");
+        crystals.text = "Crystals: " + WorldStats.knowledge_crystals.ToString();
     }
 }

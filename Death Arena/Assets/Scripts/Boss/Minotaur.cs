@@ -95,6 +95,18 @@ public class Minotaur : Boss
         else {
             canMove = true;
         }
+        
+        // Reorientate on boulder toss if player switched sides
+        if (boulderTossBool) {
+            // Facing left, player is on right
+            if (!FacingRight && targetLocation.position.x > transform.position.x) {
+                base.Flip();
+            }
+            // Facing right, player is on left
+            else if (FacingRight && targetLocation.position.x < transform.position.x) {
+                base.Flip();
+            }
+        }
         //***************************************************************************************************************//
         //***************************************************************************************************************//
 
@@ -155,7 +167,7 @@ public class Minotaur : Boss
                 isMoving = true;
                 // Move
                 if (Vector2.Distance(myLocation.position, targetLocation.position) > DistanceAway) {
-                    transform.parent.transform.position = Vector2.MoveTowards(transform.parent.transform.position, targetLocation.position, Speed * Time.deltaTime);
+                    //transform.parent.transform.position = Vector2.MoveTowards(transform.parent.transform.position, targetLocation.position, Speed * Time.deltaTime);
                 }
                 
                 // Flip
@@ -174,7 +186,7 @@ public class Minotaur : Boss
 
     //*************************************************//HammerFist//*************************************************//
     //****************************************************************************************************************//
-
+    #region Hammerfist Ability
     void hammerFist ()
     {
         // Manipulate hammerFist radius transform position values about where the boss (hand) is 
@@ -198,13 +210,14 @@ public class Minotaur : Boss
         hammerFistBool = false; 
         midstAbility = false; 
     }
-
+    #endregion
     //*************************************************//BoulderToss//*************************************************//
-    //****************************************************************************************************************//
-
+    //*****************************************************************************************************************//
+    #region Bouldertoss Ability
     void boulderToss ()
     {
         boulderCollider = Instantiate(Resources.Load<GameObject>("Prefabs/Boulder"), boulderGetLocation(), Quaternion.identity); 
+        Destroy(boulderCollider, 8.5f); 
     }
 
     public Vector3 boulderGetLocation ()
@@ -218,11 +231,15 @@ public class Minotaur : Boss
     {
         boulderTossBool = false; 
     }
-
+    #endregion
+    //*************************************************//Rampage//*************************************************//
+    //*************************************************************************************************************//
+    #region Rampage
     void rampage ()
     {
         rampageBool = false; 
     }
+    #endregion
 
     public void ActivateSlamCollision() {
         slamCollider.enabled = true;

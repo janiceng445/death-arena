@@ -2033,7 +2033,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: +5 for any stat for 1 crystal
+  m_Text: Buffing a stat each require 1 crystal
 --- !u!222 &479076458
 CanvasRenderer:
   m_ObjectHideFlags: 0

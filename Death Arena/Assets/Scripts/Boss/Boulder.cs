@@ -9,6 +9,7 @@ public class Boulder : MonoBehaviour
     private Collider2D boulderCol; 
     public float speed;
     private bool hitPlayer = false; 
+    private bool isTraveling;
     
     void Start ()
     {
@@ -20,25 +21,23 @@ public class Boulder : MonoBehaviour
 
     void Update ()
     {
-        GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
+        GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt((transform.position.y - 0.5f) * 100f) * -1;
         Vector3 currPlayerLocation = playerLocation;
         float boulderSpeed = speed * Time.deltaTime;
-        if (!hitPlayer)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, currPlayerLocation, boulderSpeed);
+        transform.position = Vector3.MoveTowards(transform.position, currPlayerLocation, boulderSpeed);
+        if (transform.position != currPlayerLocation) {
+            isTraveling = true;
+        }
+        else {
+            isTraveling = false;
         }
     }  
 
     void OnTriggerEnter2D (Collider2D col)
     {
-        if (col.tag == "Player")
+        if (col.tag == "Player" && isTraveling)
         {
-            hitPlayer = true; 
+            GetComponent<Animator>().Play("minotaur_boulder_explode"); 
         }
-    }
-
-    void Destroy ()
-    {
-        Destroy(gameObject); 
     }
 }
