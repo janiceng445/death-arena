@@ -99,11 +99,11 @@ public class Minotaur : Boss
         // Reorientate on boulder toss if player switched sides
         if (boulderTossBool) {
             // Facing left, player is on right
-            if (!FacingRight && targetLocation.position.x > transform.position.x) {
+            if (!FacingRight && targetLocation.position.x > transform.parent.transform.position.x) {
                 base.Flip();
             }
             // Facing right, player is on left
-            else if (FacingRight && targetLocation.position.x < transform.position.x) {
+            else if (FacingRight && targetLocation.position.x < transform.parent.transform.position.x) {
                 base.Flip();
             }
         }
@@ -119,7 +119,7 @@ public class Minotaur : Boss
             chooseTimer += Time.deltaTime;
             if (chooseTimer >= 4)
             {
-                ability = 1;//Random.Range (1,4); 
+                ability = Random.Range (1,3);//Random.Range (1,4); 
                 chooseTimer = 0; 
             }
         }
