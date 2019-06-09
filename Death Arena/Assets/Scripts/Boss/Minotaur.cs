@@ -119,7 +119,7 @@ public class Minotaur : Boss
             chooseTimer += Time.deltaTime;
             if (chooseTimer >= 4)
             {
-                ability = 2;//Random.Range (1,4); 
+                ability = 1;//Random.Range (1,4); 
                 chooseTimer = 0; 
             }
         }
@@ -167,7 +167,7 @@ public class Minotaur : Boss
                 isMoving = true;
                 // Move
                 if (Vector2.Distance(myLocation.position, targetLocation.position) > DistanceAway) {
-                    //transform.parent.transform.position = Vector2.MoveTowards(transform.parent.transform.position, targetLocation.position, Speed * Time.deltaTime);
+                    transform.parent.transform.position = Vector2.MoveTowards(transform.parent.transform.position, targetLocation.position, Speed * Time.deltaTime);
                 }
                 
                 // Flip
