@@ -8,6 +8,7 @@ public static class SaveSystem
     const string PlayerFileName = "/player.dat";
     const string WorldFileName = "/world.dat";
     const string ArmoryFileName = "/armory.dat";
+    const string SpellbookFileName = "/spellbook.dat";
     const string DirectoryPath = "/Save";
 
     public static void SaveData() {
@@ -15,12 +16,14 @@ public static class SaveSystem
         SavePlayerData();
         SaveWorldData();
         SaveArmoryData();
+        SaveSpellbookData();
     }
 
     public static void LoadData() {
         LoadPlayerData();
         LoadWorldData();
         LoadArmoryData();
+        LoadSpellbookData();
     }
 
     // Check if directory exists
@@ -82,6 +85,18 @@ public static class SaveSystem
         formatter.Serialize(stream, data);
         stream.Close();
     }
+
+    public static void SaveSpellbookData() {
+        CheckDirectory();
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + DirectoryPath + SpellbookFileName;
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        SpellbookData data = new SpellbookData();
+
+        formatter.Serialize(stream, data);
+        stream.Close();
+    }
     #endregion
 
     // Save new data
@@ -102,6 +117,12 @@ public static class SaveSystem
         string path = Application.persistentDataPath + DirectoryPath + ArmoryFileName;
         if (!File.Exists(path)) {
             SaveArmoryData();
+        }
+    }
+    public static void SaveNewSpellbookData() {
+        string path = Application.persistentDataPath + DirectoryPath + SpellbookFileName;
+        if (!File.Exists(path)) {
+            SaveSpellbookData();
         }
     }
     #endregion
@@ -154,6 +175,22 @@ public static class SaveSystem
         }
         else {
             Debug.LogError("No armory save file found.");
+            return null;
+        }
+    }
+        public static SpellbookData LoadSpellbookData() {
+        string path = Application.persistentDataPath + DirectoryPath + SpellbookFileName;
+        if (File.Exists(path)) {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+            SpellbookData data = formatter.Deserialize(stream) as SpellbookData;
+            stream.Close();
+
+            return data;
+        }
+        else {
+            Debug.LogError("No spellbook save file found.");
             return null;
         }
     }

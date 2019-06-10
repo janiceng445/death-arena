@@ -10,11 +10,13 @@ public class NavDisable : MonoBehaviour
     private GameObject prevBtn;
     private GameObject nextBtn;
     private GameObject container;
+    private Spellbook spellbook;
 
     void Start() {
         prevBtn = GameObject.Find("Previous");
         nextBtn = GameObject.Find("Next");
         container = gameObject.transform.GetChild(0).gameObject;
+        spellbook = GameObject.Find("Right").GetComponent<Spellbook>();
         container.SetActive(true);
     }
 
@@ -38,5 +40,9 @@ public class NavDisable : MonoBehaviour
 
     public void Unhide() {
         container.SetActive(true);
+    }
+    
+    public void CallPageSetActive() {
+        spellbook.PageSetActive();
     }
 }
