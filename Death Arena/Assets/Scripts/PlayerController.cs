@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     // Conditions
     private bool isRunning = false;
     private bool isAttacking = false;
-    private bool isMoving = false;
+    public bool isMoving = false;
     private bool isDashing = false;
 
     // Once conditions

@@ -8,6 +8,8 @@ public class GameSettings : MonoBehaviour
 {
     public static float volume;
     public static bool paused;
+    public static AudioSource MusicSource;
+    public static bool isMusicOn = true;
 
     void OnEnable() {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -19,10 +21,16 @@ public class GameSettings : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
         if (scene.name == "Arena") {
-            GetComponent<AudioSource>().enabled = false;
+            AudioClip music = (AudioClip) Resources.Load("SFX/Music/Clash Defiant", typeof(AudioClip));
+            GetComponent<AudioSource>().clip = music;
+            if (isMusicOn) GetComponent<AudioSource>().Play();
+            GetComponent<AudioSource>().loop = true;
         }
-        else if (!GetComponent<AudioSource>().enabled) {
-            GetComponent<AudioSource>().enabled = true;
+        else if (GetComponent<AudioSource>().clip.name != "Crusade - Heavy Industry" && scene.name != "Arena") {
+            AudioClip music = (AudioClip) Resources.Load("SFX/Music/Crusade - Heavy Industry", typeof(AudioClip));
+            GetComponent<AudioSource>().clip = music;
+            if (isMusicOn) GetComponent<AudioSource>().Play();
+            GetComponent<AudioSource>().loop = true;
         }
     }
  
@@ -31,6 +39,7 @@ public class GameSettings : MonoBehaviour
         GameObject volumePanel = GameObject.FindGameObjectWithTag("Volume");
         if (volumePanel != null) {
             volumePanel.GetComponent<Slider>().value = volume;
+
             UpdateAllAudio();
         }
     }
@@ -48,6 +57,8 @@ public class GameSettings : MonoBehaviour
         if (volumePanel != null) {
             volume = volumePanel.GetComponent<Slider>().value;
             AudioListener.volume = volume;
+            isMusicOn = GameObject.Find("ToggleMusic").GetComponent<Toggle>().isOn;
+            MuteMusic();
         }
         UpdateAllAudio();
     }
@@ -56,6 +67,15 @@ public class GameSettings : MonoBehaviour
         AudioSource[] audiosources = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
         foreach(AudioSource audio in audiosources) {
             audio.volume = volume;
+        }
+    }
+
+    public void MuteMusic() {
+        if (!isMusicOn) {
+            MusicSource.Stop();
+        }
+        else {
+            MusicSource.Play();
         }
     }
 }

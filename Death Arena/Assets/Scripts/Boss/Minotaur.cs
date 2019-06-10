@@ -105,11 +105,11 @@ public class Minotaur : Boss
         // Reorientate on boulder toss if player switched sides
         if (boulderTossBool) {
             // Facing left, player is on right
-            if (!FacingRight && targetLocation.position.x > transform.position.x) {
+            if (!FacingRight && targetLocation.position.x > transform.parent.transform.position.x) {
                 base.Flip();
             }
             // Facing right, player is on left
-            else if (FacingRight && targetLocation.position.x < transform.position.x) {
+            else if (FacingRight && targetLocation.position.x < transform.parent.transform.position.x) {
                 base.Flip();
             }
         }
@@ -183,7 +183,7 @@ public class Minotaur : Boss
                 isMoving = true;
                 // Move
                 if (Vector2.Distance(myLocation.position, targetLocation.position) > DistanceAway) {
-                    //transform.parent.transform.position = Vector2.MoveTowards(transform.parent.transform.position, targetLocation.position, Speed * Time.deltaTime);
+                    transform.parent.transform.position = Vector2.MoveTowards(transform.parent.transform.position, targetLocation.position, Speed * Time.deltaTime);
                 }
                 
                 // Flip
