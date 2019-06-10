@@ -12,7 +12,8 @@ public class Minotaur : Boss
     private bool midstAbility; 
     private bool hammerFistBool; 
     private bool boulderTossBool;
-    private bool rampageBool; 
+    private bool isBuffing; 
+    private bool isCharging; 
 
     // HammerFist ability
     public BoxCollider2D slamCollider;
@@ -23,6 +24,11 @@ public class Minotaur : Boss
     private GameObject boulderCollider;
     private GameObject boulderPosition;  
     public float speed = 1.0f; 
+
+    // Rampage Ability
+    private float rampageSpeed = 20.0f; 
+    private Vector3 playerCurrLocation; 
+    public bool isWithinRampageZone; 
 
     // Custom conditions
     public bool slamRange;
@@ -77,11 +83,11 @@ public class Minotaur : Boss
         }
 
         // If performing any ability, then boss is in the middle of performing an ability
-        if (hammerFistBool || boulderTossBool || rampageBool)
+        if (hammerFistBool || boulderTossBool || isBuffing || isCharging)
         {
             midstAbility = true; 
         }
-        else if (!hammerFistBool && !boulderTossBool && !rampageBool)
+        else if (!hammerFistBool && !boulderTossBool && !isBuffing && !isCharging)
         {
             midstAbility = false; 
             ability = 0;
@@ -107,6 +113,15 @@ public class Minotaur : Boss
                 base.Flip();
             }
         }
+        Debug.Log(isWithinRampageZone); 
+        if (isCharging)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, playerCurrLocation, rampageSpeed * Time.deltaTime);
+            if (transform.position == playerCurrLocation)
+            {
+                isCharging = false; 
+            }
+        }
         //***************************************************************************************************************//
         //***************************************************************************************************************//
 
@@ -119,7 +134,7 @@ public class Minotaur : Boss
             chooseTimer += Time.deltaTime;
             if (chooseTimer >= 4)
             {
-                ability = 2;//Random.Range (1,4); 
+                ability = 3;//Random.Range (1,4); 
                 chooseTimer = 0; 
             }
         }
@@ -136,9 +151,9 @@ public class Minotaur : Boss
         {
             boulderTossBool = true; 
         }
-        else if (ability == 3 && !midstAbility)
+        else if (ability == 3 && !midstAbility && isWithinRampageZone)
         {
-            rampageBool = true; 
+            isBuffing = true;  
         }
 
         //******************************************************************************************************************//
@@ -153,7 +168,8 @@ public class Minotaur : Boss
         animator.SetBool("isJumpAttacking", isJumpAttacking); 
         animator.SetBool("isHammerFist", hammerFistBool); 
         animator.SetBool("isBoulderToss", boulderTossBool); 
-        animator.SetBool("isRampage", rampageBool); 
+        animator.SetBool("isBuffing", isBuffing); 
+        animator.SetBool("isCharging", isCharging);
         //****************************************************************************************************************//
         //****************************************************************************************************************//
     }
@@ -237,7 +253,14 @@ public class Minotaur : Boss
     #region Rampage
     void rampage ()
     {
-        rampageBool = false; 
+        isBuffing = false;
+        playerCurrLocation = targetLocation.position; 
+        isCharging = true; 
+    }
+
+    void rampageDisabled ()
+    {
+        isCharging = false; 
     }
     #endregion
 
