@@ -5,6 +5,7 @@ using UnityEngine;
 public class Ab_Colliders : MonoBehaviour
 {
     private PlayerManager playerMovement; 
+    private Minotaur rampageRadius; 
     private string suffix;
 
     private float stunTimer = 0; 
@@ -16,6 +17,7 @@ public class Ab_Colliders : MonoBehaviour
     {
         suffix = "(Clone)";
         playerMovement = GameObject.Find("Player").GetComponent<PlayerManager>();
+        rampageRadius = GetComponentInParent<Minotaur>(); 
     }
 
     void Update ()
@@ -32,9 +34,9 @@ public class Ab_Colliders : MonoBehaviour
 
     void OnTriggerEnter2D (Collider2D collider)
     {
-        // HammerFistZone Collider
         if (collider.gameObject.tag == "Player")
         {
+            // HammerFistZone Collider
             if (this.gameObject.name == "HammerFistZone" + suffix)
             {
                 if (!beenStunned && initiateStun)
@@ -43,34 +45,49 @@ public class Ab_Colliders : MonoBehaviour
                     beenStunned = true; 
                 }
             }
+            // Rampage Collider
+            if (this.gameObject.name == "RampageOnTrigger") 
+            {
+                rampageRadius.isWithinRampageZone = false; 
+            }
         }
     }
 
     void OnTriggerStay2D (Collider2D collider)
     {
-        // HammerFistZone Collider
         if (collider.gameObject.tag == "Player")
         {
+            // HammerFistZone Collider
             if (this.gameObject.name == "HammerFistZone" + suffix)
             {
                 playerMovement.isSlowed = true;
+            }
+            // Rampage Collider
+            if (this.gameObject.name == "RampageOnTrigger") 
+            {
+                rampageRadius.isWithinRampageZone = false; 
             }
         }
     }
 
     void OnTriggerExit2D (Collider2D collider)
     {
-        // HammerFistZone Collider
         {
             if (collider.gameObject.tag == "Player")
             {
+                // HammerFistZone Collider
                 if (this.gameObject.name == "HammerFistZone" + suffix)
                 {
                     playerMovement.isStunned = false;
                     playerMovement.isSlowed = false; 
                     stunTimer = 0; 
                 }
-            }
+                // Rampage Collider
+                if (this.gameObject.name == "RampageOnTrigger") 
+                {
+                    rampageRadius.isWithinRampageZone = true; 
+                }
+             }
         }
     }
 
