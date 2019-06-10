@@ -29,6 +29,9 @@ TextureImporter:
   - first:
       213: 5245580907301583161
     second: sorcery_15
+  - first:
+      213: 7547027753278811503
+    second: sorcery_16
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -115,7 +118,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 245
-        y: 447
+        y: 458
         width: 86
         height: 120
       alignment: 0
@@ -125,7 +128,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7f270cb1eaa652c4fb84ee9c76e42e8f
+      spriteID: 71e9451d11efa6846b69e5da15d46319
       internalID: 318250053988811896
       vertices: []
       indices: 
@@ -136,7 +139,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 393
-        y: 449
+        y: 460
         width: 63
         height: 112
       alignment: 0
@@ -146,7 +149,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a1fb9c89ea0f01d43b4a00349d702697
+      spriteID: 9c9fc5aa5ee53a940b8f2454d33982ef
       internalID: -1460423239641507752
       vertices: []
       indices: 
@@ -157,7 +160,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 515
-        y: 455
+        y: 466
         width: 104
         height: 67
       alignment: 0
@@ -167,7 +170,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 16f9b9d9a62577444b1b8a9dd2896063
+      spriteID: 785a29e7103453544a83e77fbd41b33a
       internalID: -3517769140359129443
       vertices: []
       indices: 
@@ -178,7 +181,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 373
-        y: 316
+        y: 327
         width: 106
         height: 106
       alignment: 0
@@ -188,7 +191,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 51b597673c191114c87c4399bdca7da4
+      spriteID: 889cea7939b8f634a848ccd14a085ac9
       internalID: -4285913332233096902
       vertices: []
       indices: 
@@ -199,7 +202,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 519
-        y: 324
+        y: 335
         width: 97
         height: 98
       alignment: 0
@@ -209,7 +212,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b97763b85568ce549be1430b3b6c0062
+      spriteID: e44b0b625ab920d4ab1ec32f6dfd89f9
       internalID: 4614461334264742676
       vertices: []
       indices: 
@@ -220,7 +223,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 651
-        y: 325
+        y: 336
         width: 111
         height: 108
       alignment: 0
@@ -230,7 +233,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34626580a03146d4bb806a413894cd32
+      spriteID: 10f1c87ef5b40b24f84d7c2d8f1b3111
       internalID: -6861214605719228979
       vertices: []
       indices: 
@@ -241,17 +244,17 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 224
-        y: 304
-        width: 129
-        height: 129
+        y: 316
+        width: 128
+        height: 127
       alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 1, w: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e47a7f8d3a04fa54e8c14ba26c4b946c
+      spriteID: ea5c6d6cd2e652342ae2090a61bfd5ef
       internalID: -1799400878607607713
       vertices: []
       indices: 
@@ -262,9 +265,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 10
         width: 260
-        height: 262
+        height: 263
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -272,8 +275,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 00e1da0daa76c6d4889b003b2f4dfbd3
+      spriteID: 180d811afa8dfea4c9bdd4bde4c98f2c
       internalID: 5245580907301583161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sorcery_16
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 0
+        width: 284
+        height: 284
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b37d2ced29585140b9995d52d87eff0
+      internalID: 7547027753278811503
       vertices: []
       indices: 
       edges: []
