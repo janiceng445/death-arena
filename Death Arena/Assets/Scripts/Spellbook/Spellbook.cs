@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering;
 
 public class Spellbook : MonoBehaviour
 {
@@ -13,6 +14,14 @@ public class Spellbook : MonoBehaviour
     private AudioSource audiosource;
     private Text crystals_count;
     int counter;
+    public GameObject[] LeftPages;
+
+    // Save data
+    public static int sorcerySetID;
+    public static bool[] spellsUnlocked;
+
+    // Sorcery
+    public GameObject[] spellTransLocation;
 
     void Start() {
         page = 0;
@@ -22,7 +31,27 @@ public class Spellbook : MonoBehaviour
         audiosource = GameObject.Find("Right").GetComponent<AudioSource>();
         animator = GameObject.Find("pg" + page.ToString()).GetComponent<Animator>();
         crystals_count = GameObject.Find("Knowledge_Crystals").GetComponent<Text>();
+        PageSetActive();
+        LeftPages[0].SetActive(true);
         UpdateCrystals();
+
+
+        // Loading saved data
+        // Load actual spellbook data file
+        SpellbookData sd = SaveSystem.LoadSpellbookData();
+        if (sd != null) {
+            sorcerySetID = sd.sorceryID;
+            spellsUnlocked = sd.spellsUnlocked;
+            foreach(GameObject g in spellTransLocation) {
+                g.GetComponent<SorcerySpells>().CheckCondition();
+            }
+        }
+        else {
+            // Save new spellbook data file
+            sorcerySetID = 0;
+            spellsUnlocked = new bool[7];
+            SaveSystem.SaveNewSpellbookData();
+        }
     }
 
     public void Update() {
@@ -32,10 +61,18 @@ public class Spellbook : MonoBehaviour
         if (page == 0) {
             GameObject.Find("Previous").GetComponent<Button>().interactable = false;
         }
+        
+        // Loading the currently selected spell in <Sorcery>
+        if (page == 1 && sorcerySetID != 0) {
+            GameObject selector = GameObject.Find("Sorce_Selector");
+            selector.GetComponent<SpriteRenderer>().enabled = true;
+            selector.GetComponent<SpriteRenderer>().color = new Color32(0xFF, 0x00, 0xDD, 0xFF);
+            selector.transform.position = spellTransLocation[sorcerySetID - 1].transform.position;
+        }
     }
 
     public void NextPage() {
-        if (page != numPages - 1) {
+        if (page != 1) {
             page++;
             currPage.transform.parent.GetComponent<Canvas>().sortingOrder = counter;
             counter++;
@@ -61,6 +98,20 @@ public class Spellbook : MonoBehaviour
     void FindPage() {
         animator = GameObject.Find("pg" + page.ToString()).GetComponent<Animator>();
         currPage = GameObject.Find("pg" + page.ToString());
+    }
+
+    void PageLeftView(int layerOrder) {
+        if (page != 0) {
+            LeftPages[page].GetComponent<Canvas>().sortingOrder = layerOrder;
+        }
+    }
+
+    public void PageSetActive() {
+        foreach (GameObject g in LeftPages) {
+            g.SetActive(false);
+        }
+        LeftPages[page].SetActive(true);
+        PageLeftView(counter);
     }
 
     public void ReturnTitle() {
