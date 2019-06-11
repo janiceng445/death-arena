@@ -113,7 +113,7 @@ public class Minotaur : Boss
                 base.Flip();
             }
         }
-        Debug.Log(isWithinRampageZone); 
+        //Debug.Log(isWithinRampageZone); 
         if (isCharging)
         {
             transform.position = Vector3.MoveTowards(transform.position, playerCurrLocation, rampageSpeed * Time.deltaTime);

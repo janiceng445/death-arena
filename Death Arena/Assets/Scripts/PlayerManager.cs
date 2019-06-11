@@ -18,6 +18,7 @@ public class PlayerManager : MonoBehaviour
     void Start() {
         body = gameObject.GetComponent<Rigidbody2D>();
         sprite = gameObject.GetComponentInChildren<SpriteRenderer>();
+        AddAbility();
     }
 
 
@@ -51,6 +52,11 @@ public class PlayerManager : MonoBehaviour
         else if (x > 0 && !FacingRight) {
             Flip();
         }
+    }
+
+    void AddAbility() {
+        Ability ability = gameObject.AddComponent<Fireball>();
+        ability.setConditions(15, 0.001f, 2f);
     }
 
     void Flip() {

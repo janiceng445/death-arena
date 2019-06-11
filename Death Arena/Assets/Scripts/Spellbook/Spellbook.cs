@@ -72,7 +72,7 @@ public class Spellbook : MonoBehaviour
     }
 
     public void NextPage() {
-        if (page != numPages - 1) {
+        if (page != 1) {
             page++;
             currPage.transform.parent.GetComponent<Canvas>().sortingOrder = counter;
             counter++;
