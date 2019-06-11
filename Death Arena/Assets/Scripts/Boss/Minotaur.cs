@@ -17,8 +17,13 @@ public class Minotaur : Boss
 
     // HammerFist ability
     public BoxCollider2D slamCollider;
-    // Defined to be instantiated polygon collider gameobject
-    private GameObject hammerFistCollider; 
+    // // Defined to be instantiated polygon collider gameobject
+    // private GameObject hammerFistCollider; 
+    public CircleCollider2D hammerDmg; 
+    public BoxCollider2D hammerSlow; 
+    public static bool isDmging; 
+    public static bool isSlowing;
+    public bool damageOnce;  
 
     // BoulderToss ability
     private GameObject boulderCollider;
@@ -47,7 +52,9 @@ public class Minotaur : Boss
 
         ResetBreathTimer();
         CompleteStats();
- 
+
+        hammerDmg.enabled = false;
+        hammerSlow.enabled = false; 
     }
 
     protected override void Update() {
@@ -69,6 +76,8 @@ public class Minotaur : Boss
                 ResetBreathTimer();
             }
         }
+
+        CheckHammerFistConditions (); 
 
         //*************************************************//Abilities//*************************************************//
         //***************************************************************************************************************//
@@ -113,11 +122,10 @@ public class Minotaur : Boss
                 base.Flip();
             }
         }
-        Debug.Log(isWithinRampageZone); 
         if (isCharging)
         {
-            transform.position = Vector3.MoveTowards(transform.position, playerCurrLocation, rampageSpeed * Time.deltaTime);
-            if (transform.position == playerCurrLocation)
+            transform.parent.transform.position = Vector3.MoveTowards(transform.parent.transform.position, playerCurrLocation, rampageSpeed * Time.deltaTime);
+            if (transform.parent.transform.position == playerCurrLocation)
             {
                 isCharging = false; 
             }
@@ -134,7 +142,7 @@ public class Minotaur : Boss
             chooseTimer += Time.deltaTime;
             if (chooseTimer >= 4)
             {
-                ability = 3;//Random.Range (1,4); 
+                ability = 1;//Random.Range (1,4); 
                 chooseTimer = 0; 
             }
         }
@@ -205,26 +213,48 @@ public class Minotaur : Boss
     #region Hammerfist Ability
     void hammerFist ()
     {
+        hammerDmg.enabled = true; 
+        hammerSlow.enabled = true; 
         // Manipulate hammerFist radius transform position values about where the boss (hand) is 
-        float radiusX = gameObject.transform.position.x; 
-        if (FacingRight)
+        // float radiusX = gameObject.transform.position.x; 
+        // if (FacingRight)
+        // {
+        //     radiusX += 3; 
+        // }
+        // else if (!FacingRight)
+        // {
+        //     radiusX -= 3; 
+        // }
+        // float radiusY = gameObject.transform.position.y;
+        // float radiusZ = gameObject.transform.position.z;
+        // hammerFistCollider = Instantiate(Resources.Load<GameObject>("Prefabs/HammerFistZone"), new Vector3(radiusX, radiusY - 5, radiusZ), Quaternion.identity);
+        // hammerFistCollider.GetComponent<PolygonCollider2D>().isTrigger = true; 
+    }
+
+    void CheckHammerFistConditions ()
+    {
+        if (isDmging && isSlowing && !damageOnce)
         {
-            radiusX += 3; 
+            Debug.Log ("doDamage"); 
+            damageOnce = true; 
         }
-        else if (!FacingRight)
+        else if (isSlowing && !isDmging)
         {
-            radiusX -= 3; 
+            target.GetComponent<PlayerManager>().isSlowed = true; 
         }
-        float radiusY = gameObject.transform.position.y;
-        float radiusZ = gameObject.transform.position.z;
-        hammerFistCollider = Instantiate(Resources.Load<GameObject>("Prefabs/HammerFistZone"), new Vector3(radiusX, radiusY - 5, radiusZ), Quaternion.identity);
-        hammerFistCollider.GetComponent<PolygonCollider2D>().isTrigger = true; 
+        else if (!isSlowing && !isDmging)
+        {
+            target.GetComponent<PlayerManager>().isSlowed = false; 
+            damageOnce = false; 
+        }
     }
 
     void hammerFistDisabled ()
     {
         hammerFistBool = false; 
         midstAbility = false; 
+        hammerDmg.enabled = false;
+        hammerSlow.enabled = false;
     }
     #endregion
     //*************************************************//BoulderToss//*************************************************//

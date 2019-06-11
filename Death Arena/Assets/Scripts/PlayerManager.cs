@@ -5,7 +5,7 @@ using UnityEngine.Rendering;
 
 public class PlayerManager : MonoBehaviour
 {
-    public bool isStunned = false; 
+    // public bool isStunned = false; 
     public bool isSlowed = false; 
 
     [Range(0, .3f)] [SerializeField] private float smoothing = .05f;
@@ -29,11 +29,11 @@ public class PlayerManager : MonoBehaviour
 
         // Speed reduction
         float speedReduc;
-        if (isStunned) {
-            speedReduc = 0;
-        }
-        else if (isSlowed) {
-            speedReduc = 0.5f;
+        // if (isStunned) {
+        //     speedReduc = 0;
+        // }
+        if (isSlowed) {
+            speedReduc = 0.25f;
         }
         else {
             speedReduc = 1f;

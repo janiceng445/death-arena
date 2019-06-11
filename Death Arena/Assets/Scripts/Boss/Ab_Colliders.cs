@@ -8,43 +8,20 @@ public class Ab_Colliders : MonoBehaviour
     private Minotaur rampageRadius; 
     private string suffix;
 
-    private float stunTimer = 0; 
-    
-    private bool beenStunned = false; 
-    private bool initiateStun = true; 
+    private bool isDmg;
+    private bool isSlow; 
 
     void Start ()
     {
-        suffix = "(Clone)";
         playerMovement = GameObject.Find("Player").GetComponent<PlayerManager>();
         rampageRadius = GetComponentInParent<Minotaur>(); 
-    }
-
-    void Update ()
-    {
-        if (playerMovement.isStunned)
-        {
-            stunTimer ++;
-            if (stunTimer >= 90)
-            {
-                playerMovement.isStunned = false; 
-            }
-        }
     }
 
     void OnTriggerEnter2D (Collider2D collider)
     {
         if (collider.gameObject.tag == "Player")
         {
-            // HammerFistZone Collider
-            if (this.gameObject.name == "HammerFistZone" + suffix)
-            {
-                if (!beenStunned && initiateStun)
-                {
-                    playerMovement.isStunned = true; 
-                    beenStunned = true; 
-                }
-            }
+            
             // Rampage Collider
             if (this.gameObject.name == "RampageOnTrigger") 
             {
@@ -57,11 +34,7 @@ public class Ab_Colliders : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player")
         {
-            // HammerFistZone Collider
-            if (this.gameObject.name == "HammerFistZone" + suffix)
-            {
-                playerMovement.isSlowed = true;
-            }
+            
             // Rampage Collider
             if (this.gameObject.name == "RampageOnTrigger") 
             {
@@ -75,13 +48,6 @@ public class Ab_Colliders : MonoBehaviour
         {
             if (collider.gameObject.tag == "Player")
             {
-                // HammerFistZone Collider
-                if (this.gameObject.name == "HammerFistZone" + suffix)
-                {
-                    playerMovement.isStunned = false;
-                    playerMovement.isSlowed = false; 
-                    stunTimer = 0; 
-                }
                 // Rampage Collider
                 if (this.gameObject.name == "RampageOnTrigger") 
                 {
@@ -89,11 +55,5 @@ public class Ab_Colliders : MonoBehaviour
                 }
              }
         }
-    }
-
-    // Only stun player when hammerfistzone is first enabled, not when player walks into it
-    void OnFirstTrigger ()
-    {
-        initiateStun = false; 
     }
 }
