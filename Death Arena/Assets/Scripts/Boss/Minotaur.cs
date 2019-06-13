@@ -4,38 +4,42 @@ using UnityEngine;
 
 public class Minotaur : Boss
 {
-    // Timer between choosing attacks
+    //** Ability Cooldown Timer **//
     private float chooseTimer = 0;
     private int ability; 
+    // If above 50% HP, only use abilities 1 & 2, If below 50% HP, only use abilities 2 & 3
+    private bool switchAttacks; 
 
-    // Call Animations and Attacks on or off 
+    //** Call Animations and Attacks on or off **//
     private bool midstAbility; 
     private bool hammerFistBool; 
     private bool boulderTossBool;
     private bool isBuffing; 
-    private bool isCharging; 
+    public bool isCharging; 
 
-    // HammerFist ability
+    //** Slam Jumpattack **// 
     public BoxCollider2D slamCollider;
-    // // Defined to be instantiated polygon collider gameobject
-    // private GameObject hammerFistCollider; 
+    
+    //** HammerFist ability **//
     public CircleCollider2D hammerDmg; 
     public BoxCollider2D hammerSlow; 
     public static bool isDmging; 
     public static bool isSlowing;
     public bool damageOnce;  
 
-    // BoulderToss ability
+    //** BoulderToss ability **//
     private GameObject boulderCollider;
     private GameObject boulderPosition;  
     public float speed = 1.0f; 
 
-    // Rampage Ability
+    //** Rampage Ability **//
     private float rampageSpeed = 20.0f; 
     private Vector3 playerCurrLocation; 
+    private Vector3 chargePast = Vector3.zero; 
     public bool isWithinRampageZone; 
+    public CircleCollider2D rampageRoar; 
 
-    // Custom conditions
+    //** Custom conditions **//
     public bool slamRange;
     private bool isJumpAttacking;
     private bool canMove;
@@ -53,8 +57,11 @@ public class Minotaur : Boss
         ResetBreathTimer();
         CompleteStats();
 
+        // Turn ability colliders off
         hammerDmg.enabled = false;
         hammerSlow.enabled = false; 
+        rampageRoar.enabled = false; 
+        rampageRoar.radius = 1f; 
     }
 
     protected override void Update() {
@@ -78,12 +85,35 @@ public class Minotaur : Boss
         }
 
         CheckHammerFistConditions (); 
+        
+        // Switch attacks if Minotaur is below 50% health
+        if (health >= 250)
+        {
+            switchAttacks = false; 
+        }
+        else if (health <= 250)
+        {
+            switchAttacks = true; 
+        }
+            
+        //*************************************************//Animations//*************************************************//
+        //****************************************************************************************************************//
+        animator.SetBool("isMoving", isMoving);
+        animator.SetBool("isAttacking", isAttacking);
+        animator.SetBool("isTakingBreak", isTakingBreak);
+        animator.SetBool("isJumpAttacking", isJumpAttacking); 
+        animator.SetBool("isHammerFist", hammerFistBool); 
+        animator.SetBool("isBoulderToss", boulderTossBool); 
+        animator.SetBool("isBuffing", isBuffing); 
+        animator.SetBool("isCharging", isCharging);
+        //****************************************************************************************************************//
+        //****************************************************************************************************************//
 
         //*************************************************//Abilities//*************************************************//
         //***************************************************************************************************************//
         
         // Punch attack
-        if (inRange && !isAttacking && !isTakingBreak && !slamRange) {
+        if (inRange && !isAttacking && !isTakingBreak && !slamRange && !midstAbility) {
             isAttacking = true;
         }
         // Body slam attack
@@ -113,73 +143,63 @@ public class Minotaur : Boss
         
         // Reorientate on boulder toss if player switched sides
         if (boulderTossBool) {
-            // Facing left, player is on right
-            if (!FacingRight && targetLocation.position.x > transform.parent.transform.position.x) {
-                base.Flip();
-            }
-            // Facing right, player is on left
-            else if (FacingRight && targetLocation.position.x < transform.parent.transform.position.x) {
-                base.Flip();
-            }
+            Flip(); 
         }
+        // After Rage / Buff Animation is over, charge. Minotaur position is equal to the direction going towards the player
+        // and go past. Deactivate roar collider
         if (isCharging)
         {
-            transform.parent.transform.position = Vector3.MoveTowards(transform.parent.transform.position, playerCurrLocation, rampageSpeed * Time.deltaTime);
-            if (transform.parent.transform.position == playerCurrLocation)
-            {
-                isCharging = false; 
-            }
+            transform.parent.transform.position += chargePast * Time.deltaTime; 
+            rampageRoar.enabled = false; 
         }
         //***************************************************************************************************************//
         //***************************************************************************************************************//
-
+        Debug.Log (ability); 
 
         //*************************************************//Calculations//*************************************************//
         //******************************************************************************************************************//
-        // Random Number / Skill Generator every _ seconds and must not be in the middle of performing an ability
+        // Random Number / Skill Generator every 4 seconds and must not be in the middle of performing an ability
         if (!midstAbility)
         {
             chooseTimer += Time.deltaTime;
             if (chooseTimer >= 4)
             {
-                ability = 1;//Random.Range (1,4); 
+                if (!switchAttacks)
+                {
+                    // Pick number from 1 through  50
+                    ability = Random.Range (1, 51);
+                }
+                else if (switchAttacks)
+                {
+                    // Pick number from 25 through 75
+                    ability = Random.Range (25, 76);
+                }
+                // Reset Timer
                 chooseTimer = 0; 
             }
         }
 
-        // If ability is 1-3 and are not performing the ability at this time, then perform the ability and
-        // activate the animation. Inside the animation, the respectful function will be called. Inside the 
-        // respectful function, the ability will eventually be declared false and they will no longer be 
-        // in the middle of attacking and therefore could generate a new ability. 
-        if (ability == 1 && !midstAbility)
-        {
-            hammerFistBool = true;
-        }
-        else if (ability == 2 && !midstAbility)
-        {
-            boulderTossBool = true; 
-        }
-        else if (ability == 3 && !midstAbility && isWithinRampageZone)
-        {
-            isBuffing = true;  
-        }
+        // Above 50% HP: Number from 1-50.      // Below 50% HP: Number from 25-75.
+        // 1-25 = BoulderToss                   // 26-50 = HammerFist
+        // 26-50 = HammerFist                   // 51-75 = Rampage
 
-        //******************************************************************************************************************//
-        //******************************************************************************************************************//
-        
-            
-        //*************************************************//Animations//*************************************************//
-        //****************************************************************************************************************//
-        animator.SetBool("isMoving", isMoving);
-        animator.SetBool("isAttacking", isAttacking);
-        animator.SetBool("isTakingBreak", isTakingBreak);
-        animator.SetBool("isJumpAttacking", isJumpAttacking); 
-        animator.SetBool("isHammerFist", hammerFistBool); 
-        animator.SetBool("isBoulderToss", boulderTossBool); 
-        animator.SetBool("isBuffing", isBuffing); 
-        animator.SetBool("isCharging", isCharging);
-        //****************************************************************************************************************//
-        //****************************************************************************************************************//
+        if (ability >= 1 && ability <= 25 && !midstAbility)
+        {
+            boulderTossBool = true;
+        }
+        else if (ability >= 26 & ability <= 50 && !midstAbility)
+        {
+            hammerFistBool = true; 
+        }
+        else if (ability >= 51 && ability <= 75 && !midstAbility)
+        {
+            Flip (); 
+            // If rampage ability is chosen, begin with channeling Roar. Buffing's last frame activates charging. 
+            rampageRoar.enabled = true; 
+            isBuffing = true;
+        }
+        //***************************************************************************************************************//
+        //***************************************************************************************************************//
     }
 
     protected override void Move() {
@@ -215,27 +235,12 @@ public class Minotaur : Boss
     {
         hammerDmg.enabled = true; 
         hammerSlow.enabled = true; 
-        // Manipulate hammerFist radius transform position values about where the boss (hand) is 
-        // float radiusX = gameObject.transform.position.x; 
-        // if (FacingRight)
-        // {
-        //     radiusX += 3; 
-        // }
-        // else if (!FacingRight)
-        // {
-        //     radiusX -= 3; 
-        // }
-        // float radiusY = gameObject.transform.position.y;
-        // float radiusZ = gameObject.transform.position.z;
-        // hammerFistCollider = Instantiate(Resources.Load<GameObject>("Prefabs/HammerFistZone"), new Vector3(radiusX, radiusY - 5, radiusZ), Quaternion.identity);
-        // hammerFistCollider.GetComponent<PolygonCollider2D>().isTrigger = true; 
     }
 
     void CheckHammerFistConditions ()
     {
         if (isDmging && isSlowing && !damageOnce)
         {
-            Debug.Log ("doDamage"); 
             damageOnce = true; 
         }
         else if (isSlowing && !isDmging)
@@ -256,7 +261,10 @@ public class Minotaur : Boss
         hammerDmg.enabled = false;
         hammerSlow.enabled = false;
     }
+    //***************************************************************************************************************//
+    //***************************************************************************************************************//
     #endregion
+    
     //*************************************************//BoulderToss//*************************************************//
     //*****************************************************************************************************************//
     #region Bouldertoss Ability
@@ -277,6 +285,8 @@ public class Minotaur : Boss
     {
         boulderTossBool = false; 
     }
+    //***************************************************************************************************************//
+    //***************************************************************************************************************//
     #endregion
     //*************************************************//Rampage//*************************************************//
     //*************************************************************************************************************//
@@ -284,15 +294,28 @@ public class Minotaur : Boss
     void rampage ()
     {
         isBuffing = false;
+        // Player's current location is equal to Minotaur's target location
         playerCurrLocation = targetLocation.position; 
+        // Define chargePast to be the direction (target location from minotaur location) 
+        chargePast = (playerCurrLocation - transform.parent.transform.position).normalized * rampageSpeed; 
         isCharging = true; 
+        Flip (); 
     }
-
-    void rampageDisabled ()
-    {
-        isCharging = false; 
-    }
+    //***************************************************************************************************************//
+    //***************************************************************************************************************//
     #endregion
+
+    void Flip ()
+    {
+        // Facing left, player is on right
+        if (!FacingRight && targetLocation.position.x > transform.parent.transform.position.x) {
+            base.Flip();
+        }
+        // Facing right, player is on left
+        else if (FacingRight && targetLocation.position.x < transform.parent.transform.position.x) {
+            base.Flip();
+        }
+    }
 
     public void ActivateSlamCollision() {
         slamCollider.enabled = true;

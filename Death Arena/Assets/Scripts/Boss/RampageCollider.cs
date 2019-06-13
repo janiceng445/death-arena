@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ab_Colliders : MonoBehaviour
+public class RampageCollider : MonoBehaviour
 {
     private PlayerManager playerMovement; 
     private Minotaur rampageRadius; 
@@ -21,7 +21,6 @@ public class Ab_Colliders : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player")
         {
-            
             // Rampage Collider
             if (this.gameObject.name == "RampageOnTrigger") 
             {
