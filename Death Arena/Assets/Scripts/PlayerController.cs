@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
         ability1 = GameObject.Find("Ability1_overlay");
 
         // Timer initializations
-        dashTimer = 1f;
+        dashTimer = 4f;
         dashTimer_remaining = dashTimer;
 
         // TEMP
@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour
         // Rolling
         if (dashOnce) {
             dashTimer_remaining -= Time.deltaTime;
-            ability1.GetComponent<Image>().fillAmount = 1f - dashTimer_remaining;
+            ability1.GetComponent<Image>().fillAmount = 1f - (dashTimer_remaining / dashTimer);
             if (ability1.GetComponent<Image>().fillAmount == 1f) {
                 ability1.GetComponent<Image>().fillAmount = 1f;
                 dashTimer_remaining = dashTimer;
