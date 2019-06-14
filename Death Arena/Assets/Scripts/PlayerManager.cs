@@ -32,7 +32,7 @@ public class PlayerManager : MonoBehaviour
         float speedReduc;
 
         if (isSlowed) {
-            speedReduc = 0.25f;
+            speedReduc = 0.4f;
         }
         else {
             speedReduc = 1f;
