@@ -15,7 +15,7 @@ public class HammerDmg : MonoBehaviour
     {
         if (col.tag == "Player")
         {
-            Minotaur.isDmging = true; 
+            Minotaur.isDmging = false; 
         }
     }
     void OnTriggerExit2D (Collider2D col)

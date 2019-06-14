@@ -10,6 +10,7 @@ public class Boulder : MonoBehaviour
     public float speed;
     private bool hitPlayer = false; 
     private bool isTraveling;
+    private int power = 50;
     
     void Start ()
     {
@@ -38,6 +39,13 @@ public class Boulder : MonoBehaviour
         if (col.tag == "Player" && isTraveling)
         {
             GetComponent<Animator>().Play("minotaur_boulder_explode"); 
+            float calc_power = power - ((float) PlayerStats.def / 2f);
+            if (player.GetComponent<PlayerConditions>().health - calc_power <= 0) {
+                player.GetComponent<PlayerConditions>().health = 0;
+            }
+            else {
+                player.GetComponent<PlayerConditions>().health -= (int) Mathf.Ceil(calc_power);
+            }
         }
     }
 }

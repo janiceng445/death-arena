@@ -16,6 +16,7 @@ public class HammerSlow : MonoBehaviour
         if (col.tag == "Player")
         {
             Minotaur.isSlowing = true; 
+            Debug.Log("ARharh"); 
         }
     }
     void OnTriggerExit2D (Collider2D col)

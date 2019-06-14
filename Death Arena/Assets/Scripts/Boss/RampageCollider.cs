@@ -4,55 +4,35 @@ using UnityEngine;
 
 public class RampageCollider : MonoBehaviour
 {
-    private PlayerManager playerMovement; 
-    private Minotaur rampageRadius; 
-    private string suffix;
+    private int power = 75; 
+    private GameObject target;
+    private Minotaur Minotaur; 
+    // private PlayerManager playerMovement; 
+    // private Minotaur rampageRadius; 
+    // private string suffix;
 
-    private bool isDmg;
-    private bool isSlow; 
+    // private bool isDmg;
+    // private bool isSlow; 
 
     void Start ()
     {
-        playerMovement = GameObject.Find("Player").GetComponent<PlayerManager>();
-        rampageRadius = GetComponentInParent<Minotaur>(); 
+        // playerMovement = GameObject.Find("Player").GetComponent<PlayerManager>();
+        // rampageRadius = GetComponentInParent<Minotaur>(); 
+        target = GameObject.Find("Player"); 
+        Minotaur = GameObject.Find("Minotaur").transform.GetChild(0).GetComponent<Minotaur>(); 
     }
 
-    void OnTriggerEnter2D (Collider2D collider)
+    void OnTriggerEnter2D (Collider2D col)
     {
-        if (collider.gameObject.tag == "Player")
+        if (col.name == "Player" && Minotaur.isCharging)
         {
-            // Rampage Collider
-            if (this.gameObject.name == "RampageOnTrigger") 
-            {
-                rampageRadius.isWithinRampageZone = false; 
+            float calc_power = power - ((float) PlayerStats.def / 2f);
+            if (target.GetComponent<PlayerConditions>().health - calc_power <= 0) {
+                target.GetComponent<PlayerConditions>().health = 0;
             }
-        }
-    }
-
-    void OnTriggerStay2D (Collider2D collider)
-    {
-        if (collider.gameObject.tag == "Player")
-        {
-            
-            // Rampage Collider
-            if (this.gameObject.name == "RampageOnTrigger") 
-            {
-                rampageRadius.isWithinRampageZone = false; 
+            else {
+                target.GetComponent<PlayerConditions>().health -= (int) Mathf.Ceil(calc_power);
             }
-        }
-    }
-
-    void OnTriggerExit2D (Collider2D collider)
-    {
-        {
-            if (collider.gameObject.tag == "Player")
-            {
-                // Rampage Collider
-                if (this.gameObject.name == "RampageOnTrigger") 
-                {
-                    rampageRadius.isWithinRampageZone = true; 
-                }
-             }
         }
     }
 }

@@ -7,6 +7,9 @@ public class Minotaur : Boss
     //** Ability Cooldown Timer **//
     private float chooseTimer = 0;
     private int ability; 
+    private int boulderTossCounter; 
+    private int hammerFistCounter;
+    private int rampageCounter; 
     // If above 50% HP, only use abilities 1 & 2, If below 50% HP, only use abilities 2 & 3
     private bool switchAttacks; 
 
@@ -25,7 +28,9 @@ public class Minotaur : Boss
     public BoxCollider2D hammerSlow; 
     public static bool isDmging; 
     public static bool isSlowing;
-    public bool damageOnce;  
+    private int abilityDamage = 75; 
+    public bool damageOnce; 
+    
 
     //** BoulderToss ability **//
     private GameObject boulderCollider;
@@ -33,7 +38,7 @@ public class Minotaur : Boss
     public float speed = 1.0f; 
 
     //** Rampage Ability **//
-    private float rampageSpeed = 20.0f; 
+    private float rampageSpeed = 30.0f; 
     private Vector3 playerCurrLocation; 
     private Vector3 chargePast = Vector3.zero; 
     public bool isWithinRampageZone; 
@@ -154,7 +159,6 @@ public class Minotaur : Boss
         }
         //***************************************************************************************************************//
         //***************************************************************************************************************//
-        Debug.Log (ability); 
 
         //*************************************************//Calculations//*************************************************//
         //******************************************************************************************************************//
@@ -162,41 +166,92 @@ public class Minotaur : Boss
         if (!midstAbility)
         {
             chooseTimer += Time.deltaTime;
-            if (chooseTimer >= 4)
+            if (chooseTimer >= 3)
             {
                 if (!switchAttacks)
                 {
                     // Pick number from 1 through  50
-                    ability = Random.Range (1, 51);
+                    // Every ability has a counter. If ability has been done twice already, repick a number 
+                    // until it has become a different ability. Once it has become a different ability, counters reset
+                    // This prevents abilities to be done more than 2 times in a row 
+                    do
+                    {
+                        ability = Random.Range (1, 51);
+                        // Debug.Log("Ability Chosen: " + ability); 
+                        if (boulderTossCounter >= 2)
+                        {
+                            if (ability >= 26)
+                            {
+                                boulderTossCounter = 0; 
+                            }
+                        }
+                        if (hammerFistCounter >= 2)
+                        {
+                            if (ability <= 25)
+                            {
+                                hammerFistCounter = 0; 
+                            }
+                        }
+                    } while (boulderTossCounter == 2 || hammerFistCounter == 2);
                 }
                 else if (switchAttacks)
                 {
                     // Pick number from 25 through 75
-                    ability = Random.Range (25, 76);
+                    do
+                    {
+                        ability = Random.Range (26, 76);
+                        if (hammerFistCounter >= 2)
+                        {
+                            if (ability >= 51)
+                            {
+                                hammerFistCounter = 0; 
+                            }
+                        }
+                        if (rampageCounter >= 2)
+                        {
+                            if (ability <= 50)
+                            {
+                                rampageCounter = 0; 
+                            }
+                        }
+                    } while (hammerFistCounter == 2 || rampageCounter == 2);
                 }
                 // Reset Timer
                 chooseTimer = 0; 
             }
         }
-
         // Above 50% HP: Number from 1-50.      // Below 50% HP: Number from 25-75.
         // 1-25 = BoulderToss                   // 26-50 = HammerFist
         // 26-50 = HammerFist                   // 51-75 = Rampage
 
         if (ability >= 1 && ability <= 25 && !midstAbility)
         {
-            boulderTossBool = true;
+            boulderTossCounter++; 
+            // Debug.Log ("Boulder: " + boulderTossCounter);
+            if (boulderTossCounter != 3)
+            {
+                boulderTossBool = true; 
+            }
         }
         else if (ability >= 26 & ability <= 50 && !midstAbility)
         {
-            hammerFistBool = true; 
+            hammerFistCounter++; 
+            // Debug.Log ("Hammer : " + hammerFistCounter); 
+            if (hammerFistCounter != 3)
+            {
+                hammerFistBool = true; 
+            }
         }
         else if (ability >= 51 && ability <= 75 && !midstAbility)
         {
-            Flip (); 
-            // If rampage ability is chosen, begin with channeling Roar. Buffing's last frame activates charging. 
-            rampageRoar.enabled = true; 
-            isBuffing = true;
+            rampageCounter++; 
+            if (rampageCounter != 3)
+            {
+                Flip (); 
+                // If rampage ability is chosen, begin with channeling Roar. Buffing's last frame activates charging. 
+                rampageRoar.enabled = true; 
+                isBuffing = true;
+            }
         }
         //***************************************************************************************************************//
         //***************************************************************************************************************//
@@ -233,21 +288,23 @@ public class Minotaur : Boss
     #region Hammerfist Ability
     void hammerFist ()
     {
-        hammerDmg.enabled = true; 
-        hammerSlow.enabled = true; 
+        // hammerDmg.enabled = true; 
+        // hammerSlow.enabled = true; 
+        // Changed to be via animation ^^ // 
     }
 
     void CheckHammerFistConditions ()
     {
-        if (isDmging && isSlowing && !damageOnce)
+        if (isDmging && !damageOnce)
         {
+            dealDamage();
             damageOnce = true; 
         }
-        else if (isSlowing && !isDmging)
+        else if (isSlowing)
         {
             target.GetComponent<PlayerManager>().isSlowed = true; 
         }
-        else if (!isSlowing && !isDmging)
+        else if (!isSlowing || !isDmging)
         {
             target.GetComponent<PlayerManager>().isSlowed = false; 
             damageOnce = false; 
@@ -324,5 +381,16 @@ public class Minotaur : Boss
     public void DeactivateSlamCollision() {
         slamCollider.enabled = false;
         isTakingBreak = true;
+    }
+
+    void dealDamage ()
+    {
+        float calc_power = abilityDamage - ((float) PlayerStats.def / 2f);
+        if (target.GetComponent<PlayerConditions>().health - calc_power <= 0) {
+            target.GetComponent<PlayerConditions>().health = 0;
+        }
+        else {
+            target.GetComponent<PlayerConditions>().health -= (int) Mathf.Ceil(calc_power);
+        }
     }
 }

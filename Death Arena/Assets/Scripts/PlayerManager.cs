@@ -30,9 +30,7 @@ public class PlayerManager : MonoBehaviour
 
         // Speed reduction
         float speedReduc;
-        // if (isStunned) {
-        //     speedReduc = 0;
-        // }
+
         if (isSlowed) {
             speedReduc = 0.25f;
         }
