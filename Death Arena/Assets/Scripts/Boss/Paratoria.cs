@@ -25,12 +25,14 @@ public class Paratoria : Boss
     private float randomAbilityTimer; 
     // Nightmare 
     public bool NightmareAbility; 
+    private float nightmareTimerPrep; 
+    private bool nightmarePrepDisable; 
     private int nightmareFour; 
     private int nightmareAb1; 
     private int nightmareAb2; 
     private int nightmareAb3; 
     private int nightmareAb4; 
-    private bool nextNightmareWave = true; 
+    private bool nextNightmareWave; 
     private int waveCounter; 
     private Vector2 ParatoriaLocation; 
     private Vector2 playerLastLocation; 
@@ -59,7 +61,7 @@ public class Paratoria : Boss
         CompleteStats();
 
         // Shadowlites
-        spawnRate = 8f; 
+        spawnRate = 4f; 
         nextSpawn = 3f; 
 
         // PlayerManager
@@ -69,7 +71,7 @@ public class Paratoria : Boss
         randomMoveTimer = Random.Range (1f, 6f);
 
         // Nightmare
-        randomAbilityTimer = Random.Range (15f, 20f);
+        randomAbilityTimer = Random.Range (30f, 35f);
         abilityTimer = randomAbilityTimer; 
 
         // Slow zone enabler
@@ -112,29 +114,34 @@ public class Paratoria : Boss
             LightZone = GameObject.Find("LightZone(Clone)"); 
             NightmareAbility = true; 
         }
-        if (waveCounter >= 8)
+        if (waveCounter >= 9)
         {
             NightmareAbility = false; 
             Destroy(LightZone);
-            randomAbilityTimer = Random.Range (18f, 25f); 
+            randomAbilityTimer = Random.Range (25f, 30f); 
             abilityTimer = randomAbilityTimer; 
             nightmareAb1 = 0;
             nightmareAb2 = 0;
             nightmareAb3 = 0;
             nightmareAb4 = 0;
             transform.parent.transform.position = new Vector3 (0,0,0); 
+            nightmarePrepDisable = false; 
 
             waveCounter = 0;
         }
         if (NightmareAbility)
         {
-            foreach (GameObject enemyClone in shadowliteList)
+            //NightmareReset(); 
+            if (!nightmarePrepDisable)
             {
-                Destroy(enemyClone.gameObject); 
+                nightmareTimerPrep += Time.deltaTime; 
+                transform.parent.transform.position = new Vector3 (-500,-500,0);
             }
-            for (int i = 0; i < shadowliteList.Count; i++)
+            if (nightmareTimerPrep >= 5)
             {
-                shadowliteList.RemoveAt(i); 
+                nextNightmareWave = true; 
+                nightmarePrepDisable = true; 
+                nightmareTimerPrep = 0; 
             }
             if (nextNightmareWave)
             {
@@ -186,13 +193,13 @@ public class Paratoria : Boss
                 else if (nightmareFour == 3)
                 {
                     ParatoriaLocation.x -= 8; 
-                    ParatoriaLocation.y -= 4; 
+                    ParatoriaLocation.y -= 8; 
                     nightmareAb3++; 
                 }
                 else if (nightmareFour == 4)
                 {
                     ParatoriaLocation.x += 8; 
-                    ParatoriaLocation.y -= 4; 
+                    ParatoriaLocation.y -= 8; 
                     nightmareAb4++; 
                 }
                 Nightmare();
@@ -242,7 +249,10 @@ public class Paratoria : Boss
     IEnumerator Summon()
     {
         Debug.Log("Spawn Shadowlite"); 
-        enemyClone = (GameObject) Instantiate(enemy, transform.position, Quaternion.identity); 
+        if (NightmareAbility && waveCounter < 9)
+        {
+            enemyClone = (GameObject) Instantiate(enemy, transform.position, Quaternion.identity); 
+        }
         yield return new WaitForSeconds(4); 
         Debug.Log("Pick another (Number) Area."); 
         waveCounter++; 
@@ -261,6 +271,18 @@ public class Paratoria : Boss
         StartCoroutine(Summon());
     }
 
+    void NightmareReset()
+    {
+        foreach (GameObject enemyClone in shadowliteList)
+        {
+            Destroy(enemyClone.gameObject); 
+        }
+        for (int i = 0; i < shadowliteList.Count; i++)
+        {
+            shadowliteList.RemoveAt(i); 
+        }
+    }
+
     void ParatoriaFlip()
     {
         if (transform.parent.transform.position.x < targetLocation.position.x && !FacingRight) {
@@ -269,5 +291,25 @@ public class Paratoria : Boss
         else if (transform.parent.transform.position.x > targetLocation.position.x && FacingRight) {
             base.Flip();
         }
+    }
+
+    public void DealDamage()
+    {
+        if (!canMove && !NightmareAbility)
+        {
+            TakeDamage(30); 
+        }
+    }
+    public void Heal(int regen)
+    {
+        if (health + regen >= 500)
+        {
+            health = 500; 
+        }
+        else
+        {
+            health += regen; 
+        }
+        bar.fillAmount = (float) health / (float) maxHealth;
     }
 }

@@ -23,6 +23,9 @@ public class Weapon : MonoBehaviour
             if (collider.name == "shadowliteHitbox") {
                 collider.transform.parent.gameObject.GetComponent<Shadowlites>().DestroyThis(); 
             }
+            else if (collider.transform.parent.transform.parent.name == "Wraith") {
+                collider.transform.parent.gameObject.GetComponent<Paratoria>().DealDamage(); 
+            }
             else
             {
                 collider.transform.parent.gameObject.GetComponent<Boss>().TakeDamage(power);

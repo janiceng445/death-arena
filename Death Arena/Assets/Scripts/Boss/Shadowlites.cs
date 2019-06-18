@@ -35,7 +35,7 @@ public class Shadowlites : MonoBehaviour
         hitboxCollider.enabled = true; 
         bubbleCollider = gameObject.transform.GetChild(5).GetComponent<CircleCollider2D>(); 
         bubbleCollider.enabled = true;
-        moveSpeed = 9f; 
+        moveSpeed = 7f; 
         // shadowSprite = GetComponent<SpriteRenderer>(); 
         shadowliteAnimator = GetComponent<Animator>(); 
 
