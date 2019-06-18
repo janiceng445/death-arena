@@ -5,8 +5,8 @@ using UnityEngine.Rendering;
 
 public class PlayerManager : MonoBehaviour
 {
-    // public bool isStunned = false; 
     public bool isSlowed = false; 
+    public bool isDeathSlowed = false; 
 
     [Range(0, .3f)] [SerializeField] private float smoothing = .05f;
     private Vector3 ref_velocity;
@@ -33,6 +33,9 @@ public class PlayerManager : MonoBehaviour
 
         if (isSlowed) {
             speedReduc = 0.4f;
+        }
+        else if (isDeathSlowed) {
+            speedReduc = 0.25f; 
         }
         else {
             speedReduc = 1f;

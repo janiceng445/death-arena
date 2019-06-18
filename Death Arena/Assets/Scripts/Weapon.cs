@@ -6,7 +6,6 @@ public class Weapon : MonoBehaviour
 {
 
     public int power;
-    private bool once; 
 
     void Start() {
         power = WeaponStats.weapon_power;
@@ -20,14 +19,18 @@ public class Weapon : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
-        if (collider.tag == "EnemyHitbox" && !once) {
-            collider.transform.parent.gameObject.GetComponent<Boss>().TakeDamage(power);
-            once = true; 
+        if (collider.tag == "EnemyHitbox") {
+            if (collider.name == "shadowliteHitbox") {
+                collider.transform.parent.gameObject.GetComponent<Shadowlites>().DestroyThis(); 
+            }
+            else
+            {
+                collider.transform.parent.gameObject.GetComponent<Boss>().TakeDamage(power);
+            }
         }
     }
     void OnTriggerExit2D(Collider2D collider) {
         if (collider.tag == "EnemyHitbox") {
-            once = false; 
         }
     }
 }

@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7373488781820342755
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7373488781820342752}
+  - component: {fileID: 7373488781820342753}
+  m_Layer: 0
+  m_Name: LightZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7373488781820342752
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7373488781820342755}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.309334, y: 1.1869136, z: -93.17969}
+  m_LocalScale: {x: 0.5414344, y: 0.9123525, z: 0.69}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!68 &7373488781820342753
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7373488781820342755}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -8.311795, y: 0.09483972}
+  - {x: -8.232679, y: 1.0671104}
+  - {x: -7.5466566, y: 2.2367034}
+  - {x: -6.1339774, y: 3.3374357}
+  - {x: -4.576275, y: 3.9733412}
+  - {x: -3.1566713, y: 4.3525777}
+  - {x: -1.5615443, y: 4.612632}
+  - {x: 0.00024332106, y: 4.7484264}
+  - {x: 1.6360009, y: 4.6479425}
+  - {x: 3.010392, y: 4.350615}
+  - {x: 4.3976836, y: 3.973402}
+  - {x: 5.5754776, y: 3.4759274}
+  - {x: 6.7094135, y: 2.8920774}
+  - {x: 7.7064676, y: 2.0460315}
+  - {x: 8.352046, y: 1.1323472}
+  - {x: 8.349116, y: -0.041971803}
+  - {x: 7.861219, y: -1.3163708}
+  - {x: 6.713374, y: -2.398838}
+  - {x: 5.160238, y: -3.1772878}
+  - {x: 2.6404347, y: -3.8637707}
+  - {x: 0.026376486, y: -4.066888}
+  - {x: -2.4404912, y: -3.8999355}
+  - {x: -4.8046246, y: -3.3599067}
+  - {x: -6.476234, y: -2.606686}
+  - {x: -7.827746, y: -1.3319858}
+  - {x: -8.285794, y: -0.124011636}

@@ -380,7 +380,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5100
   m_Sprite: {fileID: -5181316110492110508, guid: b82c03c94b71e9e4b9bc347d8fd0eade,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -462,8 +462,12 @@ MonoBehaviour:
   myLocation: {fileID: 0}
   bar: {fileID: 0}
   inRange: 0
-  enemy: {fileID: 0}
+  enemy: {fileID: 9841528713574182, guid: b619ce9bf7549a54583a87497e4ed992, type: 3}
   spawnRate: 0
+  spawnCount: 0
+  shadowliteList: []
+  NightmareAbility: 0
+  SlowRadius: {fileID: 0}
 --- !u!1 &4824428754734832495
 GameObject:
   m_ObjectHideFlags: 0
