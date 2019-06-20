@@ -5,16 +5,22 @@ using UnityEngine;
 public class Paratoria : Boss
 {
     //** Spawn Shadowlites **//
+    // List 
     public GameObject enemy; 
     private GameObject enemyClone; 
+    public List<GameObject> shadowliteList = new List<GameObject>(); 
+    // Spawnpoints
     float randX; 
     float randY; 
     Vector2 whereToSpawn; 
+    // Spawn timings
     public float spawnRate;  
     float nextSpawn = 0.0f; 
     public int spawnCount;
     private bool spawnDisable; 
-    public List<GameObject> shadowliteList = new List<GameObject>(); 
+
+    // If player has struck shadowlite
+    public bool shadowAttack; 
 
     // Player slow
     private PlayerManager PlayerManager; 
@@ -23,17 +29,22 @@ public class Paratoria : Boss
     private bool midstAbility; 
     private float abilityTimer; 
     private float randomAbilityTimer; 
-    // Nightmare 
+
+    //** Nightmare **//
+    // Timings
     public bool NightmareAbility; 
     private float nightmareTimerPrep; 
-    private bool nightmarePrepDisable; 
+    private bool nightmarePrepDisable;
+    // Four Spawnpoints 
     private int nightmareFour; 
     private int nightmareAb1; 
     private int nightmareAb2; 
     private int nightmareAb3; 
-    private int nightmareAb4; 
+    private int nightmareAb4;
+    // Timings + Resets 
     private bool nextNightmareWave; 
     private int waveCounter; 
+    // Nightmare Trap initiation 
     private Vector2 ParatoriaLocation; 
     private Vector2 playerLastLocation; 
     private GameObject LightZone; 
@@ -42,7 +53,7 @@ public class Paratoria : Boss
     public Collider2D SlowRadius; 
 
     //** Moving Mechanics **// 
-    private bool canMove;
+    public bool canMove;
     // Timer that goes up
     private float moveTimer; 
     // Random number that Timer goes up to in order to determine when Paratoria moves
@@ -81,6 +92,7 @@ public class Paratoria : Boss
     protected override void Update() 
     {
         // Spawning Shadowlites
+        // If more than 7 on map, slow
         if (spawnCount >= 7)
         {
             spawnDisable = true;
@@ -91,12 +103,14 @@ public class Paratoria : Boss
             spawnDisable = false; 
             PlayerManager.isDeathSlowed = false; 
         }
+        // Spawning next shadowlite up to 7
         if (Time.time > nextSpawn && !NightmareAbility)
         {
             nextSpawn = Time.time + spawnRate; 
             randX = Random.Range (-23f, 23f);
             randY = Random.Range (-10f, 10f);
             whereToSpawn = new Vector2 (randX, randY); 
+            // If not disabled (less than 7), spawn and add to list. 
             if (!spawnDisable)
             {
                 enemyClone = (GameObject) Instantiate (enemy, whereToSpawn, Quaternion.identity);
@@ -106,15 +120,19 @@ public class Paratoria : Boss
         }
 
         // Nightmare Ability
+        // abilityTimer is equaled to a random timer. Once abilityTimer reaches 0, start Nightmare ability 
         abilityTimer -= Time.deltaTime; 
         if (abilityTimer <= 0 && !NightmareAbility)
         {
+            // Take players last location, and store it for the entirety of the ability 
             playerLastLocation = target.transform.position;
+            // Trap Player
             Instantiate (Resources.Load<GameObject>("Prefabs/LightZone"), playerLastLocation, Quaternion.identity); 
             LightZone = GameObject.Find("LightZone(Clone)"); 
             NightmareAbility = true; 
         }
-        if (waveCounter >= 9)
+        // Once the player has completed 8 waves, reset 
+        if (waveCounter >= 8)
         {
             NightmareAbility = false; 
             Destroy(LightZone);
@@ -125,16 +143,19 @@ public class Paratoria : Boss
             nightmareAb3 = 0;
             nightmareAb4 = 0;
             transform.parent.transform.position = new Vector3 (0,0,0); 
-            nightmarePrepDisable = false; 
+            nightmarePrepDisable = false;
+            NightmareReset(); 
 
             waveCounter = 0;
         }
         if (NightmareAbility)
         {
-            //NightmareReset(); 
+            // 5 second warning / preparation so Paratoria doesn't spawn right away 
             if (!nightmarePrepDisable)
             {
+                NightmareReset(); 
                 nightmareTimerPrep += Time.deltaTime; 
+                // Paratoria disappears off to side (dramatic effect) 
                 transform.parent.transform.position = new Vector3 (-500,-500,0);
             }
             if (nightmareTimerPrep >= 5)
@@ -145,7 +166,10 @@ public class Paratoria : Boss
             }
             if (nextNightmareWave)
             {
+                // Set Paratoria's (4) locations to be based off of the stored player location values 
                 ParatoriaLocation = playerLastLocation; 
+
+                // Keep choosing random number 1-4 if any are to be repeated more than twice. 
                 do
                 {
                     nightmareFour = Random.Range (1,5);
@@ -178,32 +202,38 @@ public class Paratoria : Boss
                         }
                     }
                 } while (nightmareAb1 == 2 || nightmareAb2 == 2 || nightmareAb3 == 2 || nightmareAb4 == 2);
+                // Top left
                 if (nightmareFour == 1)
                 {
                     ParatoriaLocation.x -= 8;
                     ParatoriaLocation.y += 8; 
                     nightmareAb1++; 
                 }
+                // Top right
                 else if (nightmareFour == 2)
                 {
                     ParatoriaLocation.x += 8;
                     ParatoriaLocation.y += 8;
                     nightmareAb2++; 
                 }
+                // Bottom left
                 else if (nightmareFour == 3)
                 {
                     ParatoriaLocation.x -= 8; 
                     ParatoriaLocation.y -= 8; 
                     nightmareAb3++; 
                 }
+                // Bottom right
                 else if (nightmareFour == 4)
                 {
                     ParatoriaLocation.x += 8; 
                     ParatoriaLocation.y -= 8; 
                     nightmareAb4++; 
                 }
+                // Cast Nightmare and Flip 
                 Nightmare();
                 ParatoriaFlip();
+                // Immediately cancel so does not spawn infinitely 
                 nextNightmareWave = false; 
             }
         }
@@ -248,31 +278,35 @@ public class Paratoria : Boss
     
     IEnumerator Summon()
     {
-        Debug.Log("Spawn Shadowlite"); 
-        if (NightmareAbility && waveCounter < 9)
+        // So long as 8 waves have not been completed yet, keep spawning and add to list 
+        if (NightmareAbility && waveCounter < 8)
         {
             enemyClone = (GameObject) Instantiate(enemy, transform.position, Quaternion.identity); 
+            shadowliteList.Add(enemyClone); 
         }
-        yield return new WaitForSeconds(4); 
-        Debug.Log("Pick another (Number) Area."); 
+        yield return new WaitForSeconds(4);
+        // After 4 seconds, (player must have killed shadowlite by now, thus resulting in waveCounter++, or wave complete) 
         waveCounter++; 
         Debug.Log(waveCounter); 
-        if (NightmareAbility)
+        // So long as 8 waves have not been completed yet, reset and choose again 1-4
+        if (NightmareAbility && waveCounter < 8)
         {
             nextNightmareWave = true;
         } 
     }
     void Nightmare()
     {
-        Debug.Log("Moved to (Number) Area."); 
+        // In this ability, Paraoria cannot move, damage, 
         canMove = false;
         SlowRadius.enabled = false; 
+        // Finally set Paratoria's actual location to ParatoriaLocation (which was manipulated according to 4 choices)
         transform.parent.transform.position = ParatoriaLocation; 
         StartCoroutine(Summon());
     }
 
     void NightmareReset()
     {
+        // Destroy all shadowlites before and afer Nightmare has been casted 
         foreach (GameObject enemyClone in shadowliteList)
         {
             Destroy(enemyClone.gameObject); 
@@ -281,6 +315,7 @@ public class Paratoria : Boss
         {
             shadowliteList.RemoveAt(i); 
         }
+        spawnCount = 0; 
     }
 
     void ParatoriaFlip()
@@ -295,13 +330,20 @@ public class Paratoria : Boss
 
     public void DealDamage()
     {
-        if (!canMove && !NightmareAbility)
+        // If Paratoria is not moving, nor casting Nightmare, nor has a shadowlite been attacked
+        if (!canMove && !NightmareAbility && !shadowAttack)
         {
-            TakeDamage(30); 
+            TakeDamage(50); 
+        }
+        // Moving or not moving, take damage if Player has attacked shadowlite
+        else if (shadowAttack)
+        {
+            TakeDamage(30);
         }
     }
     public void Heal(int regen)
     {
+        // During Nightmare, if any shadowlite should touch player, heal Paratoria 
         if (health + regen >= 500)
         {
             health = 500; 
