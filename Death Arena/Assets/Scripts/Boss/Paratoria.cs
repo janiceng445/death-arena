@@ -150,6 +150,9 @@ public class Paratoria : Boss
         }
         if (NightmareAbility)
         {
+            // Change background
+            GameObject.Find("Darkness").GetComponent<Darkness>().ActivateDarknessBG();
+
             // 5 second warning / preparation so Paratoria doesn't spawn right away 
             if (!nightmarePrepDisable)
             {
