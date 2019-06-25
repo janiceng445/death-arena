@@ -9,8 +9,6 @@ public class Darkness : MonoBehaviour
     public GameObject circle;
 
     void Start() {
-        // Test 
-        WorldStats.level = 3;
 
         if (WorldStats.level == 3) {
             gameObject.GetComponent<SpriteRenderer>().enabled = true;

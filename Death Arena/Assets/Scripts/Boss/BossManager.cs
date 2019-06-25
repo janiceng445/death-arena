@@ -39,6 +39,9 @@ public class BossManager : MonoBehaviour
             case 2:
                 namePrefab = "Minotaur";
                 break;
+            case 3:
+                namePrefab = "Wraith";
+                break;
         }
 
         // Player ups

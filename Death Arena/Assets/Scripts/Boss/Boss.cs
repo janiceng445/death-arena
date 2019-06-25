@@ -73,13 +73,16 @@ public class Boss : MonoBehaviour
         if (!GameSettings.paused) {
             if (target.GetComponent<PlayerConditions>().health >= 0.001f) {
                 // Fix sorting order
-                sprite.sortingOrder = Mathf.RoundToInt(transform.parent.transform.position.y * 100f) * -1;
+                if (transform.name == "OgreAlive" || transform.name == "OgreDead") sprite.sortingOrder = Mathf.RoundToInt(transform.parent.transform.position.y * 100f) * -1;
 
                 if (!isAttacking && !isTakingBreak && !inRange) {
                     // Move
                     isMoving = true;
                     if (Vector2.Distance(myLocation.position, targetLocation.position) > DistanceAway) {
                         transform.parent.transform.position = Vector2.MoveTowards(transform.parent.transform.position, targetLocation.position, Speed * Time.deltaTime);
+                    }
+                    else {
+                        isMoving = false;
                     }
                     
                     // Flip
@@ -121,7 +124,7 @@ public class Boss : MonoBehaviour
         isDead = true;
         WorldStats.gold += moneyAmount;
         dieOnce = true;
-        animator.Play("Death");
+        animator.Play("death");
         this.enabled = false;
         BossManager.bossAlive = false;
     }
