@@ -61,6 +61,11 @@ public class GameSettings : MonoBehaviour
             MuteMusic();
         }
         UpdateAllAudio();
+
+        // Disable Play if level == 5
+        if (WorldStats.level == 5) {
+            GameObject.Find("Play_btn").GetComponent<Button>().interactable = false;
+        }
     }
 
     public static void UpdateAllAudio() {
