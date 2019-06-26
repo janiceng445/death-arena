@@ -91,6 +91,11 @@ public class Paratoria : Boss
     }
     protected override void Update() 
     {
+        // Check death
+        if (health <= 0 && !dieOnce) {
+            base.Die();
+        }
+        
         // Spawning Shadowlites
         // If more than 7 on map, slow
         if (spawnCount >= 7)

@@ -11,7 +11,7 @@ public class shadowPlayerCollision : MonoBehaviour
 
     void Start ()
     {
-        Paratoria = GameObject.Find("Wraith").transform.GetChild(0).GetComponent<Paratoria>(); 
+        Paratoria = GameObject.Find("Wraith(Clone)").transform.GetChild(0).GetComponent<Paratoria>(); 
         Shadowlites = GetComponentInParent<Shadowlites>();
         player = GameObject.Find("Player").GetComponent<PlayerConditions>();
     }

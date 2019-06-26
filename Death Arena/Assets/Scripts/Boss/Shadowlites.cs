@@ -40,7 +40,7 @@ public class Shadowlites : MonoBehaviour
         shadowliteAnimator = GetComponent<Animator>(); 
 
         // Paratoria 
-        Paratoria = GameObject.Find("Wraith").transform.GetChild(0).GetComponent<Paratoria>(); 
+        Paratoria = GameObject.Find("Wraith(Clone)").transform.GetChild(0).GetComponent<Paratoria>(); 
     }
     
     void Update ()

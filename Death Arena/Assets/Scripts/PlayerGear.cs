@@ -33,10 +33,10 @@ public class PlayerGear : MonoBehaviour
         lower_leg_right = GameObject.Find("l_armor_leg_r");
         weapon_back = GameObject.Find("weapon");
         weapon_hand = GameObject.Find("WeaponHitbox");
-        if (PlayerStats.armorSetName != null) {
+        if (PlayerStats.armorSetName != "null") {
             LoadArmorSet(PlayerStats.armorSet, PlayerStats.armorSetName); 
         }
-        if (PlayerStats.weaponName != null) {
+        if (PlayerStats.weaponName != "null") {
             LoadWeapon();
         }
     }

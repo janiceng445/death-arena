@@ -75,9 +75,6 @@ public class Minotaur : Boss
             base.Die();
         }
 
-        // Move mechanic
-        Move();
-
         // Cooldown between attacks
         if (isTakingBreak) {
             isAttacking = false;
@@ -89,172 +86,186 @@ public class Minotaur : Boss
             }
         }
 
-        CheckHammerFistConditions (); 
-        
-        // Switch attacks if Minotaur is below 50% health
-        if (health >= 250)
-        {
-            switchAttacks = false; 
-        }
-        else if (health <= 250)
-        {
-            switchAttacks = true; 
-        }
+        // Only do stuff if player is alive
+        if (target.GetComponent<PlayerConditions>().health >= 0.001f) {
+            // Move mechanic
+            Move();
+
+            // Condition checking
+            CheckHammerFistConditions (); 
             
-        //*************************************************//Animations//*************************************************//
-        //****************************************************************************************************************//
-        animator.SetBool("isMoving", isMoving);
-        animator.SetBool("isAttacking", isAttacking);
-        animator.SetBool("isTakingBreak", isTakingBreak);
-        animator.SetBool("isJumpAttacking", isJumpAttacking); 
-        animator.SetBool("isHammerFist", hammerFistBool); 
-        animator.SetBool("isBoulderToss", boulderTossBool); 
-        animator.SetBool("isBuffing", isBuffing); 
-        animator.SetBool("isCharging", isCharging);
-        //****************************************************************************************************************//
-        //****************************************************************************************************************//
+            // Switch attacks if Minotaur is below 50% health
+            if (health >= 250)
+            {
+                switchAttacks = false; 
+            }
+            else if (health <= 250)
+            {
+                switchAttacks = true; 
+            }
 
-        //*************************************************//Abilities//*************************************************//
-        //***************************************************************************************************************//
-        
-        // Punch attack
-        if (inRange && !isAttacking && !isTakingBreak && !slamRange && !midstAbility) {
-            isAttacking = true;
-        }
-        // Body slam attack
-        else if (slamRange && !isJumpAttacking && !isTakingBreak && !inRange && !midstAbility) {
-            isJumpAttacking = true;
-        }
+            //*************************************************//Animations//*************************************************//
+            //****************************************************************************************************************//
+            animator.SetBool("isMoving", isMoving);
+            animator.SetBool("isAttacking", isAttacking);
+            animator.SetBool("isTakingBreak", isTakingBreak);
+            animator.SetBool("isJumpAttacking", isJumpAttacking); 
+            animator.SetBool("isHammerFist", hammerFistBool); 
+            animator.SetBool("isBoulderToss", boulderTossBool); 
+            animator.SetBool("isBuffing", isBuffing); 
+            animator.SetBool("isCharging", isCharging);
+            //****************************************************************************************************************//
+            //****************************************************************************************************************//
 
-        // If performing any ability, then boss is in the middle of performing an ability
-        if (hammerFistBool || boulderTossBool || isBuffing || isCharging)
-        {
-            midstAbility = true; 
-        }
-        else if (!hammerFistBool && !boulderTossBool && !isBuffing && !isCharging)
-        {
-            midstAbility = false; 
-            ability = 0;
-        }
+            //*************************************************//Abilities//*************************************************//
+            //***************************************************************************************************************//
+            
+            // Punch attack
+            if (inRange && !isAttacking && !isTakingBreak && !slamRange && !midstAbility) {
+                isAttacking = true;
+            }
+            // Body slam attack
+            else if (slamRange && !isJumpAttacking && !isTakingBreak && !inRange && !midstAbility) {
+                isJumpAttacking = true;
+            }
 
-        // Stop moving if attacking
-        if (isAttacking || isJumpAttacking) {
-            canMove = false;
-            isMoving = false;
+            // If performing any ability, then boss is in the middle of performing an ability
+            if (hammerFistBool || boulderTossBool || isBuffing || isCharging)
+            {
+                midstAbility = true; 
+            }
+            else if (!hammerFistBool && !boulderTossBool && !isBuffing && !isCharging)
+            {
+                midstAbility = false; 
+                ability = 0;
+            }
+
+            // Stop moving if attacking
+            if (isAttacking || isJumpAttacking) {
+                canMove = false;
+                isMoving = false;
+            }
+            else {
+                canMove = true;
+            }
+            
+            // Reorientate on boulder toss if player switched sides
+            if (boulderTossBool) {
+                Flip(); 
+            }
+            // After Rage / Buff Animation is over, charge. Minotaur position is equal to the direction going towards the player
+            // and go past. Deactivate roar collider
+            if (isCharging)
+            {
+                transform.parent.transform.position += chargePast * Time.deltaTime; 
+                rampageRoar.enabled = false; 
+            }
+            //***************************************************************************************************************//
+            //***************************************************************************************************************//
+
+            //*************************************************//Calculations//*************************************************//
+            //******************************************************************************************************************//
+            // Random Number / Skill Generator every 4 seconds and must not be in the middle of performing an ability
+            if (!midstAbility)
+            {
+                chooseTimer += Time.deltaTime;
+                if (chooseTimer >= 3)
+                {
+                    if (!switchAttacks)
+                    {
+                        // Pick number from 1 through  50
+                        // Every ability has a counter. If ability has been done twice already, repick a number 
+                        // until it has become a different ability. Once it has become a different ability, counters reset
+                        // This prevents abilities to be done more than 2 times in a row 
+                        do
+                        {
+                            ability = Random.Range (1, 51);
+                            // Debug.Log("Ability Chosen: " + ability); 
+                            if (boulderTossCounter >= 2)
+                            {
+                                if (ability >= 26)
+                                {
+                                    boulderTossCounter = 0; 
+                                }
+                            }
+                            if (hammerFistCounter >= 2)
+                            {
+                                if (ability <= 25)
+                                {
+                                    hammerFistCounter = 0; 
+                                }
+                            }
+                        } while (boulderTossCounter == 2 || hammerFistCounter == 2);
+                    }
+                    else if (switchAttacks)
+                    {
+                        // Pick number from 25 through 75
+                        do
+                        {
+                            ability = Random.Range (26, 76);
+                            if (hammerFistCounter >= 2)
+                            {
+                                if (ability >= 51)
+                                {
+                                    hammerFistCounter = 0; 
+                                }
+                            }
+                            if (rampageCounter >= 2)
+                            {
+                                if (ability <= 50)
+                                {
+                                    rampageCounter = 0; 
+                                }
+                            }
+                        } while (hammerFistCounter == 2 || rampageCounter == 2);
+                    }
+                    // Reset Timer
+                    chooseTimer = 0; 
+                }
+            }
+            // Above 50% HP: Number from 1-50.      // Below 50% HP: Number from 25-75.
+            // 1-25 = BoulderToss                   // 26-50 = HammerFist
+            // 26-50 = HammerFist                   // 51-75 = Rampage
+
+            if (ability >= 1 && ability <= 25 && !midstAbility)
+            {
+                boulderTossCounter++; 
+                // Debug.Log ("Boulder: " + boulderTossCounter);
+                if (boulderTossCounter != 3)
+                {
+                    boulderTossBool = true; 
+                }
+            }
+            else if (ability >= 26 & ability <= 50 && !midstAbility)
+            {
+                hammerFistCounter++; 
+                // Debug.Log ("Hammer : " + hammerFistCounter); 
+                if (hammerFistCounter != 3)
+                {
+                    hammerFistBool = true; 
+                }
+            }
+            else if (ability >= 51 && ability <= 75 && !midstAbility)
+            {
+                rampageCounter++; 
+                if (rampageCounter != 3)
+                {
+                    Flip (); 
+                    // If rampage ability is chosen, begin with channeling Roar. Buffing's last frame activates charging. 
+                    rampageRoar.enabled = true; 
+                    isBuffing = true;
+                }
+            }
         }
         else {
-            canMove = true;
+            isJumpAttacking = false;
+            isMoving = false;
+            isTakingBreak = false;
+            isAttacking = false;
+            hammerFistBool = false;
+            boulderTossBool = false;
+            isBuffing = false;
         }
-        
-        // Reorientate on boulder toss if player switched sides
-        if (boulderTossBool) {
-            Flip(); 
-        }
-        // After Rage / Buff Animation is over, charge. Minotaur position is equal to the direction going towards the player
-        // and go past. Deactivate roar collider
-        if (isCharging)
-        {
-            transform.parent.transform.position += chargePast * Time.deltaTime; 
-            rampageRoar.enabled = false; 
-        }
-        //***************************************************************************************************************//
-        //***************************************************************************************************************//
-
-        //*************************************************//Calculations//*************************************************//
-        //******************************************************************************************************************//
-        // Random Number / Skill Generator every 4 seconds and must not be in the middle of performing an ability
-        if (!midstAbility)
-        {
-            chooseTimer += Time.deltaTime;
-            if (chooseTimer >= 3)
-            {
-                if (!switchAttacks)
-                {
-                    // Pick number from 1 through  50
-                    // Every ability has a counter. If ability has been done twice already, repick a number 
-                    // until it has become a different ability. Once it has become a different ability, counters reset
-                    // This prevents abilities to be done more than 2 times in a row 
-                    do
-                    {
-                        ability = Random.Range (1, 51);
-                        // Debug.Log("Ability Chosen: " + ability); 
-                        if (boulderTossCounter >= 2)
-                        {
-                            if (ability >= 26)
-                            {
-                                boulderTossCounter = 0; 
-                            }
-                        }
-                        if (hammerFistCounter >= 2)
-                        {
-                            if (ability <= 25)
-                            {
-                                hammerFistCounter = 0; 
-                            }
-                        }
-                    } while (boulderTossCounter == 2 || hammerFistCounter == 2);
-                }
-                else if (switchAttacks)
-                {
-                    // Pick number from 25 through 75
-                    do
-                    {
-                        ability = Random.Range (26, 76);
-                        if (hammerFistCounter >= 2)
-                        {
-                            if (ability >= 51)
-                            {
-                                hammerFistCounter = 0; 
-                            }
-                        }
-                        if (rampageCounter >= 2)
-                        {
-                            if (ability <= 50)
-                            {
-                                rampageCounter = 0; 
-                            }
-                        }
-                    } while (hammerFistCounter == 2 || rampageCounter == 2);
-                }
-                // Reset Timer
-                chooseTimer = 0; 
-            }
-        }
-        // Above 50% HP: Number from 1-50.      // Below 50% HP: Number from 25-75.
-        // 1-25 = BoulderToss                   // 26-50 = HammerFist
-        // 26-50 = HammerFist                   // 51-75 = Rampage
-
-        if (ability >= 1 && ability <= 25 && !midstAbility)
-        {
-            boulderTossCounter++; 
-            // Debug.Log ("Boulder: " + boulderTossCounter);
-            if (boulderTossCounter != 3)
-            {
-                boulderTossBool = true; 
-            }
-        }
-        else if (ability >= 26 & ability <= 50 && !midstAbility)
-        {
-            hammerFistCounter++; 
-            // Debug.Log ("Hammer : " + hammerFistCounter); 
-            if (hammerFistCounter != 3)
-            {
-                hammerFistBool = true; 
-            }
-        }
-        else if (ability >= 51 && ability <= 75 && !midstAbility)
-        {
-            rampageCounter++; 
-            if (rampageCounter != 3)
-            {
-                Flip (); 
-                // If rampage ability is chosen, begin with channeling Roar. Buffing's last frame activates charging. 
-                rampageRoar.enabled = true; 
-                isBuffing = true;
-            }
-        }
-        //***************************************************************************************************************//
-        //***************************************************************************************************************//
     }
 
     protected override void Move() {
