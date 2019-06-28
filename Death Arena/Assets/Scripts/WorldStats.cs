@@ -10,8 +10,8 @@ public class WorldStats : MonoBehaviour
 
     void Start() {
         level = 1;
-        gold = 5000;
-        knowledge_crystals = 5;
+        gold = 0;
+        knowledge_crystals = 0;
 
         // Save new world data file if needed
         SaveSystem.SaveNewWorldData();

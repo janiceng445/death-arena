@@ -27,11 +27,11 @@ public class Ability : MonoBehaviour
     }
 
     protected virtual void Update() {
-        if (Input.GetKeyDown(KeyCode.F) && canCast) {
-            isCasting = true;
-            canCast = false;
-        }
-        Timers();
+        // if (Input.GetKeyDown(KeyCode.F) && canCast) {
+        //     isCasting = true;
+        //     canCast = false;
+        // }
+        // Timers();
     }
 
     protected virtual void Timers() {

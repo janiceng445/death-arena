@@ -54,7 +54,7 @@ public class Minotaur : Boss
 
         // Set stats
         power = 50;
-        health = 500;
+        health = 1750;
         Speed = 3f;
         breathDuration = 1f;
         moneyAmount = 1000;

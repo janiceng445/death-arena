@@ -62,8 +62,8 @@ public class GameSettings : MonoBehaviour
         }
         UpdateAllAudio();
 
-        // Disable Play if level == 5
-        if (WorldStats.level == 5) {
+        // Disable Play if level == 4
+        if (WorldStats.level == 4) {
             GameObject.Find("Play_btn").GetComponent<Button>().interactable = false;
         }
     }

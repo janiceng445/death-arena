@@ -12,7 +12,7 @@ public class Ogre : Boss
         base.Start();
 
         // Set stats
-        power = 50;
+        power = 20;
         health = 500;
         Speed = 3f;
         breathDuration = 1f;
