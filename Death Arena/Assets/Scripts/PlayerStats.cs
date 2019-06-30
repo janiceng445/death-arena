@@ -30,6 +30,39 @@ public class PlayerStats : MonoBehaviour
     public static string weaponName;
 
     void Start() {
+
+        DefaultStats();
+
+        // Save new player data file if needed
+        SaveSystem.SaveNewPlayerData();
+
+        // Load actual player data file
+        PlayerData pd = SaveSystem.LoadPlayerData();
+        if (pd != null) {
+            // Bonuses
+            atk_bon = pd.atk_bon;
+            atk_bon2 = pd.atk_bon2;
+            def_bon = pd.def_bon;
+            def_bon2 = pd.def_bon2;
+            hp_bon = pd.hp_bon;
+            hp_bon2 = pd.hp_bon2;
+
+            // Calculate with bonuses
+            w_speed = pd.w_speed;
+            r_speed = pd.r_speed;
+            atk = pd.atk + atk_bon + atk_bon2;
+            def = pd.def + def_bon + def_bon2;
+            hp = pd.hp + hp_bon + hp_bon2;
+            energy = pd.energy;
+            isWearingArmor = pd.isWearingArmor;
+            hasNewWeapon = pd.hasNewWeapon;
+            armorSet = pd.armorSet;
+            armorSetName = pd.armorSetName;
+            weaponName = pd.weaponName;
+        }
+    }
+
+    public void DefaultStats() {
         // The default
         w_speed = 35f;
         r_speed = 45f;
@@ -48,34 +81,6 @@ public class PlayerStats : MonoBehaviour
         armorSet = new string[10];
         armorSetName = "null";
         weaponName = "null";
-
-        // Save new player data file if needed
-        SaveSystem.SaveNewPlayerData();
-
-        // Load actual player data file
-        PlayerData pd = SaveSystem.LoadPlayerData();
-        if (pd != null) {
-            // Bonuses
-            atk_bon = pd.atk_bon;
-            atk_bon2 = pd.atk_bon2;
-            def_bon = pd.def_bon;
-            def_bon = pd.def_bon2;
-            hp_bon = pd.hp_bon;
-            hp_bon = pd.hp_bon2;
-
-            // Calculate with bonuses
-            w_speed = pd.w_speed;
-            r_speed = pd.r_speed;
-            atk = pd.atk + atk_bon + atk_bon2;
-            def = pd.def + def_bon + def_bon2;
-            hp = pd.hp + hp_bon + hp_bon2;
-            energy = pd.energy;
-            isWearingArmor = pd.isWearingArmor;
-            hasNewWeapon = pd.hasNewWeapon;
-            armorSet = pd.armorSet;
-            armorSetName = pd.armorSetName;
-            weaponName = pd.weaponName;
-        }
     }
 
     public static void AddBonuses(int a, int h, int d) {
@@ -85,6 +90,7 @@ public class PlayerStats : MonoBehaviour
         atk_bon = a;
         hp_bon = h;
         def_bon = d;
+        SaveSystem.SavePlayerData();
     }
 
     public static void AddBonusesWeapon(int a, int h, int d) {
@@ -94,6 +100,7 @@ public class PlayerStats : MonoBehaviour
         atk_bon2 = a;
         hp_bon2 = h;
         def_bon2 = d;
+        SaveSystem.SavePlayerData();
     }
     
 }

@@ -464,11 +464,13 @@ MonoBehaviour:
   bar: {fileID: 0}
   inRange: 0
   enemy: {fileID: 9841528713574182, guid: b619ce9bf7549a54583a87497e4ed992, type: 3}
+  shadowliteList: []
   spawnRate: 0
   spawnCount: 0
-  shadowliteList: []
+  shadowAttack: 0
   NightmareAbility: 0
   SlowRadius: {fileID: 0}
+  canMove: 0
 --- !u!1 &4824428754734832495
 GameObject:
   m_ObjectHideFlags: 0

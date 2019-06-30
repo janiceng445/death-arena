@@ -10,7 +10,7 @@ public class Steel : Item
         index = 1;
         cost = 500;
         attackBuff = 0;
-        healthBuff = 100;
+        healthBuff = 275;
         defBuff = 10;
         type = 1;
 

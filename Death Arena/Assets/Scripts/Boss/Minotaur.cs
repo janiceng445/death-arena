@@ -53,8 +53,8 @@ public class Minotaur : Boss
         base.Start();
 
         // Set stats
-        power = 50;
-        health = 1750;
+        power = 30;
+        health = 1500;
         Speed = 3f;
         breathDuration = 1f;
         moneyAmount = 1000;
@@ -67,6 +67,9 @@ public class Minotaur : Boss
         hammerSlow.enabled = false; 
         rampageRoar.enabled = false; 
         rampageRoar.radius = 1f; 
+
+        hammerFistBool = false;
+        boulderTossBool = false;
     }
 
     protected override void Update() {
@@ -93,13 +96,21 @@ public class Minotaur : Boss
 
             // Condition checking
             CheckHammerFistConditions (); 
+
+            // Activate hammerfist collider only if bool is true
+            if (hammerFistBool) {
+                hammerSlow.enabled = true;
+            }
+            else { 
+                hammerSlow.enabled = false;
+            }
             
             // Switch attacks if Minotaur is below 50% health
-            if (health >= 250)
+            if (health >= 0.5f * maxHealth)
             {
                 switchAttacks = false; 
             }
-            else if (health <= 250)
+            else if (health <= 0.5f * maxHealth)
             {
                 switchAttacks = true; 
             }
@@ -253,7 +264,11 @@ public class Minotaur : Boss
                     Flip (); 
                     // If rampage ability is chosen, begin with channeling Roar. Buffing's last frame activates charging. 
                     rampageRoar.enabled = true; 
+                    gameObject.transform.parent.GetComponent<Rigidbody2D>().isKinematic = true;
                     isBuffing = true;
+                }
+                else {
+                    gameObject.transform.parent.GetComponent<Rigidbody2D>().isKinematic = false;
                 }
             }
         }
@@ -266,6 +281,7 @@ public class Minotaur : Boss
             boulderTossBool = false;
             isBuffing = false;
         }
+
     }
 
     protected override void Move() {

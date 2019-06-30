@@ -10,14 +10,7 @@ public class Armory : MonoBehaviour
     public static bool[] weaponBought;
 
     void Start() {
-        armorBought = new bool[2];
-        weaponBought = new bool[2];
-        for (int i = 0; i < armorBought.Length; i++) {
-            armorBought[i] = false;
-        }
-        for (int i = 0; i < weaponBought.Length; i++) {
-            weaponBought[i] = false;
-        }
+        DefaultStats();
 
         // Save new armory data file if needed
         SaveSystem.SaveNewArmoryData();
@@ -27,6 +20,17 @@ public class Armory : MonoBehaviour
         if (ad != null) {
             armorBought = ad.armorBought;
             weaponBought = ad.weaponBought;
+        }
+    }
+
+    public void DefaultStats() {
+        armorBought = new bool[2];
+        weaponBought = new bool[2];
+        for (int i = 0; i < armorBought.Length; i++) {
+            armorBought[i] = false;
+        }
+        for (int i = 0; i < weaponBought.Length; i++) {
+            weaponBought[i] = false;
         }
     }
 }

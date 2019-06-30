@@ -9,14 +9,18 @@ public class WorldStats : MonoBehaviour
     public static int knowledge_crystals;
 
     void Start() {
-        level = 1;
-        gold = 0;
-        knowledge_crystals = 0;
+        DefaultStats();
 
         // Save new world data file if needed
         SaveSystem.SaveNewWorldData();
 
         LoadAll();
+    }
+
+    public void DefaultStats() {
+        level = 1;
+        gold = 0;
+        knowledge_crystals = 0;
     }
 
     void LoadAll() {

@@ -10,7 +10,7 @@ public class Boulder : MonoBehaviour
     public float speed;
     private bool hitPlayer = false; 
     private bool isTraveling;
-    private int power = 50;
+    private int power = 25;
     
     void Start ()
     {

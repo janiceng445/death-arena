@@ -165,7 +165,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6229818507954085886}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -244,7 +244,7 @@ GameObject:
   - component: {fileID: 6411934548435346766}
   - component: {fileID: 7995898458408386957}
   - component: {fileID: 5179074051409265594}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: HammerSlowBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -272,7 +272,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7033243343538181225}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -1381,8 +1381,8 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!61 &8947458109689633080
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1454,7 +1454,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.79697204, y: 0.7303672}
+  m_Offset: {x: 0.53, y: 0.7303672}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1465,7 +1465,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.700788, y: 3.087945}
+  m_Size: {x: 3.95, y: 1.8}
   m_EdgeRadius: 0
 --- !u!114 &8545161498936670468
 MonoBehaviour:
@@ -2069,7 +2069,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 19.165491, y: 2.0625944}
+  m_Size: {x: 15.41, y: 2.0625944}
   m_EdgeRadius: 0
 --- !u!114 &8545161499066503218
 MonoBehaviour:
@@ -2125,7 +2125,7 @@ GameObject:
   - component: {fileID: 2206118546819740395}
   - component: {fileID: 2373383340123445332}
   - component: {fileID: 4966266445342616298}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: RampageCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

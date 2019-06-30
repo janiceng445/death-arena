@@ -35,6 +35,7 @@ public class PlayerManager : MonoBehaviour
             speedReduc = 0.4f;
         }
         else if (isDeathSlowed) {
+            Debug.Log("hello");
             speedReduc = 0.25f; 
         }
         else {

@@ -19,7 +19,7 @@ public class RampageCollider : MonoBehaviour
         // playerMovement = GameObject.Find("Player").GetComponent<PlayerManager>();
         // rampageRadius = GetComponentInParent<Minotaur>(); 
         target = GameObject.Find("Player"); 
-        Minotaur = GameObject.Find("Minotaur").transform.GetChild(0).GetComponent<Minotaur>(); 
+        Minotaur = GameObject.Find("Minotaur(Clone)").transform.GetChild(0).GetComponent<Minotaur>(); 
     }
 
     void OnTriggerEnter2D (Collider2D col)

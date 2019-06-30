@@ -10839,7 +10839,7 @@ GameObject:
   - component: {fileID: 1164555426}
   - component: {fileID: 1164555427}
   - component: {fileID: 1164555428}
-  m_Layer: 15
+  m_Layer: 8
   m_Name: Wall Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11575,7 +11575,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1257241809}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.3, y: 0.46, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 968392815}
@@ -20798,12 +20798,12 @@ PrefabInstance:
     - target: {fileID: 5834154097058068793, guid: 03de9fe4be8ca504d931048bccc4231c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5834154097058068793, guid: 03de9fe4be8ca504d931048bccc4231c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.46
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5834154097058068793, guid: 03de9fe4be8ca504d931048bccc4231c,
         type: 3}
@@ -20873,6 +20873,11 @@ PrefabInstance:
     - target: {fileID: 5834154097058068795, guid: 03de9fe4be8ca504d931048bccc4231c,
         type: 3}
       propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5834154097058068795, guid: 03de9fe4be8ca504d931048bccc4231c,
+        type: 3}
+      propertyPath: m_CollisionDetection
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

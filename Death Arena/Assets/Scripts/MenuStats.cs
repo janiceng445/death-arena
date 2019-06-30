@@ -17,6 +17,10 @@ public class MenuStats : MonoBehaviour
     public Text crystals;
 
     void Update() {
+        ReloadScene();
+    }
+
+    public void ReloadScene() {
         // Update player stats
         health.text = "Health: " + PlayerStats.hp;
         energy.text = "Energy: " + PlayerStats.energy;
@@ -25,7 +29,7 @@ public class MenuStats : MonoBehaviour
 
         // Update world stats
         level.text = "Level: " + WorldStats.level;
-        gold.text = "Gold: " + WorldStats.gold.ToString("n0");
-        crystals.text = "Crystals: " + WorldStats.knowledge_crystals.ToString();
+        gold.text = WorldStats.gold.ToString("n0");
+        crystals.text = WorldStats.knowledge_crystals.ToString();
     }
 }

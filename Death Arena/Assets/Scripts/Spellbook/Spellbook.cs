@@ -55,12 +55,12 @@ public class Spellbook : MonoBehaviour
     }
 
     public void Update() {
-        if (page == numPages - 1) {
-            GameObject.Find("Next").GetComponent<Button>().interactable = false;
-        }
-        if (page == 0) {
-            GameObject.Find("Previous").GetComponent<Button>().interactable = false;
-        }
+        // if (page == numPages - 1) {
+        //     GameObject.Find("Next").GetComponent<Button>().interactable = false;
+        // }
+        // if (page == 0) {
+        //     GameObject.Find("Previous").GetComponent<Button>().interactable = false;
+        // }
         
         // Loading the currently selected spell in <Sorcery>
         if (page == 1 && sorcerySetID != 0) {
