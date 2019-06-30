@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerConditions : MonoBehaviour
 {
-    public int health;
+    public float health;
     public GameObject hitbox;
     private float timer;
 

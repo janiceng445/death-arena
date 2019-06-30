@@ -20,9 +20,7 @@ public class PlayerManager : MonoBehaviour
         sprite = gameObject.GetComponentInChildren<SpriteRenderer>();
         AddAbility();
     }
-
-
-
+    
     public void Move(float x, float y) {
 
         // Fix sorting order

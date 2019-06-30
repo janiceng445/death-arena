@@ -43,6 +43,7 @@ public class Minotaur : Boss
     private Vector3 chargePast = Vector3.zero; 
     public bool isWithinRampageZone; 
     public CircleCollider2D rampageRoar; 
+    public RampageWall WallScript; 
 
     //** Custom conditions **//
     public bool slamRange;
@@ -70,12 +71,15 @@ public class Minotaur : Boss
 
         hammerFistBool = false;
         boulderTossBool = false;
+        WallScript = GameObject.Find("Environment").transform.GetChild(7).GetComponent<RampageWall>();
+        WallScript.enabled = true; 
     }
 
     protected override void Update() {
         // Check death
         if (health <= 0 && !dieOnce) {
             base.Die();
+            WallScript.enabled = false;  
         }
 
         // Cooldown between attacks

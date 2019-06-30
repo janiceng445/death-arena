@@ -5,7 +5,7 @@ using UnityEngine;
 public class SlowRadius : MonoBehaviour
 {
     private PlayerManager player;
-    private float damage = 0.25f; 
+    private float damage = 0.075f; 
     private bool withinZone; 
 
     void Start ()
@@ -17,11 +17,11 @@ public class SlowRadius : MonoBehaviour
         if (withinZone)
         {
             float calc_power = damage - ((float) PlayerStats.def / 2f);
-            if (player.GetComponent<PlayerConditions>().health - calc_power <= 0) {
+            if (player.GetComponent<PlayerConditions>().health - damage <= 0) {
                 player.GetComponent<PlayerConditions>().health = 0;
             }
             else {
-                player.GetComponent<PlayerConditions>().health -= (int) Mathf.Ceil(calc_power);
+                player.GetComponent<PlayerConditions>().health -= damage;
             }
         }
     }

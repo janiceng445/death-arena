@@ -341,12 +341,12 @@ public class Paratoria : Boss
         // If Paratoria is not moving, nor casting Nightmare, nor has a shadowlite been attacked
         if (!canMove && !NightmareAbility && !shadowAttack)
         {
-            TakeDamage(50); 
+            TakeDamage(20); 
         }
         // Moving or not moving, take damage if Player has attacked shadowlite
         else if (shadowAttack)
         {
-            TakeDamage(30);
+            TakeDamage(8);
         }
     }
     public void Heal(int regen)

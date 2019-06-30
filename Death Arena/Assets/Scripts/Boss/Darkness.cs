@@ -27,6 +27,6 @@ public class Darkness : MonoBehaviour
     public void ActivateDarknessBG() {
         sprites[0].color = new Color32(0x14, 0x63, 0x85, 0xFF);
         var main = sandstorm.main;
-        main.startColor = new Color(0xff, 0xff, 0xff, 0x10);
+        main.startColor = new Color(0xff, 0xff, 0xff, 0x05);
     }
 }

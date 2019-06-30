@@ -5374,6 +5374,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4229474301932485010}
   - component: {fileID: 3453628975809241768}
+  - component: {fileID: 445496363124254978}
   m_Layer: 0
   m_Name: SlowRadius
   m_TagString: Untagged
@@ -5411,6 +5412,18 @@ CircleCollider2D:
   m_Offset: {x: -0.1, y: -0.25}
   serializedVersion: 2
   m_Radius: 6
+--- !u!114 &445496363124254978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5351680803621116971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be7f18beee01e384f97fbaeccdc2d809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8083250793400142313
 GameObject:
   m_ObjectHideFlags: 0

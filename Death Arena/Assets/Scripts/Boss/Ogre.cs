@@ -16,7 +16,7 @@ public class Ogre : Boss
         health = 500;
         Speed = 3f;
         breathDuration = 1f;
-        moneyAmount = 1000;
+        moneyAmount = 500;
 
         weaponCollider = gameObject.transform.Find("bone_1/bone_2/bone_3/weapon").gameObject.GetComponent<BoxCollider2D>();
 
