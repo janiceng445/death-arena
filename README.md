@@ -1,2 +1,1 @@
-# jing-cis4914
-Senior Project: College Student Brain Simulator
+# Death Arena Game in Unity
